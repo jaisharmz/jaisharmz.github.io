@@ -1,12 +1,12 @@
 # jaisharmz.github.io
 
-Personal academic site for Jai Sharma — https://jaisharmz.github.io
+Personal academic site for Jai Sharma. Live at https://jaisharmz.github.io
 
 Static HTML/CSS, no build step, no external assets. Layout follows the
 Jon Barron academic template convention.
 
 ```
-index.html            single page — everything lives here
+index.html            single page, everything lives here
 assets/css/style.css  design system (light + dark, follows system or toggle)
 assets/js/main.js     theme toggle only
 assets/pdf/           hosted papers, books, white papers, CV

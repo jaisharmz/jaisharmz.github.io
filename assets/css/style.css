@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Jai Sharma — personal site
+   Jai Sharma, personal site
    Layout follows the Jon Barron academic template convention (single column,
    ~800px, thumbnailed publication rows) with tightened typography.
    Self-contained: no webfonts, no external assets.
@@ -13,8 +13,8 @@
   --muted:      #70707a;
   --rule:       #e4e3de;
   --rule-soft:  #efeeea;
-  --accent:     #9a3b1f;
-  --accent-dim: #c07a63;
+  --accent:     #1a4f8c;
+  --accent-dim: #7ba3cc;
 
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --serif: "Iowan Old Style", Charter, "Palatino Linotype", Palatino, Georgia, serif;
@@ -27,18 +27,18 @@
   :root {
     --paper: #16161a; --paper-sunk: #1e1e23; --ink: #e8e7e3; --ink-soft: #c7c6c1;
     --muted: #93929b; --rule: #2e2e35; --rule-soft: #26262c;
-    --accent: #e08a68; --accent-dim: #a9705a;
+    --accent: #7fb2e3; --accent-dim: #5b83a8;
   }
 }
 :root[data-theme="light"] {
   --paper: #ffffff; --paper-sunk: #f6f5f2; --ink: #1b1b1d; --ink-soft: #37373b;
   --muted: #70707a; --rule: #e4e3de; --rule-soft: #efeeea;
-  --accent: #9a3b1f; --accent-dim: #c07a63;
+  --accent: #1a4f8c; --accent-dim: #7ba3cc;
 }
 :root[data-theme="dark"] {
   --paper: #16161a; --paper-sunk: #1e1e23; --ink: #e8e7e3; --ink-soft: #c7c6c1;
   --muted: #93929b; --rule: #2e2e35; --rule-soft: #26262c;
-  --accent: #e08a68; --accent-dim: #a9705a;
+  --accent: #7fb2e3; --accent-dim: #5b83a8;
 }
 
 * { box-sizing: border-box; }
@@ -213,7 +213,7 @@ p.lead { color: var(--ink-soft); margin: -.5rem 0 1.4rem; font-size: .97rem; tex
 .facts li:last-child { border-bottom: 0; }
 .facts .what { font-size: .95rem; text-wrap: pretty; color: var(--ink-soft); }
 .facts .what strong { color: var(--ink); font-weight: 650; }
-/* Titles inside fact rows read as headings, not links — accent only on hover. */
+/* Titles inside fact rows read as headings, not links, so accent only on hover. */
 .facts .what > a, .facts .what a:has(strong) { color: var(--ink); font-weight: 600; }
 .facts .what > a:hover, .facts .what a:has(strong):hover { color: var(--accent); }
 .facts .when { font-size: .82rem; color: var(--muted); white-space: nowrap; text-align: right; }
