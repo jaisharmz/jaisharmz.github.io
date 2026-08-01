@@ -116,7 +116,7 @@ img { max-width: 100%; height: auto; }
 .hdr .affil { color: var(--muted); font-size: .93rem; margin: 0 0 1.15rem; }
 .hdr p.bio { margin: 0 0 .9rem; color: var(--ink-soft); font-size: 1rem; text-wrap: pretty; }
 .hdr p.bio:last-of-type { margin-bottom: 1.15rem; }
-.hdr strong { color: var(--ink); font-weight: 600; }
+
 
 .portrait {
   width: 11rem; height: 11rem; border-radius: 4px; overflow: hidden;
@@ -181,11 +181,14 @@ p.lead { color: var(--ink-soft); margin: -.5rem 0 1.4rem; font-size: .97rem; tex
 .pub__title a { color: var(--ink); }
 .pub__title a:hover { color: var(--accent); text-decoration: none; }
 .pub__authors { font-size: .9rem; color: var(--muted); margin: 0 0 .18rem; }
-.pub__authors .me { color: var(--ink); font-weight: 650; }
-.pub__venue { font-size: .9rem; font-style: italic; color: var(--ink-soft); margin: 0 0 .45rem; }
-.pub__venue .hl { font-style: normal; font-weight: 650; color: var(--accent); }
+.pub__authors .me { color: var(--ink); }
+.pub__venue { font-size: .9rem; color: var(--muted); margin: 0 0 .45rem; }
+.pub__venue a { color: var(--muted); border-bottom: 1px solid var(--rule); }
+.pub__venue a:hover { color: var(--accent); border-bottom-color: var(--accent); text-decoration: none; }
 .pub__desc { font-size: .905rem; color: var(--ink-soft); line-height: 1.55; margin: 0 0 .5rem; text-wrap: pretty; }
-.pub__desc strong { font-weight: 650; color: var(--ink); }
+.pub__desc a, .news .what a, .facts .what a { border-bottom: 1px solid var(--accent-dim); }
+.pub__desc a:hover, .news .what a:hover, .facts .what a:hover { text-decoration: none; border-bottom-width: 2px; }
+
 
 .pub__links { list-style: none; display: flex; flex-wrap: wrap; margin: 0; padding: 0; font-size: .82rem; }
 .pub__links li { display: flex; align-items: center; }
@@ -201,7 +204,7 @@ p.lead { color: var(--ink-soft); margin: -.5rem 0 1.4rem; font-size: .97rem; tex
 }
 .news .when { color: var(--muted); font-size: .82rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .news .what { text-wrap: pretty; color: var(--ink-soft); }
-.news .what strong { color: var(--ink); font-weight: 650; }
+
 
 /* ---------- two-column fact list ---------------------------------------- */
 
@@ -212,7 +215,7 @@ p.lead { color: var(--ink-soft); margin: -.5rem 0 1.4rem; font-size: .97rem; tex
 }
 .facts li:last-child { border-bottom: 0; }
 .facts .what { font-size: .95rem; text-wrap: pretty; color: var(--ink-soft); }
-.facts .what strong { color: var(--ink); font-weight: 650; }
+
 /* Titles inside fact rows read as headings, not links, so accent only on hover. */
 .facts .what > a, .facts .what a:has(strong) { color: var(--ink); font-weight: 600; }
 .facts .what > a:hover, .facts .what a:has(strong):hover { color: var(--accent); }
@@ -223,8 +226,8 @@ p.lead { color: var(--ink-soft); margin: -.5rem 0 1.4rem; font-size: .97rem; tex
 .awards { list-style: none; margin: 0; padding: 0;
   display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0 2rem; }
 .awards li { padding: .5rem 0; border-bottom: 1px solid var(--rule-soft); font-size: .92rem; line-height: 1.45; text-wrap: pretty; }
-.awards strong { font-weight: 650; }
-.awards span { display: block; color: var(--muted); font-size: .83rem; }
+.awards .name { display: block; color: var(--ink); }
+.awards .detail { display: block; color: var(--muted); font-size: .83rem; }
 
 /* ---------- prose -------------------------------------------------------- */
 
