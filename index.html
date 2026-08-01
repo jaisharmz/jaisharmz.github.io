@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jai Sharma</title>
+<meta name="description" content="Jai Sharma — researcher at Berkeley AI Research working on diffusion language models and their safety failures. M.E.T. dual degree (EECS + Business), UC Berkeley.">
+<link rel="canonical" href="https://jaisharmz.github.io/">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Jai Sharma">
+<meta property="og:description" content="Researcher at Berkeley AI Research working on diffusion language models and their safety failures.">
+<meta property="og:url" content="https://jaisharmz.github.io/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.92em' font-size='92' font-family='Georgia,serif' font-weight='600'>J</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="home" href="#top">Jai Sharma</a>
+    <nav>
+      <a href="#research">Research</a>
+      <a href="#patents">Patents</a>
+      <a href="#writing">Writing</a>
+      <a href="#building">Building</a>
+      <a href="#cv">CV</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.6v2.4M12 20v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M1.6 12h2.4M20 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8z"/></svg>
+    </button>
+  </div>
+</div>
+
+<main class="wrap" id="top">
+
+  <header class="hdr fade">
+    <div>
+      <h1>Jai Sharma</h1>
+      <p class="affil">M.E.T. — EECS + Business, UC Berkeley &nbsp;·&nbsp; Berkeley AI Research</p>
+
+      <p class="bio">
+        I'm an undergraduate researcher at <strong>Berkeley AI Research</strong>, advised by
+        <a href="https://people.eecs.berkeley.edu/~dawnsong/">Prof. Dawn Song</a>. I work on
+        <strong>diffusion language models</strong> — how they generate, what they leak about their own
+        dependency structure, and how to break them on purpose.
+      </p>
+      <p class="bio">
+        The thread running through my work is inverting generative models: recovering the prompt from
+        the response, the dependency graph from the hidden states, one biological modality from
+        another. Previously at Databricks, Palo Alto Networks (two patents on LLM security) and IBM
+        Research, and co-founder of <strong>BioMiner AI</strong>.
+      </p>
+
+      <ul class="links">
+        <li><a href="mailto:jais@berkeley.edu">Email</a></li>
+        <li><a href="assets/pdf/Jai_Sharma_CV.pdf">CV</a></li>
+        <li><a href="https://scholar.google.com/citations?user=IwKijKIAAAAJ&hl=en">Google Scholar</a></li>
+        <li><a href="https://github.com/jaisharmz">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/jsharmz/">LinkedIn</a></li>
+        <li><a href="https://www.youtube.com/@jaisharmz">YouTube</a></li>
+      </ul>
+    </div>
+
+    <div class="portrait">
+      <!-- Drop a square photo at assets/img/profile.jpg and swap the line below for:
+           <img src="assets/img/profile.jpg" alt="Jai Sharma"> -->
+      <span class="monogram">JS</span>
+    </div>
+  </header>
+
+  <hr class="divider">
+
+  <section id="news">
+    <h2>News</h2>
+    <ul class="news">
+      <li><span class="when">May 2026</span><span class="what">Started at <strong>Databricks</strong> as a PhD-level Data Science Intern.</span></li>
+      <li><span class="when">May 2026</span><span class="what"><strong>Neural Estimation of Pairwise Mutual Information in Masked Discrete Sequence Models</strong> posted to arXiv.</span></li>
+      <li><span class="when">Mar 2026</span><span class="what">Presented work on dynamic GPU pricing and compute exchanges to the <strong>New York Stock Exchange</strong>.</span></li>
+      <li><span class="when">Oct 2025</span><span class="what">Began writing <strong>Diffusion from First Principles</strong>.</span></li>
+      <li><span class="when">Sep 2025</span><span class="what">Joined <strong>Prof. Dawn Song's group</strong> at Berkeley AI Research.</span></li>
+      <li><span class="when">Aug 2025</span><span class="what">Two patents filed at <strong>Palo Alto Networks</strong>; won the internal R&amp;D hackathon, 1st of 300+.</span></li>
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <section id="research">
+    <h2>Research</h2>
+    <p class="lead">Selected work. Asterisks denote equal contribution.</p>
+
+    <ul class="pubs">
+
+      <li class="pub">
+        <div class="pub__thumb"><img src="assets/img/thumbs/diffusion-investigator-agents.jpg" alt="First page of Diffusion Investigator Agents" loading="lazy"></div>
+        <div>
+          <p class="pub__title"><a href="assets/pdf/diffusion-investigator-agents.pdf">Diffusion Investigator Agents</a></p>
+          <p class="pub__authors"><span class="me">Jai Sharma</span>, Zhanhui Zhou, Dawn Song</p>
+          <p class="pub__venue">Preprint, 2026</p>
+          <p class="pub__desc">
+            Autoregressive models are bad at reverse generation — finding the prompt that maximizes the
+            probability of a given harmful response — because they are locked to one ordering. Diffusion
+            LLMs are not. We recast jailbreak discovery as masked completion inside the dLLM sampling
+            process, and apply Bayes' theorem to the diffusion objective to derive a sampling strategy
+            that maximizes divergence between the conditional and unconditional distributions — a formal
+            link between reverse generation and classifier-free guidance. The resulting Dynamic Diffusion
+            Attack reaches <strong>92.9% attack success rate</strong> against <strong>65.4%</strong> for GCG.
+          </p>
+          <ul class="pub__links">
+            <li><a href="assets/pdf/diffusion-investigator-agents.pdf">PDF</a></li>
+            <li><a href="https://drive.google.com/file/d/17jVEISveW0yDFN1qmsu-rj-nDzmaQQNY/view">Mirror</a></li>
+            <li><span class="tag">AI safety</span></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="pub">
+        <div class="pub__thumb"><img src="assets/img/thumbs/neural-mi-masked-diffusion.jpg" alt="First page of the mutual information estimation paper" loading="lazy"></div>
+        <div>
+          <p class="pub__title"><a href="assets/pdf/neural-mi-masked-diffusion.pdf">Neural Estimation of Pairwise Mutual Information in Masked Discrete Sequence Models</a></p>
+          <p class="pub__authors">Yifan Wang*, <span class="me">Jai Sharma</span>*, Bryan Li*</p>
+          <p class="pub__venue">Preprint, 2025 · arXiv:2605.20187</p>
+          <p class="pub__desc">
+            Masked diffusion models expose marginal conditionals but never say which variables actually
+            depend on each other — which is precisely what you need in order to decode in parallel. We
+            train an estimator on the model's own hidden states, supervised by ground-truth MI computed
+            from its conditional distributions, that predicts the full pairwise mutual-information matrix
+            in one forward pass. The maps recover known structure — Sudoku constraints, positionwise
+            dependencies in ESM-C — and enable MI-guided parallel decoding: a <strong>3–5× reduction</strong>
+            in inference-time forward passes at preserved quality, beating entropy-based parallelization.
+          </p>
+          <ul class="pub__links">
+            <li><a href="assets/pdf/neural-mi-masked-diffusion.pdf">PDF</a></li>
+            <li><a href="https://arxiv.org/abs/2605.20187">arXiv</a></li>
+            <li><span class="tag">Interpretability</span></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="pub">
+        <div class="pub__thumb"><span class="glyph">WebArena</span></div>
+        <div>
+          <p class="pub__title"><a href="https://www2.eecs.berkeley.edu/Pubs/TechRpts/2024/EECS-2024-167.html">Autonomous Web Navigation using Multimodal Agents</a></p>
+          <p class="pub__authors">Research contribution — Prof. Ion Stoica's group, Berkeley AI Research</p>
+          <p class="pub__venue">UC Berkeley EECS Technical Report UCB/EECS-2024-167, 2024</p>
+          <p class="pub__desc">
+            Reinforcement learning to automate hundreds of web navigation tasks across Reddit, e-commerce
+            and other live sites. Actor–critic models lift zero-shot performance of multimodal LLMs on the
+            70+ GB VisualWebArena benchmark.
+          </p>
+          <ul class="pub__links">
+            <li><a href="https://www2.eecs.berkeley.edu/Pubs/TechRpts/2024/EECS-2024-167.html">Tech report</a></li>
+            <li><span class="tag">Agents</span></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="pub">
+        <div class="pub__thumb"><img src="assets/img/thumbs/rnaseq-mast-cells-osteoarthritis.jpg" alt="First page of the Clinical Immunology paper" loading="lazy"></div>
+        <div>
+          <p class="pub__title"><a href="assets/pdf/rnaseq-mast-cells-osteoarthritis.pdf">RNA-seq characterization of histamine-releasing mast cells as potential therapeutic target of osteoarthritis</a></p>
+          <p class="pub__authors">Xiaoyi Zhao, Shady Younis, Hui Shi, et al. — Robinson Lab, Stanford School of Medicine</p>
+          <p class="pub__venue"><span class="hl">Clinical Immunology</span> (Elsevier), vol. 244, 2022</p>
+          <p class="pub__desc">
+            Single-cell and bulk RNA-seq of osteoarthritis synovium identifies KIT⁺ FcεRI⁺ mast cells and a
+            marker score that sorts patients into three synovial pathotypes; H1-receptor blockade attenuates
+            disease in the DMM mouse model. I ran the biostatistical analysis across 40,000+ genes and
+            1,000+ samples.
+          </p>
+          <ul class="pub__links">
+            <li><a href="assets/pdf/rnaseq-mast-cells-osteoarthritis.pdf">PDF</a></li>
+            <li><a href="https://doi.org/10.1016/j.clim.2022.109117">DOI</a></li>
+          </ul>
+        </div>
+      </li>
+
+    </ul>
+
+    <h3>Earlier work</h3>
+    <ul class="facts">
+      <li>
+        <span class="what"><a href="assets/pdf/geocentric-pose-prai-2022.pdf">A Deep Learning Ensemble Framework for Off-Nadir Geocentric Pose Prediction</a> — <strong>IEEE PRAI</strong>. U-Net elevation masks fused back into RGB for pose regression; R² = 0.917.</span>
+        <span class="when">2022</span>
+      </li>
+      <li>
+        <span class="what"><a href="assets/pdf/cvd-lime-ibiomed-2022.pdf">Leveraging Machine Learning and Model-Agnostic Explanations to Understand Automated Diagnosis of Cardiovascular Disease</a> — <strong>IEEE IBIOMED</strong>. F1 = 0.897, opened up with LIME.</span>
+        <span class="when">2022</span>
+      </li>
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <section id="patents">
+    <h2>Patents <span class="n">3 filed</span></h2>
+    <ul class="facts">
+      <li>
+        <span class="what"><a href="https://drive.google.com/file/d/1PMPXRuC_Y934K5hzwpxkldNQrpCIbsDE/view"><strong>System for Adversarial Reinforcement of an LLM Firewall</strong></a><br>
+        Palo Alto Networks. Hardens an LLM firewall by training adversarial models against it — gradient-suffix, reinforcement learning and agentic attacks — so it learns the attack classes it has not seen.</span>
+        <span class="when">09/2025</span>
+      </li>
+      <li>
+        <span class="what"><a href="https://drive.google.com/file/d/1vBdINWX75w8t-_YO4ruVCzs1Hq0NXZe0/view"><strong>User-Context Guided Agentic AI System for Binary File Reverse Engineering</strong></a><br>
+        Palo Alto Networks. An orchestrator decomposes reverse-engineering of a binary into subtasks for specialized sub-agents, steered by user context.</span>
+        <span class="when">08/2025</span>
+      </li>
+      <li>
+        <span class="what"><a href="https://drive.google.com/file/d/1DquoIaK-ooShU5ftm4HAMmfqB8JIS-SL/view"><strong>Systems and Methods for Multimodal Biological Data Translation and Embedding Representations</strong></a><br>
+        BioMiner AI — first author. CycleGAN translates between modalities but ignores that they come from the same patient; CLIP aligns two modalities but cannot decode back. This learns a shared latent space that is label-free <em>and</em> invertible, which is what makes compound biomarkers discoverable at all.</span>
+        <span class="when">10/2024</span>
+      </li>
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <section id="writing">
+    <h2>Writing</h2>
+    <ul class="pubs">
+
+      <li class="pub">
+        <div class="pub__thumb"><img src="assets/img/thumbs/diffusion-from-first-principles.jpg" alt="Contents page of Diffusion from First Principles" loading="lazy"></div>
+        <div>
+          <p class="pub__title"><a href="assets/pdf/diffusion-from-first-principles.pdf">Diffusion from First Principles</a></p>
+          <p class="pub__venue">Book, in progress — 2025</p>
+          <p class="pub__desc">
+            Derives diffusion from physics rather than from the ML literature: the forward SDE,
+            Fokker–Planck, the reverse SDE, Boltzmann distributions and Lagrange multipliers,
+            Einstein–Stokes, Langevin sampling, and the fluctuation–dissipation theorem.
+          </p>
+          <ul class="pub__links">
+            <li><a href="assets/pdf/diffusion-from-first-principles.pdf">PDF</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="pub">
+        <div class="pub__thumb"><img src="assets/img/thumbs/introduction-to-deep-learning.jpg" alt="Interior page of Introduction to Deep Learning" loading="lazy"></div>
+        <div>
+          <p class="pub__title"><a href="https://a.co/d/01Qjusp">Introduction to Deep Learning</a></p>
+          <p class="pub__venue">Book — ISBN 979-8767404476, 2021</p>
+          <p class="pub__desc">
+            A full introductory text, published with an accompanying 26-part video lecture series and a
+            code repository.
+          </p>
+          <ul class="pub__links">
+            <li><a href="https://a.co/d/01Qjusp">Amazon</a></li>
+            <li><a href="assets/pdf/introduction-to-deep-learning.pdf">PDF</a></li>
+            <li><a href="https://www.youtube.com/@jaisharmz">Lectures</a></li>
+            <li><a href="https://github.com/jaisharmz/introduction-to-deep-learning">Code</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="pub">
+        <div class="pub__thumb"><img src="assets/img/thumbs/compute-exchange-provider-perspective.jpg" alt="First page of the compute exchange white paper" loading="lazy"></div>
+        <div>
+          <p class="pub__title"><a href="assets/pdf/compute-exchange-provider-perspective.pdf">A Provider's Perspective of a Compute Exchange</a></p>
+          <p class="pub__venue">White paper, 2026 — presented to the New York Stock Exchange</p>
+          <p class="pub__desc">
+            Treats GPU capacity as a tradable commodity: gamma-distributed price modeling, resource
+            utilization sampling, energy-cost coupling, and a correlation metric for a tokens market.
+          </p>
+          <ul class="pub__links">
+            <li><a href="assets/pdf/compute-exchange-provider-perspective.pdf">PDF</a></li>
+          </ul>
+        </div>
+      </li>
+
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <section id="building">
+    <h2>Building</h2>
+    <ul class="pubs">
+
+      <li class="pub">
+        <div class="pub__thumb"><span class="glyph">BioMiner<br>AI</span></div>
+        <div>
+          <p class="pub__title">BioMiner AI</p>
+          <p class="pub__venue">Co-founder &amp; Chief AI Officer · NVIDIA Inception · 2024–2025</p>
+          <p class="pub__desc">
+            Foundation models that embed multi-omics, imaging and EHR data into one shared latent space,
+            so a patient's modalities translate into each other and compound biomarkers fall out.
+            Cross-modality cosine similarity above <strong>0.99</strong>; downstream performance held at
+            85–92% from a single modality worth ~2% of raw features. Clients included Novo Nordisk,
+            St. Jude Children's Hospital, BioSkryb Genomics and J&amp;J Labs.
+          </p>
+          <ul class="pub__links">
+            <li><a href="https://drive.google.com/file/d/1DquoIaK-ooShU5ftm4HAMmfqB8JIS-SL/view">Patent</a></li>
+            <li><span class="tag">Multimodal representation learning</span></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="pub">
+        <div class="pub__thumb"><span class="glyph">dLLM</span></div>
+        <div>
+          <p class="pub__title"><a href="https://github.com/jaisharmz/dllm">dLLM</a></p>
+          <p class="pub__venue">Open-source library · 2025</p>
+          <p class="pub__desc">
+            Unified, readable training pipelines for diffusion language models — reproduction and
+            finetuning recipes for LLaDA, Dream and RND1, plus reference implementations of algorithms
+            like Edit Flows, scaling from LoRA on one device to DeepSpeed across nodes.
+          </p>
+          <ul class="pub__links">
+            <li><a href="https://github.com/jaisharmz/dllm">GitHub</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="pub">
+        <div class="pub__thumb"><span class="glyph">LLM<br>Firewall</span></div>
+        <div>
+          <p class="pub__title">Adversarial red-teaming of an LLM firewall</p>
+          <p class="pub__venue">Palo Alto Networks · PhD-level AI Research Intern · 2025</p>
+          <p class="pub__desc">
+            Researched LLM red-teaming strategies for AI safety and built adversarial training against
+            gradient-suffix, reinforcement-learning and agentic attacks — raising prompt-injection
+            detection coverage on new attack classes by <strong>50%</strong>. Two patents filed; won the
+            internal R&amp;D hackathon, 1st of 300+.
+          </p>
+          <ul class="pub__links">
+            <li><span class="tag">LLM security</span></li>
+            <li><span class="tag">2 patents</span></li>
+          </ul>
+        </div>
+      </li>
+
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <section id="cv">
+    <h2>Experience</h2>
+    <ul class="facts">
+      <li><span class="what"><strong>Databricks</strong> — PhD-level Data Science Intern. Agentic workflows for quantitative finance analysis; improved holiday-effect modeling by 20% for forecasts.</span><span class="when">2026 —</span></li>
+      <li><span class="what"><strong>Palo Alto Networks</strong> — PhD-level AI Research Intern, under Billy Hewlett.</span><span class="when">2025</span></li>
+      <li><span class="what"><strong>BioMiner AI</strong> — Co-founder &amp; Chief AI Officer.</span><span class="when">2024 – 25</span></li>
+      <li><span class="what"><strong>IBM Research</strong> — ML Researcher, Meta Learning. Investigated LLM hyperparameter transferability across 1000+ language tasks with Bayesian optimization; LoRA / QLoRA finetuning on 7B models.</span><span class="when">2024</span></li>
+      <li><span class="what"><strong>Anaflash Inc.</strong> — ML Engineer, TinyML. 4-bit quantization for edge anomaly detection under 10 mW; 1st place Best Prototype at the TinyML 2024 Research Conference.</span><span class="when">2024</span></li>
+    </ul>
+
+    <h3>Education</h3>
+    <ul class="facts">
+      <li><span class="what"><strong>UC Berkeley</strong> — B.S. Electrical Engineering &amp; Computer Science, B.S. Business Administration (Haas). Management, Entrepreneurship &amp; Technology dual degree, &lt;1% acceptance.</span><span class="when">Expected 2027</span></li>
+    </ul>
+
+    <h3>Teaching</h3>
+    <ul class="facts">
+      <li><span class="what"><strong>CS 70</strong> — Discrete Mathematics &amp; Probability Theory. Teaching Assistant, Academic Intern, CS Senior Mentor.</span><span class="when">2024 —</span></li>
+      <li><span class="what"><strong>IEOR 162</strong> — Linear Programming &amp; Network Flows. Teaching Assistant.</span><span class="when">2025</span></li>
+      <li><span class="what"><a href="https://www.youtube.com/@jaisharmz"><strong>Introduction to Deep Learning</strong></a> — a 26-part public video lecture series accompanying the book.</span><span class="when">2021</span></li>
+    </ul>
+
+    <h3>Honors</h3>
+    <ul class="awards">
+      <li><strong>Kleiner Perkins Fellow</strong><span>&lt;1% acceptance</span></li>
+      <li><strong>Greylock X finalist</strong><span>&lt;1%; presented to the NYSE</span></li>
+      <li><strong>Regents' &amp; Chancellor's Scholar</strong><span>Top 1% of UC Berkeley</span></li>
+      <li><strong>UC Berkeley Leadership Award</strong><span>&lt;2% acceptance · Eta Kappa Nu</span></li>
+      <li><strong>PANW Internal R&amp;D Hackathon</strong><span>1st of 300+ participants</span></li>
+      <li><strong>Cloudflare AI Agents Hackathon</strong><span>2nd of 400+ participants</span></li>
+      <li><strong>TinyML 2024 Research Conference</strong><span>1st place, Best Prototype</span></li>
+      <li><strong>IMC Prosperity · Citadel Terminal</strong><span>Top 1% of 20,000+ teams · &lt;1%</span></li>
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="prose">
+      <p>
+        Reach me at <a href="mailto:jais@berkeley.edu">jais@berkeley.edu</a>. Always happy to talk about
+        diffusion, red-teaming, or something you think should exist and doesn't.
+      </p>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>© 2026 Jai Sharma</span>
+    <span class="spacer"></span>
+    <span>Layout after <a href="https://jonbarron.info/">Jon Barron</a>'s template.</span>
+  </footer>
+
+</main>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
