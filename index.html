@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jai Sharma</title>
-<meta name="description" content="Jai Sharma is an undergraduate researcher at Berkeley AI Research working on diffusion language models. M.E.T. dual degree (EECS and Business), UC Berkeley.">
+<meta name="description" content="Jai Sharma is an undergraduate researcher at Berkeley AI Research working on the mathematics of diffusion models, with applications to robotics and to biology.">
 <link rel="canonical" href="https://jaisharmz.github.io/">
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Jai Sharma">
-<meta property="og:description" content="Undergraduate researcher at Berkeley AI Research working on diffusion language models.">
+<meta property="og:description" content="Undergraduate researcher at Berkeley AI Research. The mathematics of diffusion models, applied to robotics and biology.">
 <meta property="og:url" content="https://jaisharmz.github.io/">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.92em' font-size='92' font-family='Georgia,serif' font-weight='600'>J</text></svg>">
@@ -42,18 +42,18 @@
       <p class="affil">M.E.T., EECS + Business, UC Berkeley &nbsp;·&nbsp; Berkeley AI Research</p>
 
       <p class="bio">
-        I am an undergraduate researcher at <strong>Berkeley AI Research</strong>, advised by
-        <a href="https://people.eecs.berkeley.edu/~dawnsong/">Prof. Dawn Song</a>. My work is on
-        <strong>diffusion language models</strong>: how they generate text, what their hidden states
-        reveal about the dependencies between tokens, and how to find the prompts that make them fail.
+        Undergraduate researcher at <strong>Berkeley AI Research</strong>, advised by
+        <a href="https://people.eecs.berkeley.edu/~dawnsong/">Prof. Dawn Song</a>. I work on the
+        mathematics of <strong>diffusion models</strong>: how they sample, what their hidden states
+        encode, and how to invert them.
       </p>
       <p class="bio">
-        Most of my projects come back to the same question, which is how to invert a generative model.
-        Given a response, can we recover the prompt that produced it? Given a model's hidden states, can
-        we recover the dependency structure it learned? Given one modality of biological data, can we
-        recover another? Previously I worked at Databricks, at Palo Alto Networks, where I filed two
-        patents on LLM security, and at IBM Research. I also co-founded a stealth startup building
-        foundation models for biological data.
+        I want to apply that math to <strong>robotics and world models</strong> and to
+        <strong>biology</strong>. On the robotics side I work on offline to online reinforcement
+        learning, and I am incoming at <a href="https://narada.ai/">Narada AI</a> to work on small
+        language models and vision-language-action models with Amir Gholami, Kurt Keutzer, and Dave
+        Park. On the biology side I have built multi-omics embedding models, applied masked diffusion
+        to protein sequence generation, and analyzed mRNA-seq data at Stanford.
       </p>
 
       <ul class="links">
@@ -78,9 +78,10 @@
   <section id="news">
     <h2>News</h2>
     <ul class="news">
+      <li><span class="when">2026</span><span class="what">Incoming at <strong>Narada AI</strong>, working on small language models and vision-language-action models.</span></li>
       <li><span class="when">May 2026</span><span class="what">Started at <strong>Databricks</strong> as a PhD-level Data Science Intern.</span></li>
       <li><span class="when">May 2026</span><span class="what">Posted <strong>Neural Estimation of Pairwise Mutual Information in Masked Discrete Sequence Models</strong> to arXiv.</span></li>
-      <li><span class="when">Mar 2026</span><span class="what">Presented work on dynamic GPU pricing and compute exchanges to the <strong>New York Stock Exchange</strong>.</span></li>
+      <li><span class="when">Mar 2026</span><span class="what">Presented a compute exchange for GPUs to the <strong>New York Stock Exchange</strong>.</span></li>
       <li><span class="when">Oct 2025</span><span class="what">Started writing <strong>Diffusion from First Principles</strong>.</span></li>
       <li><span class="when">Sep 2025</span><span class="what">Joined <strong>Prof. Dawn Song's group</strong> at Berkeley AI Research.</span></li>
       <li><span class="when">Aug 2025</span><span class="what">Filed two patents at <strong>Palo Alto Networks</strong>, and won first place out of over 300 participants at the internal R&amp;D hackathon.</span></li>
@@ -91,8 +92,9 @@
 
   <section id="research">
     <h2>Research</h2>
-    <p class="lead">Selected work. An asterisk denotes equal contribution.</p>
+    <p class="lead">An asterisk denotes equal contribution.</p>
 
+    <h3>Diffusion models</h3>
     <ul class="pubs">
 
       <li class="pub">
@@ -100,7 +102,7 @@
         <div>
           <p class="pub__title"><a href="assets/pdf/diffusion-investigator-agents.pdf">Diffusion Investigator Agents</a></p>
           <p class="pub__authors"><span class="me">Jai Sharma</span>, Zhanhui Zhou, Dawn Song</p>
-          <p class="pub__venue">Preprint, 2026</p>
+          <p class="pub__venue">ICML 2026 submission</p>
           <p class="pub__desc">
             Reverse generation is the process of finding a prompt that maximizes the probability of a
             specific target response, and it is one of the main strategies for red-teaming a language
@@ -116,7 +118,7 @@
           </p>
           <ul class="pub__links">
             <li><a href="assets/pdf/diffusion-investigator-agents.pdf">PDF</a></li>
-            <li><a href="https://drive.google.com/file/d/17jVEISveW0yDFN1qmsu-rj-nDzmaQQNY/view">Mirror</a></li>
+            <li><a href="assets/pdf/diffusion-investigator-slides.pdf">Slides</a></li>
             <li><span class="tag">AI safety</span></li>
           </ul>
         </div>
@@ -142,28 +144,66 @@
           <ul class="pub__links">
             <li><a href="assets/pdf/neural-mi-masked-diffusion.pdf">PDF</a></li>
             <li><a href="https://arxiv.org/abs/2605.20187">arXiv</a></li>
+            <li><a href="assets/pdf/diffusion-sampling-info-theory-slides.pdf">Slides</a></li>
             <li><span class="tag">Interpretability</span></li>
           </ul>
         </div>
       </li>
 
+    </ul>
+
+    <h3>Reinforcement learning and robotics</h3>
+    <ul class="pubs">
+
       <li class="pub">
-        <div class="pub__thumb"><span class="glyph">WebArena</span></div>
+        <div class="pub__thumb"><img src="assets/img/thumbs/pawfql.jpg" alt="First page of the offline to online reinforcement learning report" loading="lazy"></div>
         <div>
-          <p class="pub__title"><a href="https://www2.eecs.berkeley.edu/Pubs/TechRpts/2024/EECS-2024-167.html">Autonomous Web Navigation using Multimodal Agents</a></p>
-          <p class="pub__authors">Research contribution, Prof. Ion Stoica's group, Berkeley AI Research</p>
-          <p class="pub__venue">UC Berkeley EECS Technical Report UCB/EECS-2024-167, 2024</p>
+          <p class="pub__title"><a href="assets/pdf/pawfql-offline-to-online-rl.pdf">Pessimistic Advantage Weighted Flow Q Learning for Offline to Online Reinforcement Learning</a></p>
+          <p class="pub__authors"><span class="me">Jai Sharma</span>, Socrates Osorio</p>
+          <p class="pub__venue">Technical report, 2026</p>
           <p class="pub__desc">
-            We developed reinforcement learning methods to automate hundreds of web navigation tasks on
-            live sites such as Reddit and e-commerce pages. We applied actor-critic models to improve the
-            zero-shot performance of multimodal LLMs on VisualWebArena, a dataset of over 70 GB.
+            An agent starts from a fixed offline dataset and then improves through limited online
+            interaction. Offline data avoids risky exploration, but it creates a hard transition, because
+            the state action distribution seen during offline training differs from the one the learned
+            policy produces online. We diagnose that transition on the OGBench robotics tasks, then
+            propose PAWFQL, which extends Flow Q Learning in two ways: it reweights the behavioral flow
+            matching loss by an exponentiated pessimistic advantage, and it uses pessimistic best of N
+            action selection against the minimum of the critic ensemble. We also explored Q Learning with
+            Adjoint Matching, which reached <strong>84% success</strong> on antsoccer by transporting a
+            terminal Q gradient backward through the flow trajectory.
           </p>
           <ul class="pub__links">
+            <li><a href="assets/pdf/pawfql-offline-to-online-rl.pdf">PDF</a></li>
+            <li><span class="tag">Robotics</span></li>
+            <li><span class="tag">Flow matching</span></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="pub">
+        <div class="pub__thumb"><span class="glyph">MMRC</span></div>
+        <div>
+          <p class="pub__title"><a href="assets/pdf/mmrc-web-navigation-slides.pdf">MMRC: Multimodal Reasoning and Critique for Web Navigation</a></p>
+          <p class="pub__authors"><span class="me">Jai Sharma</span>, Abdus Salam Azad. With Prof. Pieter Abbeel and Prof. Ion Stoica, and Izzeddin Gur, Hiroki Furuta and Aleksandra Faust at Google DeepMind</p>
+          <p class="pub__venue">2024. Included in UC Berkeley EECS Technical Report UCB/EECS-2024-167.</p>
+          <p class="pub__desc">
+            Scaling training alone plateaus on web navigation, so we asked how to apply actor-critic
+            methods instead. We built reinforcement learning methods to automate hundreds of tasks on
+            live sites such as Reddit and e-commerce pages, and finetuned a small critic model to improve
+            the zero-shot performance of multimodal LLMs on VisualWebArena, a dataset of over 70 GB.
+          </p>
+          <ul class="pub__links">
+            <li><a href="assets/pdf/mmrc-web-navigation-slides.pdf">Slides</a></li>
             <li><a href="https://www2.eecs.berkeley.edu/Pubs/TechRpts/2024/EECS-2024-167.html">Tech report</a></li>
             <li><span class="tag">Agents</span></li>
           </ul>
         </div>
       </li>
+
+    </ul>
+
+    <h3>Biology</h3>
+    <ul class="pubs">
 
       <li class="pub">
         <div class="pub__thumb"><img src="assets/img/thumbs/rnaseq-mast-cells-osteoarthritis.jpg" alt="First page of the Clinical Immunology paper" loading="lazy"></div>
@@ -218,7 +258,7 @@
       </li>
       <li>
         <span class="what"><a href="https://drive.google.com/file/d/1DquoIaK-ooShU5ftm4HAMmfqB8JIS-SL/view"><strong>Systems and Methods for Multimodal Biological Data Translation and Embedding Representations</strong></a><br>
-        First author, filed through my startup. Existing methods are limited here. CycleGAN can translate between modalities but does not account for the fact that the modalities come from the same patient. CLIP learns shared representations for paired data but cannot decode an embedding back to the input features. This invention learns a shared latent space across multi-omics, radiology imaging, cellular imaging, clinical tabular, and EHR data without requiring outcome labels, and its embeddings can be decoded back to interpretable biological features. That decoding is what makes compound biomarkers discoverable.</span>
+        First author, filed through my startup. CycleGAN can translate between modalities but does not account for the fact that the modalities come from the same patient. CLIP learns shared representations for paired data but cannot decode an embedding back to the input features. This invention learns a shared latent space across multi-omics, radiology imaging, cellular imaging, clinical tabular, and EHR data without requiring outcome labels, and its embeddings can be decoded back to interpretable biological features. That decoding is what makes compound biomarkers discoverable.</span>
         <span class="when">10/2024</span>
       </li>
     </ul>
@@ -271,15 +311,17 @@
         <div class="pub__thumb"><img src="assets/img/thumbs/compute-exchange-provider-perspective.jpg" alt="First page of the compute exchange white paper" loading="lazy"></div>
         <div>
           <p class="pub__title"><a href="assets/pdf/compute-exchange-provider-perspective.pdf">A Provider's Perspective of a Compute Exchange</a></p>
-          <p class="pub__venue">White paper, 2026. Presented to the New York Stock Exchange.</p>
+          <p class="pub__venue">White paper and team presentation to the New York Stock Exchange, 2026</p>
           <p class="pub__desc">
-            A short analysis of GPU resource allocation from the perspective of a provider in a proposed
-            compute exchange. It covers modeling GPU price with gamma distributions, the sampling rate of
-            resource utilization, compute price and energy cost modeling, and a correlation metric for a
-            tokens market.
+            AI compute is scarce, intrinsically valuable and consumable, but a lack of standardization and
+            divisibility keeps it from being traded the way oil and gold are. The white paper models GPU
+            resource allocation from a provider's point of view: modeling price with gamma distributions,
+            the sampling rate of resource utilization, compute price and energy cost modeling, and a
+            correlation metric for a tokens market.
           </p>
           <ul class="pub__links">
-            <li><a href="assets/pdf/compute-exchange-provider-perspective.pdf">PDF</a></li>
+            <li><a href="assets/pdf/compute-exchange-provider-perspective.pdf">White paper</a></li>
+            <li><a href="assets/pdf/nyse-compute-exchange-slides.pdf">NYSE slides</a></li>
           </ul>
         </div>
       </li>
@@ -343,7 +385,8 @@
   <section id="cv">
     <h2>Experience</h2>
     <ul class="facts">
-      <li><span class="what"><strong>Databricks</strong>, PhD-level Data Science Intern. I build agentic workflows to automate quantitative finance analysis, and improved the modeling of holiday effects by 20% for forecasts.</span><span class="when">2026 to now</span></li>
+      <li><span class="what"><strong><a href="https://narada.ai/">Narada AI</a></strong>, incoming. Small language models and vision-language-action models, with Amir Gholami, Kurt Keutzer and Dave Park.</span><span class="when">Incoming</span></li>
+      <li><span class="what"><strong>Databricks</strong>, PhD-level Data Science Intern. I build agentic workflows to automate quantitative finance analysis, and improved the modeling of holiday effects by 20% for forecasts.</span><span class="when">2026</span></li>
       <li><span class="what"><strong>Palo Alto Networks</strong>, PhD-level AI Research Intern, under Billy Hewlett.</span><span class="when">2025</span></li>
       <li><span class="what"><strong>Stealth startup</strong>, Co-founder and Chief AI Officer.</span><span class="when">2024 to 2025</span></li>
       <li><span class="what"><strong>IBM Research</strong>, Machine Learning Researcher for Meta Learning. I investigated LLM hyperparameter transferability across over 1,000 language tasks using Bayesian optimization with a statistical prior, and ran LoRA and QLoRA finetuning experiments on 7B models.</span><span class="when">2024</span></li>
@@ -365,7 +408,7 @@
     <h3>Honors</h3>
     <ul class="awards">
       <li><strong>Kleiner Perkins Fellow</strong><span>Under 1% acceptance</span></li>
-      <li><strong>Greylock X finalist</strong><span>Under 1%, presented to the NYSE</span></li>
+      <li><strong>Greylock X finalist</strong><span>Under 1% acceptance</span></li>
       <li><strong>Regents' and Chancellor's Scholar</strong><span>Top 1% of UC Berkeley</span></li>
       <li><strong>UC Berkeley Leadership Award</strong><span>Under 2% acceptance, Eta Kappa Nu</span></li>
       <li><strong>PANW Internal R&amp;D Hackathon</strong><span>1st of over 300 participants</span></li>
@@ -382,7 +425,7 @@
     <div class="prose">
       <p>
         You can reach me at <a href="mailto:jais@berkeley.edu">jais@berkeley.edu</a>. I am always happy
-        to talk about diffusion, red-teaming, or a research idea you are thinking about.
+        to talk about diffusion, robotics, or a research idea you are thinking about.
       </p>
     </div>
   </section>
