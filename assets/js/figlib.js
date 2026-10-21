@@ -351,7 +351,30 @@
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); mount(e.target); } });
     }, { rootMargin: "300px 0px" });
-    stages.forEach(function (s) { if (specs[s.getAttribute("data-fig")]) io.observe(s); });
+    var pending = [];
+    function isNear(s) {
+      var r = s.getBoundingClientRect();
+      return r.bottom > -300 && r.top < window.innerHeight + 300;
+    }
+    stages.forEach(function (s) {
+      if (!specs[s.getAttribute("data-fig")]) return;
+      // already on screen at load: mount now rather than wait for the observer's first callback
+      if (isNear(s)) mount(s);
+      else { io.observe(s); pending.push(s); }
+    });
+    // a plain scroll check as well, for browsers that delay observer callbacks
+    var timer = 0;
+    function check() {
+      timer = 0;
+      pending = pending.filter(function (s) {
+        if (s.dataset.mounted) return false;
+        if (isNear(s)) { io.unobserve(s); mount(s); return false; }
+        return true;
+      });
+      if (!pending.length) window.removeEventListener("scroll", onScroll);
+    }
+    function onScroll() { if (!timer) timer = setTimeout(check, 120); }
+    if (pending.length) window.addEventListener("scroll", onScroll, { passive: true });
   }
 
   var scanned = false;

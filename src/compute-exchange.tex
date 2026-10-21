@@ -96,8 +96,6 @@ The profit is given by the difference between compute price and energy cost:
 
 Here, we make a small note about the correlation between $dW_{1,t}$ and $dW_{2,t}$. If high, when energy spikes, the price of compute follows immediately. Therefore, the provider has a natural hedge, since they can pass the energy spike onto the customer faster. However, if low, the compute price might not be as reactive to the spikes in energy cost. This can cause the Value at Risk (VaR) to increase exponentially.
 
-\webfig{cx-energy}
-
 \section{Correlation Metric for Tokens Market}
 This section is a small remark about an information-theoretic metric for correlation of tokens in a decentralized compute tokens market. Suppose $X_1, X_2, \cdots , X_n$ are $n$ different tokens on the market. Due to joint entropy laws from information theory, we know that:
 \[H(X_1,\cdots,X_n) \leq \sum_{i=1}^n H(X_i)\]

@@ -384,6 +384,9 @@ This above process is the core of most all Machine Learning algorithms, so make 
 \\
 For Linear Regression, we initialize all of our parameters to be 0. We know how to compute the cost, and we know about the parameter update except for the slope of the tangent line part. We will cover this specific detail later. For now, make sure you understand how Machine Learning algorithms are trained (at a high level).
 
+\webfig{idl-linreg}
+
+
 \section{Logistic Regression}
 Logistic Regression is also one of the core parts of Neural Networks. Arguably, Neural Networks is just a series of Logistic Regression Functions. In this section, we discuss Logistic Regression as an extension of Linear Regression.
 
@@ -482,6 +485,9 @@ Prove that the Cross Entropy cost function gives a \textbf{high cost} when the p
 \end{problem}
 Now, we know how to initialize our parameters, we know how to compute the cost, and we are almost ready to do the whole Gradient Descent algorithm. We will go into depth with finding the slope of the tangent line (and therefore parameter update) a bit later. For now, we connect our ideas to learn the basics of Neural Networks!
 
+\webfig{idl-logreg}
+
+
 \section{Neural Networks}
 Now that we have seen an introduction to Linear Regression and Logistic Regression, we are ready to put these together to look at a Neural Network. 
 
@@ -565,6 +571,9 @@ Finally, we train a Neural Network and find the optimal value for its parameters
 \\
 \\
 Why don't we just initialize them to be 0 like before? Well, as we will learn, if the parameters are all 0 (or the same number), then they will get the same parameter update, meaning that they will yet again be the same number. Through the course of training the Neural Network, the parameters always stay the same. It can be shown that when the parameters are all the same for each layer, then all of the entries in all of the Hidden Layers are the same, and therefore the resulting hypothesis function is no better than a Logistic Regression hypothesis function. Do you see why? We must initialize these parameters at random in order to ``break symmetry.''
+
+\webfig{idl-nn}
+
 
 \section{Summary}
 You now know the basics about Neural Networks. In the next part of this text, we will cover how to find the formula for the parameter update for Linear Regression, Logistic Regression, and Neural Networks. But first, we have to learn a little bit about Linear Algebra and Calculus. It might not be easy, but it will be worth it in the end.
@@ -1511,6 +1520,9 @@ The answer is yes. The derivative is the ``slope of the tangent line.'' Take a l
 Do you see anything familiar here? This fraction is 
 \[\frac{\text{change in $y$-values}}{\text{change in $x$-values}}.\]
 In other words, this value represents the slope of the line going through two different points. Which points? Looking back at the definition, we see that the derivative is the slope of the line going through $(a,f(a))$ and $(x,f(x))$. Since $x$ approaches $a$, the two points are very close to each other.
+
+\webfig{idl-derivative}
+
 
 \subsubsection{Derivatives Examples}
 Let's try some examples to get a better sense of how derivatives work. 

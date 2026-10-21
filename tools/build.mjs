@@ -63,11 +63,11 @@ function renderMath(tex, display) {
   try {
     return katex.renderToString(tex, {
       displayMode: display, throwOnError: true, strict: "ignore", trust: false,
-      macros: { ...KATEX_MACROS }, output: "html"
+      macros: { ...KATEX_MACROS }, output: "htmlAndMathml"
     });
   } catch (err) {
     warn(`KaTeX: ${err.message.split("\n")[0]} in ${tex.slice(0, 80)}`);
-    return katex.renderToString(tex, { displayMode: display, throwOnError: false, strict: "ignore", macros: { ...KATEX_MACROS }, output: "html" });
+    return katex.renderToString(tex, { displayMode: display, throwOnError: false, strict: "ignore", macros: { ...KATEX_MACROS }, output: "htmlAndMathml" });
   }
 }
 
@@ -287,6 +287,8 @@ function htmlPass(html, doc, opts) {
   // keep "x," together: a line break between inline math and its punctuation reads as a typo
   $(".katex").each((_, k) => {
     if ($(k).parent().hasClass("katex-display")) return;
+    // only short formulas: a long one must stay free to break across lines
+    if ($(k).find("annotation").text().length > 40) return;
     const next = k.next;
     if (next && next.type === "text") {
       const m = next.data.match(/^[,.;:)!?\u201D\u2019]+/);
@@ -356,7 +358,8 @@ function htmlPass(html, doc, opts) {
       const wide = /^\s*<!--\s*wide\s*-->/.test(inner);
       inner = renderInlineDelims(inner.replace(/^\s*<!--\s*wide\s*-->\s*/, ""));
       figureCounter += 1;
-      inner = inner.replace(/<figcaption>/, `<figcaption><span class="fig__num">Figure ${figureCounter}.</span>`);
+      const label = opts.chapter ? `${opts.chapter}.${figureCounter}` : `${figureCounter}`;
+      inner = inner.replace(/<figcaption>/, `<figcaption><span class="fig__num">Figure ${label}.</span>`);
       figures.push(arg);
       $p.replaceWith(`<figure class="fig${wide ? " fig--wide" : ""}" id="fig-${arg}">${inner}</figure>`);
     }
@@ -675,6 +678,7 @@ function buildBook(doc) {
   // render chapters
   figureCounter = 0;
   const rendered = chapters.map((ch) => {
+    figureCounter = 0;
     const nb = ch.notebook ? loadNotebook(ch.notebook) : null;
     const html = pandoc(latexPass(ch.tex, preamble, doc), preamble);
     const res = htmlPass(html, doc, { chapter: ch.num, unnumbered: ch.unnumbered, notebook: nb });

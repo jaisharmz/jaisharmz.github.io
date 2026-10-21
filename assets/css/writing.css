@@ -213,7 +213,9 @@ pre code span.ex { color: #6b4fa0; }
 /* ---------- interactive figures ------------------------------------------ */
 
 .fig { margin: 2rem 0 2.2rem; }
-@media (min-width: 1000px) { .fig--wide { margin-left: -4rem; margin-right: -4rem; } }
+/* wide figures take the empty margins: both sides without a sidebar, the right side with one */
+@media (min-width: 1000px) { .prose-long .fig--wide { margin-left: -4rem; margin-right: -4rem; } }
+@media (min-width: 1180px) { .prose-long .fig--wide { margin-left: 0; margin-right: -10rem; } }
 .fig__title { font-weight: 650; font-size: .97rem; color: var(--ink); margin: 0 0 .55rem; line-height: 1.45; text-wrap: pretty; }
 .fig__stage {
   border: 1px solid var(--rule); border-radius: 8px; padding: .9rem .95rem 1rem;
@@ -238,9 +240,10 @@ pre code span.ex { color: #6b4fa0; }
 .fig__btn--primary { border-color: var(--accent); color: var(--accent); font-weight: 600; }
 .fig__canvas { position: relative; width: 100%; }
 .fig__canvas canvas { display: block; touch-action: pan-y; }
-.fig__row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
-.fig__row--3-2 { grid-template-columns: 3fr 2fr; }
-@media (max-width: 620px) { .fig__row, .fig__row--3-2 { grid-template-columns: 1fr; } }
+.fig__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .9rem; }
+.fig__row--3-2 { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+.fig__row > * { min-width: 0; }
+@media (max-width: 620px) { .fig__row, .fig__row--3-2 { grid-template-columns: minmax(0, 1fr); } }
 .fig__readout {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
   gap: .35rem 1.1rem; margin: .8rem 0 0; font-size: .8rem;
