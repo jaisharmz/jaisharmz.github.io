@@ -69,6 +69,9 @@
   <section id="news">
     <h2>News</h2>
     <ul class="news">
+      <li><span class="when">Oct 2026</span><span class="what">My <a href="writing/">writing</a> now reads on this site, with interactive figures that compute each mechanism it derives.</span></li>
+      <li><span class="when">Sep 2026</span><span class="what">Released <a href="https://github.com/jaisharmz/dexter">dexter</a>, an open source agent workspace for Claude Code.</span></li>
+      <li><span class="when">Aug 2026</span><span class="what">Joined <a href="https://narada.ai/">Narada AI</a> as an AI Researcher.</span></li>
       <li><span class="when">May 2026</span><span class="what">Started at <a href="https://www.databricks.com/">Databricks</a> as a PhD level Data Science Intern.</span></li>
       <li><span class="when">Mar 2026</span><span class="what">Presented <a href="assets/pdf/nyse-compute-exchange-slides.pdf">a compute exchange for GPUs</a> to the New York Stock Exchange.</span></li>
       <li><span class="when">Jan 2026</span><span class="what">Posted <a href="https://arxiv.org/abs/2605.20187">Neural Estimation of Pairwise Mutual Information in Masked Discrete Sequence Models</a> to arXiv.</span></li>
@@ -230,6 +233,14 @@
         <span class="what"><a href="assets/pdf/cvd-lime-ibiomed-2022.pdf">Leveraging Machine Learning and Model-Agnostic Explanations to Understand Automated Diagnosis of Cardiovascular Disease</a>, <a href="https://doi.org/10.1109/IBIOMED56408.2022.9988121">IEEE IBIOMED</a>. An MLP diagnoses cardiovascular disease with an F1 score of 0.897, and LIME is used to understand which features drive the diagnosis. <a href="https://github.com/jaisharmz/cardiovascular-disease-diagnosis">Code</a>.</span>
         <span class="when">2022</span>
       </li>
+      <li>
+        <span class="what"><a href="https://arxiv.org/abs/2210.01546">An RNA Sequencing Analysis of Glaucoma Genesis in Mice</a>, with Vidhyacharan Bhaskar, arXiv. Differential expression and gene ontology analyses of optic nerve head and retina RNA-seq data compare mice with severe glaucoma against several control groups. <a href="https://github.com/jaisharmz/glaucoma-in-mice-2022">Code</a>.</span>
+        <span class="when">2022</span>
+      </li>
+      <li>
+        <span class="what"><a href="https://arxiv.org/abs/2108.06628">Investigating the Relationship Between Dropout Regularization and Model Complexity in Neural Networks</a>, with Christopher Sun and Milind Maiti, arXiv. Training 2,000 networks on each of three data sets, with random dropout rates and layer widths, shows that a wider layer with more dropout does not always perform better.</span>
+        <span class="when">2021</span>
+      </li>
     </ul>
   </section>
 
@@ -330,6 +341,42 @@
   <section id="building">
     <h2>Building</h2>
     <ul class="pubs">
+
+      <li class="pub">
+        <div class="pub__thumb"><span class="glyph">dexter</span></div>
+        <div>
+          <p class="pub__title"><a href="https://github.com/jaisharmz/dexter">dexter, a personal agent workspace</a></p>
+          <p class="pub__venue">Open source, 2026</p>
+          <p class="pub__desc">
+            I run my own work through an agent I built on Claude Code, and dexter is its open source
+            version. Its skills, rules, memory and a queue of deferred work are plain files in one
+            folder, so a correction made once becomes a lesson that every later run of that skill
+            reads first. One hook logs every prompt and tool call and holds sends and pushes for
+            approval, and the same folder can run as a bot in a Discord server.
+          </p>
+          <ul class="pub__links">
+            <li><a href="https://github.com/jaisharmz/dexter">Code</a></li>
+            <li><span class="tag">Agents</span></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="pub">
+        <div class="pub__thumb"><span class="glyph">Läsa</span></div>
+        <div>
+          <p class="pub__title"><a href="https://lasa-reading.web.app">Läsa, Strava for reading</a></p>
+          <p class="pub__venue">Side project, 2026</p>
+          <p class="pub__desc">
+            Kindle and Apple Books already record how far you are in every book. Läsa turns each rise
+            in the percent read into a reading session and puts the sessions in a feed with kudos,
+            streaks and a leaderboard for every book. A Kindle data export backfills every past session.
+          </p>
+          <ul class="pub__links">
+            <li><a href="https://lasa-reading.web.app">Site</a></li>
+            <li><a href="https://github.com/jaisharmz/lasa">Code</a></li>
+          </ul>
+        </div>
+      </li>
 
       <li class="pub">
         <div class="pub__thumb"><span class="glyph">Stealth</span></div>
