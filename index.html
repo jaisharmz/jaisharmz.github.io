@@ -102,9 +102,9 @@
             objective gives a sampling strategy that maximizes the divergence between the conditional and
             unconditional distributions, which provides a formal link between reverse generation and
             classifier free guidance. We extend this into a Dynamic Diffusion Attack that folds a history
-            of successful jailbreaks and failed refusals back into the guidance objective. On harmful
-            string datasets it reaches a 92.86% attack success rate, compared to 65.38% for
-            <a href="https://arxiv.org/abs/2307.15043">Greedy Coordinate Gradient</a>.
+            of successful jailbreaks and failed refusals back into the guidance objective. With LLaDA 8B
+            Instruct as both investigator and target, it reaches a 92.86% attack success rate on
+            AdvBench harmful strings.
           </p>
           <ul class="pub__links">
             <li><a href="assets/pdf/diffusion-investigator-agents.pdf">PDF</a></li>
