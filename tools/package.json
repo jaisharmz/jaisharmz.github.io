@@ -1,0 +1,8 @@
+{
+  "name": "jaisharmz-site-tools",
+  "private": true,
+  "type": "module",
+  "description": "Builds the writing pages from LaTeX: pandoc for structure, KaTeX for math, dvisvgm for TikZ.",
+  "scripts": { "build": "node build.mjs" },
+  "dependencies": { "cheerio": "1.0.0", "katex": "0.16.11" }
+}

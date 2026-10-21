@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction to Deep Learning | Jai Sharma</title>
+<meta name="description" content="An introductory text on deep learning. It starts with linear and logistic regression and builds up to neural networks, developing the linear algebra and calculus needed to derive the parameter updates along the way, then implements everything from scratch in Python.">
+<link rel="canonical" href="https://jaisharmz.github.io/writing/introduction-to-deep-learning/">
+<meta property="og:type" content="book">
+<meta property="og:title" content="Introduction to Deep Learning | Jai Sharma">
+<meta property="og:description" content="An introductory text on deep learning. It starts with linear and logistic regression and builds up to neural networks, developing the linear algebra and calculus needed to derive the parameter updates along the way, then implements everything from scratch in Python.">
+<meta property="og:url" content="https://jaisharmz.github.io/writing/introduction-to-deep-learning/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.92em' font-size='92' font-family='Georgia,serif' font-weight='600'>J</text></svg>">
+<link rel="alternate" type="application/atom+xml" title="Jai Sharma: Writing" href="../../writing/index.xml">
+<link rel="stylesheet" href="../../assets/css/style.css">
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/css/writing.css">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap topbar__inner topbar__inner--wide">
+    <a class="home" href="../../index.html">Jai Sharma</a>
+    <nav>
+      <a href="../../index.html#research">Research</a>
+      <a href="../../writing/">Writing</a>
+      <a href="../../assets/pdf/Jai_Sharma_CV.pdf">CV</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.6v2.4M12 20v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M1.6 12h2.4M20 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8z"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="page">
+<aside class="side toc book-toc" aria-label="Book contents">
+  <p class="side__label"><a href="./">Introduction to Deep Learning</a></p>
+  <p class="part">Introduction</p>
+  <ol><li><a href="what-is-deep-learning/"><span class="num">1</span><span>What is Deep Learning?</span></a></li><li><a href="linear-regression/"><span class="num">2</span><span>Linear Regression</span></a></li><li><a href="logistic-regression/"><span class="num">3</span><span>Logistic Regression</span></a></li><li><a href="neural-networks/"><span class="num">4</span><span>Neural Networks</span></a></li></ol>
+  <p class="part">Linear Algebra, Calculus, and Derivations</p>
+  <ol><li><a href="linear-algebra/"><span class="num">5</span><span>Linear Algebra</span></a></li><li><a href="calculus/"><span class="num">6</span><span>Calculus</span></a></li><li><a href="derivations/"><span class="num">7</span><span>Derivations</span></a></li></ol>
+  <p class="part">Introduction to Python</p>
+  <ol><li><a href="python-basics/"><span class="num">8</span><span>The Basics of Python</span></a></li><li><a href="numpy-arrays/"><span class="num">9</span><span>NumPy Arrays</span></a></li><li><a href="plotting-with-matplotlib/"><span class="num">10</span><span>Plotting with Matplotlib</span></a></li></ol>
+  <p class="part">Hands On Implementations</p>
+  <ol><li><a href="implementing-linear-regression/"><span class="num">11</span><span>Implementing Linear Regression</span></a></li><li><a href="implementing-logistic-regression/"><span class="num">12</span><span>Implementing Logistic Regression</span></a></li><li><a href="implementing-neural-networks/"><span class="num">13</span><span>Implementing a Neural Network</span></a></li></ol>
+  <p class="part">Afterword</p>
+  <ol><li><a href="afterword/"><span>Afterword</span></a></li></ol>
+</aside>
+<article class="article">
+<header class="article__head book-hero">
+  <div>
+    <p class="article__kicker"><a href="../../writing/">Writing</a> · Book</p>
+    <h1>Introduction to Deep Learning</h1>
+    <p class="article__dek">An introductory text on deep learning. It starts with linear and logistic regression and builds up to neural networks, developing the linear algebra and calculus needed to derive the parameter updates along the way, then implements everything from scratch in Python.</p>
+    <p class="article__meta"><span>Jai Sharma</span><span>2021</span><span>ISBN 979-8767404476</span><span>13 chapters</span><span>26 lectures</span></p>
+  </div>
+  <a class="book-cover" href="what-is-deep-learning/" aria-label="Start reading">
+    <span class="book-cover__title">Introduction to Deep Learning</span>
+    <img src="../../assets/img/writing/introduction-to-deep-learning/tikz-baccf5eb4f73.svg" alt="">
+    <span class="book-cover__author">Jai Sharma</span>
+  </a>
+</header>
+<div class="btnrow">
+  <a class="primary" href="what-is-deep-learning/">Start reading</a>
+  <a href="../../assets/pdf/introduction-to-deep-learning.pdf">PDF</a>
+  <a href="https://a.co/d/01Qjusp">Amazon</a>
+  <a href="https://www.youtube.com/playlist?list=PLVjRK697Kk5sFVpUdUD-veuNveDoi9Y1m">26 lectures</a>
+  <a href="https://github.com/jaisharmz/introduction-to-deep-learning">Code</a>
+</div>
+<div class="lectures">
+  <p class="lectures__label">Start with the syllabus</p>
+  <ol><li><a href="https://www.youtube.com/watch?v=TWBBh5GW0tw&amp;list=PLVjRK697Kk5sFVpUdUD-veuNveDoi9Y1m">Intro to Deep Learning Syllabus<span class="dur">0:58</span></a></li></ol>
+</div>
+<div class="prose-long"><h2 id="to-the-reader">To the Reader</h2><p>Deep Learning is one of the greatest areas of research and practical applications today; it is a gold mine waiting to be tapped into. I am really proud of you for taking your first step to learning about this great subject by reading this text.</p>
+<p>In this text, we will start by exploring the applications of Deep Learning and why it has become so widespread in its use. We will then examine some elementary Machine Learning algorithms such as Linear Regression and Logistic Regression, both of which will give us a nice foundation to learn about Neural Networks. Next, we will explore Neural Networks at a high level without going too much into the mathematical side.</p>
+<p>After this high level approach, we delve into the basic mathematical understanding needed for Deep Learning, including Linear Algebra and Calculus. We develop the tools we will need to derive the parameter updates for Linear Regression, Logistic Regression, and Neural Networks. These derivations are a essential to explaining how Machine Learning and Deep Learning algorithms “learn” from patterns.</p>
+<p>The second part of the text focuses on implementing the skills in the first part in code. We will be using Python here because of its famous libraries such as NumPy and Matplotlib. We will conclude the text with implementations of Linear Regression, Logistic Regression, and Neural Networks from scratch in Python.</p>
+<p>I hope this book will not only provide instruction on the concepts behind Deep Learning, but also the interest to explore its riches. Thank you for reading this text.</p>
+</div>
+<section class="contents" aria-label="Contents">
+<div class="contents__part">
+  <h2>Part I · Introduction</h2>
+  <ol><li><a href="what-is-deep-learning/"><span class="n">1</span><span class="t">What is Deep Learning?</span><span class="l"></span><span class="d">What deep learning is, where it is used, and how it compares with other machine learning algorithms as data sets grow.</span></a></li><li><a href="linear-regression/"><span class="n">2</span><span class="t">Linear Regression</span><span class="l">3 lectures</span><span class="d">The hypothesis, the mean squared error cost, and gradient descent.</span></a></li><li><a href="logistic-regression/"><span class="n">3</span><span class="t">Logistic Regression</span><span class="l">5 lectures</span><span class="d">The sigmoid hypothesis, classification, and the cross entropy cost.</span></a></li><li><a href="neural-networks/"><span class="n">4</span><span class="t">Neural Networks</span><span class="l">8 lectures</span><span class="d">Stacked logistic regressions, a forward pass worked by hand, and why the parameters start random.</span></a></li></ol>
+</div>
+<div class="contents__part">
+  <h2>Part II · Linear Algebra, Calculus, and Derivations</h2>
+  <ol><li><a href="linear-algebra/"><span class="n">5</span><span class="t">Linear Algebra</span><span class="l">1 lecture</span><span class="d">Vectors, matrices, and vectorizing a neural network’s forward pass.</span></a></li><li><a href="calculus/"><span class="n">6</span><span class="t">Calculus</span><span class="l"></span><span class="d">Limits and derivatives, built up to the rules the derivations need.</span></a></li><li><a href="derivations/"><span class="n">7</span><span class="t">Derivations</span><span class="l">4 lectures</span><span class="d">The parameter updates for linear regression, logistic regression, and neural networks, derived step by step.</span></a></li></ol>
+</div>
+<div class="contents__part">
+  <h2>Part III · Introduction to Python</h2>
+  <ol><li><a href="python-basics/"><span class="n">8</span><span class="t">The Basics of Python</span><span class="l"></span><span class="d">Data types, variables, printing, slicing, conditions, and loops.</span></a></li><li><a href="numpy-arrays/"><span class="n">9</span><span class="t">NumPy Arrays</span><span class="l"></span><span class="d">Defining arrays, operating on them, and reading their shapes and statistics.</span></a></li><li><a href="plotting-with-matplotlib/"><span class="n">10</span><span class="t">Plotting with Matplotlib</span><span class="l"></span><span class="d">Line plots and scatter plots for looking at data.</span></a></li></ol>
+</div>
+<div class="contents__part">
+  <h2>Part IV · Hands On Implementations</h2>
+  <ol><li><a href="implementing-linear-regression/"><span class="n">11</span><span class="t">Implementing Linear Regression</span><span class="l"></span><span class="d">Predicting California house prices with gradient descent written from scratch.</span></a></li><li><a href="implementing-logistic-regression/"><span class="n">12</span><span class="t">Implementing Logistic Regression</span><span class="l"></span><span class="d">Classifying breast cancer tumors with logistic regression from scratch.</span></a></li><li><a href="implementing-neural-networks/"><span class="n">13</span><span class="t">Implementing a Neural Network</span><span class="l"></span><span class="d">Recognizing handwritten digits with a neural network built from scratch.</span></a></li></ol>
+</div>
+<div class="contents__part">
+  <h2>Afterword</h2>
+  <ol><li><a href="afterword/"><span class="n"></span><span class="t">Afterword</span><span class="l">4 lectures</span><span class="d">Where to go next, with the last three lectures of the series.</span></a></li></ol>
+</div>
+</section>
+<section class="cite">
+  <h2>Cite this</h2>
+  <p>Sharma (2021). Introduction to Deep Learning. <em>jaisharmz.github.io</em>.</p>
+  <pre>@book{sharma2021introduction,
+  title     = &quot;Introduction to Deep Learning&quot;,
+  author    = &quot;Sharma, Jai&quot;,
+  publisher = &quot;Independently published&quot;,
+  isbn      = &quot;979-8767404476&quot;,
+  year      = &quot;2021&quot;,
+  month     = &quot;Dec&quot;,
+  url       = &quot;https://jaisharmz.github.io/writing/introduction-to-deep-learning/&quot;
+}</pre>
+</section>
+<div class="web-note"><p>This edition is rendered from the book's LaTeX source. The <a href="../../assets/pdf/introduction-to-deep-learning.pdf">PDF</a> stays at its original address. Code outputs come from the companion notebooks, and the interactive figures are new to the web edition.</p></div>
+</article>
+</div>
+
+<footer class="wrap foot">
+  <span>© 2026 Jai Sharma</span>
+  <span class="spacer"></span>
+  <span>Math typeset with <a href="https://katex.org/">KaTeX</a>.</span>
+</footer>
+
+<script src="../../assets/js/main.js"></script>
+<script src="../../assets/js/writing.js"></script>
+</body>
+</html>

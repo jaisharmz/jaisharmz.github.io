@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Figure preview</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="../assets/css/writing.css">
+<style>
+  .bar { display: flex; gap: .6rem; align-items: center; padding: .6rem 1.35rem; border-bottom: 1px solid var(--rule); font-size: .85rem; flex-wrap: wrap; }
+  .bar select, .bar button { font: inherit; }
+</style>
+</head>
+<body>
+<!-- Dev harness, not linked from the site: /tools/figpreview.html?fig=<id>&w=375&theme=dark -->
+<div class="bar">
+  <strong>Figure preview</strong>
+  <span id="which"></span>
+  <button type="button" id="theme">Toggle theme</button>
+  <label>width <select id="width"><option value="">column</option><option>375</option><option>620</option><option>1000</option></select></label>
+</div>
+<div class="page"><article class="article"><div class="prose-long" id="host"></div></article></div>
+<script src="../assets/js/figlib.js"></script>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var id = q.get("fig");
+  var host = document.getElementById("host");
+  document.getElementById("which").textContent = id || "(pass ?fig=<id>)";
+  if (q.get("theme")) document.documentElement.setAttribute("data-theme", q.get("theme"));
+  if (q.get("w")) { host.style.maxWidth = q.get("w") + "px"; document.getElementById("width").value = q.get("w"); }
+  document.getElementById("theme").onclick = function () {
+    var r = document.documentElement;
+    var dark = r.getAttribute("data-theme") === "dark" || (!r.getAttribute("data-theme") && matchMedia("(prefers-color-scheme: dark)").matches);
+    r.setAttribute("data-theme", dark ? "light" : "dark");
+  };
+  document.getElementById("width").onchange = function (e) { host.style.maxWidth = e.target.value ? e.target.value + "px" : ""; };
+  if (!id) return;
+  fetch("../src/figures/" + id + ".html").then(function (r) { return r.text(); }).then(function (html) {
+    var fig = document.createElement("figure");
+    fig.className = "fig";
+    fig.id = "fig-" + id;
+    fig.innerHTML = html;
+    host.appendChild(fig);
+    var s = document.createElement("script");
+    s.src = "../assets/js/figures/" + id + ".js";
+    document.body.appendChild(s);
+  });
+})();
+</script>
+</body>
+</html>

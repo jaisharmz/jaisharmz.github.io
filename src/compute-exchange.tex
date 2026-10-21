@@ -1,0 +1,110 @@
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage{url}
+\usepackage{amsmath, amssymb} 
+\usepackage{listings}
+\usepackage{float}
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+\DeclareMathOperator{\EX}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+
+\title{A Provider's Perspective of a Compute Exchange}
+\author{Jai Sharma, Salman Koshy, Sanjana Ryali, Maitree Meher, Kourosh Salahi, Kawin Wangwijit}
+\date{24 March 2026}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduction}
+The following is some short insight into the perspective of a GPU provider in a proposed compute exchange. 
+
+\section{Formulation}
+The following is the formulation of GPU resource allocation:
+\begin{align*}
+    \min &\sum_{i = 1} ^n x_iB_i\\
+    \text{s.t.}\hspace{2mm}&\sum_{i=1}^n x_iR_j \leq K_{ij} \hspace{2mm} (\forall j\in \{1,\cdots,m\})
+\end{align*}
+Here, $n$ is the number of GPU providers, $x_i$ is the amount of compute used from provider $i$, $B_i$ is the bid for compute provider $i$, $j$ is the resource (among $m$ total resources), $R_j$ is the cost of resource $j$, and $K_{ij}$ is the capacity of resource $j$ from provider $i$. The following are examples of resources that can be considered:
+\begin{itemize}
+    \item VCPUs
+    \item Memory
+    \item GPU capacity
+    \item Bandwidth
+    \item Duration of use
+\end{itemize}
+
+\section{Example: Modeling GPU Price with Gamma Distributions}
+Consider a Poisson process for the incoming bids for compute $P(\lambda)$. A Gamma distribution $\Gamma (k, \lambda)$ can help us model multiple incoming bids, or competitors, for the compute. Therefore, the profit can be modeled as:
+\[E[\text{Profit}] = (B - C)\cdot P(B<B^*)\]
+Here, $B$ is the ask from the provider, $B^*$ is the lowest ask from any competitor provider, and $C$ is the marginal cost of a GPU. This can be seen as the product of marginal profit of winning the bid weighted by the probability of winning the bid, or being lower than the lowest ask. The goal of the provider is to set $B$ to maximize the expected profit. 
+
+\webfig{cx-bid}
+
+\section{Sampling Rate of Resource Utilization}
+In this section, we explore the effects of providers having slower and faster sampling rates for resource utilization. Suppose $R(t)$ is the function for resource utilization at time $t$. Then, the revenue loss suffered by the provider due to discretization is:
+\[\text{Loss} = \underbrace{\int_0^T R(t)dt}_{\text{continuous}} - \underbrace{\sum_{i = 1}^n R(t_i)\Delta t}_{\text{discrete}}\]
+
+Suppose that we model this subject to the following Stochastic Differential Equation (SDE) with Geometric Brownian Motion (GBM):
+\[dR_t = \mu R_t dt + \sigma R_t dW_t\]
+Solving this for $R(t)$ and $E[R(t)]$, we get:
+\begin{align*}
+    R(t) &= R_0 \exp\left(\left(\mu - \frac{\sigma^2}{2}\right)t+\sigma W_t\right) \\ 
+    E[R(t)] &= R_0 e^{\mu t} \\
+\end{align*}
+Then, the expected loss is:
+\begin{align*}
+    E[\text{Loss}] &= E\left[\int_0^T R(t)dt\right] - E\left[\sum_{i = 1}^n R(t_i)\Delta t\right] \\
+    &= \int_0^T E[R(t)]dt - \sum_{i = 1}^n E[R(t_i)]\Delta t
+\end{align*}
+
+For the continuous part:
+\[\int_0^T E[R(t)]dt = \frac{R_0}{\mu} (e^{\mu T} - 1)\]
+For the discrete part:
+\begin{align*}
+    \sum_{i = 1}^n E[R(t_i)]\Delta t &= \sum_{i = 1}^n R_0 e^{\mu (i-1)\Delta t} \Delta t\\
+    &=R_0 \Delta t \frac{e^{\mu T} - 1}{e^{\mu \Delta t} - 1}
+\end{align*}
+
+Therefore, 
+\[E[\text{Loss}] = R_0 (e^{\mu T} - 1) \left[\frac{1}{\mu} - \frac{\Delta t}{e^{\mu \Delta t} - 1}\right]\]
+Taking the first order Taylor expansion, we get:
+\[E[\text{Loss}] \approx \frac{1}{2} R_0 (e^{\mu T} - 1) \Delta t\]
+The final insight from this analysis is that sampling frequency reduces the loss bias linearly. In other words, if the GPU provider doubles their sampling frequency, they halve the loss. 
+
+\webfig{cx-sampling}
+
+\section{Compute Price and Energy Cost Modeling}
+We can model energy cost using the following jump SDE diffusion model:
+\[dE_t = \kappa (\theta - E_t) dt + \sigma_{\text{energy}}dW_{1,t} + dJ_t\]
+Here, $\theta$ is the long term mean price of energy (modeled here for mean reversion), $E$ is the price of energy, $dW_{1,t}$ is a Brownian motion, and $J_t$ is a Poisson process modeling the energy spikes. We can model the price of compute using the following SDE:
+\[dC_t = \mu C_t dt + \sigma_{\text{compute}} dW_{2,t} + \rho (E_t) dZ_t\]
+Here, $C$ is the price of compute, $dW_{2,t}$ is a different Brownian motion, and $\rho(E_t)$ is some function of energy cost. 
+\\
+\\
+If $\rho$ is convex, compute prices are stable when energy is cheap. However, once energy hits a certain threshold, compute prices become hyper volatile. If $\kappa$ is high, mean reversion is fast and providers can afford to have lower sampling rates for resource utilization. However, if $\kappa$ is small, the discretization error is wrong for longer.
+
+The profit is given by the difference between compute price and energy cost: 
+\[\text{Profit}_t = C_t - E_t\]
+
+Here, we make a small note about the correlation between $dW_{1,t}$ and $dW_{2,t}$. If high, when energy spikes, the price of compute follows immediately. Therefore, the provider has a natural hedge, since they can pass the energy spike onto the customer faster. However, if low, the compute price might not be as reactive to the spikes in energy cost. This can cause the Value at Risk (VaR) to increase exponentially.
+
+\webfig{cx-energy}
+
+\section{Correlation Metric for Tokens Market}
+This section is a small remark about an information-theoretic metric for correlation of tokens in a decentralized compute tokens market. Suppose $X_1, X_2, \cdots , X_n$ are $n$ different tokens on the market. Due to joint entropy laws from information theory, we know that:
+\[H(X_1,\cdots,X_n) \leq \sum_{i=1}^n H(X_i)\]
+Here, $H(X)$ represents the entropy of $X$. Rearranging, we get:
+\[\sum_{i=1}^n H(X_i) - H(X_1,\cdots,X_n) \geq 0\]
+This metric, if approximated correctly, can be a proxy for systemic risk in a decentralized exchange. Specifically, this is some measure of correlation between tokens, where a metric of 0 indicates that the tokens are independent. 
+
+\webfig{cx-total-correlation}
+
+\end{document}

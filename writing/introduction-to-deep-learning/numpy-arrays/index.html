@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NumPy Arrays | Introduction to Deep Learning</title>
+<meta name="description" content="Defining arrays, operating on them, and reading their shapes and statistics.">
+<link rel="canonical" href="https://jaisharmz.github.io/writing/introduction-to-deep-learning/numpy-arrays/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NumPy Arrays | Introduction to Deep Learning">
+<meta property="og:description" content="Defining arrays, operating on them, and reading their shapes and statistics.">
+<meta property="og:url" content="https://jaisharmz.github.io/writing/introduction-to-deep-learning/numpy-arrays/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.92em' font-size='92' font-family='Georgia,serif' font-weight='600'>J</text></svg>">
+<link rel="alternate" type="application/atom+xml" title="Jai Sharma: Writing" href="../../../writing/index.xml">
+<link rel="stylesheet" href="../../../assets/css/style.css">
+<link rel="stylesheet" href="../../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../../assets/css/writing.css">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap topbar__inner topbar__inner--wide">
+    <a class="home" href="../../../index.html">Jai Sharma</a>
+    <nav>
+      <a href="../../../index.html#research">Research</a>
+      <a href="../../../writing/">Writing</a>
+      <a href="../../../assets/pdf/Jai_Sharma_CV.pdf">CV</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.6v2.4M12 20v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M1.6 12h2.4M20 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8z"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="page">
+<aside class="side toc book-toc" aria-label="Book contents">
+  <p class="side__label"><a href="../">Introduction to Deep Learning</a></p>
+  <p class="part">Introduction</p>
+  <ol><li><a href="../what-is-deep-learning/"><span class="num">1</span><span>What is Deep Learning?</span></a></li><li><a href="../linear-regression/"><span class="num">2</span><span>Linear Regression</span></a></li><li><a href="../logistic-regression/"><span class="num">3</span><span>Logistic Regression</span></a></li><li><a href="../neural-networks/"><span class="num">4</span><span>Neural Networks</span></a></li></ol>
+  <p class="part">Linear Algebra, Calculus, and Derivations</p>
+  <ol><li><a href="../linear-algebra/"><span class="num">5</span><span>Linear Algebra</span></a></li><li><a href="../calculus/"><span class="num">6</span><span>Calculus</span></a></li><li><a href="../derivations/"><span class="num">7</span><span>Derivations</span></a></li></ol>
+  <p class="part">Introduction to Python</p>
+  <ol><li><a href="../python-basics/"><span class="num">8</span><span>The Basics of Python</span></a></li><li class="is-current"><a href="./"><span class="num">9</span><span>NumPy Arrays</span></a><ol><li><a href="#defining-vectors-and-matrices"><span class="num">9.1</span><span>Defining Vectors and Matrices</span></a></li><li><a href="#operations-with-numpy-arrays"><span class="num">9.2</span><span>Operations with Numpy Arrays</span></a></li><li><a href="#size-and-shape-of-an-array"><span class="num">9.3</span><span>Size and Shape of an Array</span></a></li><li><a href="#accessing-elements-of-an-array"><span class="num">9.4</span><span>Accessing Elements of an Array</span></a></li><li><a href="#special-numpy-arrays"><span class="num">9.5</span><span>Special NumPy Arrays</span></a></li><li><a href="#statistics-of-an-array"><span class="num">9.6</span><span>Statistics of an Array</span></a></li><li><a href="#transpose-of-an-array"><span class="num">9.7</span><span>Transpose of an Array</span></a></li></ol></li><li><a href="../plotting-with-matplotlib/"><span class="num">10</span><span>Plotting with Matplotlib</span></a></li></ol>
+  <p class="part">Hands On Implementations</p>
+  <ol><li><a href="../implementing-linear-regression/"><span class="num">11</span><span>Implementing Linear Regression</span></a></li><li><a href="../implementing-logistic-regression/"><span class="num">12</span><span>Implementing Logistic Regression</span></a></li><li><a href="../implementing-neural-networks/"><span class="num">13</span><span>Implementing a Neural Network</span></a></li></ol>
+  <p class="part">Afterword</p>
+  <ol><li><a href="../afterword/"><span>Afterword</span></a></li></ol>
+</aside>
+<article class="article">
+<header class="article__head">
+  <p class="article__kicker"><a href="../">Introduction to Deep Learning</a> · Introduction to Python · Chapter 9</p>
+  <h1>NumPy Arrays</h1>
+  <p class="article__meta">
+    <span>6 min read</span>
+    <a href="../../../assets/pdf/introduction-to-deep-learning.pdf">PDF of the book</a>
+  </p>
+</header>
+
+<details class="toc-inline"><summary>In this chapter</summary><ol><li><a href="#defining-vectors-and-matrices"><span class="num">9.1</span><span>Defining Vectors and Matrices</span></a></li><li><a href="#operations-with-numpy-arrays"><span class="num">9.2</span><span>Operations with Numpy Arrays</span></a></li><li><a href="#size-and-shape-of-an-array"><span class="num">9.3</span><span>Size and Shape of an Array</span></a></li><li><a href="#accessing-elements-of-an-array"><span class="num">9.4</span><span>Accessing Elements of an Array</span></a></li><li><a href="#special-numpy-arrays"><span class="num">9.5</span><span>Special NumPy Arrays</span></a></li><li><a href="#statistics-of-an-array"><span class="num">9.6</span><span>Statistics of an Array</span></a></li><li><a href="#transpose-of-an-array"><span class="num">9.7</span><span>Transpose of an Array</span></a></li></ol></details>
+<div class="prose-long">
+<p>In this section, we will cover an introduction to NumPy Arrays. NumPy is a library in Python that allows us to define variables that are vectors or matrices. NumPy Arrays are extremely powerful and are widely used in Machine Learning. We will be largely focusing on how to define and use vectors and matrices in NumPy.</p>
+<h2 id="defining-vectors-and-matrices"><span class="num">9.1</span>Defining Vectors and Matrices</h2>
+<p>We can define NumPy arrays by first importing NumPy. We often import NumPy as <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">n</span><span class="mord mathnormal">p</span></span></span></span> to avoid hassle. Then, we can use the following command to define a vector (a.k.a. a NumPy array).</p>
+<div class="sourceCode" id="cb1" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">MyArray <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>])</span>
+<span id="cb1-4"><span class="bu">print</span>(MyArray)</span></code></pre></div>
+<p>We will get an output of the row vector <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span></span></span></span>.</span> If we wanted to make this into a vector, we could transpose it, which we will later learn. Notice how we have parentheses, then square brackets. If we do not have both, we will get an error.</p>
+<p>We can manually define the same row vector instead as a column vector (without transposing it) by doing the following.</p>
+<div class="sourceCode" id="cb2" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"></span>
+<span id="cb2-3">MyArray <span class="op">=</span> np.array([[<span class="dv">1</span>],[<span class="dv">2</span>],[<span class="dv">3</span>],[<span class="dv">4</span>],[<span class="dv">5</span>]])</span>
+<span id="cb2-4"><span class="bu">print</span>(MyArray)</span></code></pre></div>
+<p>We will get the column vector: <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:6em;vertical-align:-2.75em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.25em;"><span style="top:-5.25em;"><span class="pstrut" style="height:8em;"></span><span style="width:0.875em;height:6.000em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.875em" height="6.000em" viewBox="0 0 875 6000"><path d="M863,9c0,-2,-2,-5,-6,-9c0,0,-17,0,-17,0c-12.7,0,-19.3,0.3,-20,1
+c-5.3,5.3,-10.3,11,-15,17c-242.7,294.7,-395.3,682,-458,1162c-21.3,163.3,-33.3,349,
+-36,557 l0,2484c0.2,6,0,26,0,60c2,159.3,10,310.7,24,454c53.3,528,210,
+949.7,470,1265c4.7,6,9.7,11.7,15,17c0.7,0.7,7,1,19,1c0,0,18,0,18,0c4,-4,6,-7,6,-9
+c0,-2.7,-3.3,-8.7,-10,-18c-135.3,-192.7,-235.5,-414.3,-300.5,-665c-65,-250.7,-102.5,
+-544.7,-112.5,-882c-2,-104,-3,-167,-3,-189
+l0,-2492c0,-162.7,5.7,-314,17,-454c20.7,-272,63.7,-513,129,-723c65.3,
+-210,155.3,-396.3,270,-559c6.7,-9.3,10,-15.3,10,-18z"></path></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.75em;"><span></span></span></span></span></span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.25em;"><span style="top:-5.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span><span style="top:-4.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-1.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span></span></span><span style="top:-0.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.75em;"><span></span></span></span></span></span></span></span><span class="mclose"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.25em;"><span style="top:-5.25em;"><span class="pstrut" style="height:8em;"></span><span style="width:0.875em;height:6.000em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.875em" height="6.000em" viewBox="0 0 875 6000"><path d="M76,0c-16.7,0,-25,3,-25,9c0,2,2,6.3,6,13c21.3,28.7,42.3,60.3,
+63,95c96.7,156.7,172.8,332.5,228.5,527.5c55.7,195,92.8,416.5,111.5,664.5
+c11.3,139.3,17,290.7,17,454c0,28,1.7,43,3.3,45l0,2409
+c-3,4,-3.3,16.7,-3.3,38c0,162,-5.7,313.7,-17,455c-18.7,248,-55.8,469.3,-111.5,664
+c-55.7,194.7,-131.8,370.3,-228.5,527c-20.7,34.7,-41.7,66.3,-63,95c-2,3.3,-4,7,-6,11
+c0,7.3,5.7,11,17,11c0,0,11,0,11,0c9.3,0,14.3,-0.3,15,-1c5.3,-5.3,10.3,-11,15,-17
+c242.7,-294.7,395.3,-681.7,458,-1161c21.3,-164.7,33.3,-350.7,36,-558
+l0,-2544c-2,-159.3,-10,-310.7,-24,-454c-53.3,-528,-210,-949.7,
+-470,-1265c-4.7,-6,-9.7,-11.7,-15,-17c-0.7,-0.7,-6.7,-1,-18,-1z"></path></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.75em;"><span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">.</span></span></span></span></span> This notation is much more interesting to think about, as opposed to the last example, which was essentially just a list. We have two sets of brackets here: one around each of the numbers, and one around the entire set of numbers. We always need this latter one, no matter what our matrix or vector is. The brackets around each of the numbers indicates that all of the numbers are in different rows. By this logic, we can define matrices to be vectors with just more elements in each of the rows.</p>
+<p>Let’s do just that.</p>
+<div class="sourceCode" id="cb3" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"></span>
+<span id="cb3-3">MyArray <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>],[<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>],[<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>],[<span class="dv">16</span>,<span class="dv">17</span>,<span class="dv">18</span>,<span class="dv">19</span>,<span class="dv">20</span>],[<span class="dv">21</span>,<span class="dv">22</span>,<span class="dv">23</span>,<span class="dv">24</span>,<span class="dv">25</span>]])</span>
+<span id="cb3-4"><span class="bu">print</span>(MyArray)</span></code></pre></div>
+<p>Now, this program will output: <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:6em;vertical-align:-2.75em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.25em;"><span style="top:-5.25em;"><span class="pstrut" style="height:8em;"></span><span style="width:0.875em;height:6.000em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.875em" height="6.000em" viewBox="0 0 875 6000"><path d="M863,9c0,-2,-2,-5,-6,-9c0,0,-17,0,-17,0c-12.7,0,-19.3,0.3,-20,1
+c-5.3,5.3,-10.3,11,-15,17c-242.7,294.7,-395.3,682,-458,1162c-21.3,163.3,-33.3,349,
+-36,557 l0,2484c0.2,6,0,26,0,60c2,159.3,10,310.7,24,454c53.3,528,210,
+949.7,470,1265c4.7,6,9.7,11.7,15,17c0.7,0.7,7,1,19,1c0,0,18,0,18,0c4,-4,6,-7,6,-9
+c0,-2.7,-3.3,-8.7,-10,-18c-135.3,-192.7,-235.5,-414.3,-300.5,-665c-65,-250.7,-102.5,
+-544.7,-112.5,-882c-2,-104,-3,-167,-3,-189
+l0,-2492c0,-162.7,5.7,-314,17,-454c20.7,-272,63.7,-513,129,-723c65.3,
+-210,155.3,-396.3,270,-559c6.7,-9.3,10,-15.3,10,-18z"></path></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.75em;"><span></span></span></span></span></span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.25em;"><span style="top:-5.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span><span style="top:-4.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">6</span></span></span><span style="top:-3.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">11</span></span></span><span style="top:-1.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">16</span></span></span><span style="top:-0.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">21</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.75em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.25em;"><span style="top:-5.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-4.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">7</span></span></span><span style="top:-3.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">12</span></span></span><span style="top:-1.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">17</span></span></span><span style="top:-0.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">22</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.75em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.25em;"><span style="top:-5.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-4.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">8</span></span></span><span style="top:-3.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">13</span></span></span><span style="top:-1.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">18</span></span></span><span style="top:-0.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">23</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.75em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.25em;"><span style="top:-5.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span></span></span><span style="top:-4.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">9</span></span></span><span style="top:-3.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">14</span></span></span><span style="top:-1.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">19</span></span></span><span style="top:-0.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">24</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.75em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.25em;"><span style="top:-5.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span></span></span><span style="top:-4.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">10</span></span></span><span style="top:-3.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">15</span></span></span><span style="top:-1.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">20</span></span></span><span style="top:-0.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">25</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.75em;"><span></span></span></span></span></span></span></span><span class="mclose"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.25em;"><span style="top:-5.25em;"><span class="pstrut" style="height:8em;"></span><span style="width:0.875em;height:6.000em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.875em" height="6.000em" viewBox="0 0 875 6000"><path d="M76,0c-16.7,0,-25,3,-25,9c0,2,2,6.3,6,13c21.3,28.7,42.3,60.3,
+63,95c96.7,156.7,172.8,332.5,228.5,527.5c55.7,195,92.8,416.5,111.5,664.5
+c11.3,139.3,17,290.7,17,454c0,28,1.7,43,3.3,45l0,2409
+c-3,4,-3.3,16.7,-3.3,38c0,162,-5.7,313.7,-17,455c-18.7,248,-55.8,469.3,-111.5,664
+c-55.7,194.7,-131.8,370.3,-228.5,527c-20.7,34.7,-41.7,66.3,-63,95c-2,3.3,-4,7,-6,11
+c0,7.3,5.7,11,17,11c0,0,11,0,11,0c9.3,0,14.3,-0.3,15,-1c5.3,-5.3,10.3,-11,15,-17
+c242.7,-294.7,395.3,-681.7,458,-1161c21.3,-164.7,33.3,-350.7,36,-558
+l0,-2544c-2,-159.3,-10,-310.7,-24,-454c-53.3,-528,-210,-949.7,
+-470,-1265c-4.7,-6,-9.7,-11.7,-15,-17c-0.7,-0.7,-6.7,-1,-18,-1z"></path></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.75em;"><span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">.</span></span></span></span></span> Notice how the rows in the matrix line up with the rows in the code. This is, in essence, how we write NumPy matrices. We could add as many rows or as many elements in each row as we wanted. Note that the number of elements in each row must be the same in order for the array to be considered a matrix. If the number of elements in each row is not the same, Python will consider the array to be a “list containing lists” and not a matrix.</p>
+<h2 id="operations-with-numpy-arrays"><span class="num">9.2</span>Operations with Numpy Arrays</h2>
+<p>We will be discussing the operations on NumPy arrays that are matrices. Note that vectors can also be considered as matrices, so this section will apply to both.</p>
+<p>We can add two matrices by simply adding them as we would with integers.</p>
+<div class="sourceCode" id="cb4" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-2"></span>
+<span id="cb4-3">MyArray1 <span class="op">=</span> [some array]</span>
+<span id="cb4-4">MyArray2 <span class="op">=</span> [some other array]</span>
+<span id="cb4-5"><span class="bu">sum</span> <span class="op">=</span> MyArray1<span class="op">+</span>MyArray2</span>
+<span id="cb4-6"><span class="bu">print</span>(<span class="bu">sum</span>)</span></code></pre></div>
+<p>We will get the sum of the two matrices that the arrays represent.</p>
+<p>We can also do scalar multiplication by a vector by multiplying that vector by the scalar directly.</p>
+<div class="sourceCode" id="cb5" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"></span>
+<span id="cb5-3">MyArray <span class="op">=</span> [some array]</span>
+<span id="cb5-4">product <span class="op">=</span> MyArray<span class="op">*</span>[some number]</span>
+<span id="cb5-5"><span class="bu">print</span>(product)</span></code></pre></div>
+<p>We will get the product.</p>
+<p>In fact, we can extend this idea to the operation between any scalar and vector.</p>
+<div class="sourceCode" id="cb6" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-2"></span>
+<span id="cb6-3">MyArray <span class="op">=</span> [some array]</span>
+<span id="cb6-4">result <span class="op">=</span> MyArray[some operation][some number]</span>
+<span id="cb6-5"><span class="bu">print</span>(result)</span></code></pre></div>
+<p>The operation here can be any operation that works between integers such as addition subtraction, multiplication, division, etc.</p>
+<p>Now, back to the operations between matrices. We can do element-wise operations, or operations on the corresponding elements of two matrices, by doing the same thing as we would in integer operations.</p>
+<div class="sourceCode" id="cb7" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-2"></span>
+<span id="cb7-3">MyArray1 <span class="op">=</span> [some array]</span>
+<span id="cb7-4">MyArray2 <span class="op">=</span> [some other array]</span>
+<span id="cb7-5">result <span class="op">=</span> MyArray1[some operation]MyArray2</span>
+<span id="cb7-6"><span class="bu">print</span>(result)</span></code></pre></div>
+<p>So, we can do some operation on the corresponding elements of two arrays. Matrix addition, as we saw before, is a special type of this kind of operation.</p>
+<p>One of the operations we can do is element-wise multiplication. This means that we multiply the corresponding elements of a matrix. Note that this is <strong>not</strong> the same as matrix multiplication.</p>
+<p>We can do matrix multiplication by doing the following.</p>
+<div class="sourceCode" id="cb8" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-2"></span>
+<span id="cb8-3">MyArray1 <span class="op">=</span> [some array]</span>
+<span id="cb8-4">MyArray2 <span class="op">=</span> [some other array]</span>
+<span id="cb8-5">result <span class="op">=</span> MyArray1.dot(MyArray2)</span>
+<span id="cb8-6"><span class="bu">print</span>(result)</span></code></pre></div>
+<p>This will do matrix multiplication.</p>
+<h2 id="size-and-shape-of-an-array"><span class="num">9.3</span>Size and Shape of an Array</h2>
+<p>We can reshape an array (matrix) to be of any dimensions we want.</p>
+<p>To do this, we use reshape.</p>
+<div class="sourceCode" id="cb9" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-2"></span>
+<span id="cb9-3">MyArray <span class="op">=</span> [some array]</span>
+<span id="cb9-4"><span class="bu">print</span>(MyArray)</span>
+<span id="cb9-5">MyArray <span class="op">=</span> MyArray.reshape([dimension <span class="dv">1</span>],[dimension <span class="dv">2</span>])</span>
+<span id="cb9-6"><span class="bu">print</span>(MyArray)</span></code></pre></div>
+<p>The program will first output the original array. Then, the array will be reshaped according to the given dimensions. Then, the program will output the reshaped matrix.</p>
+<p>We can get the size of an array as well, meaning the length of the array, or the number of elements in it. Additionally, we can print the dimensions of the array, as follows.</p>
+<div class="sourceCode" id="cb10" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-2"></span>
+<span id="cb10-3">MyArray <span class="op">=</span> [some array]</span>
+<span id="cb10-4"><span class="bu">print</span>(MyArray)</span>
+<span id="cb10-5"><span class="bu">print</span>(MyArray.size) <span class="co"># Length of Array.</span></span>
+<span id="cb10-6"><span class="bu">print</span>(MyArray.shape) <span class="co"># Dimensions of Array.</span></span></code></pre></div>
+<p>Our program will first print the array. Then, it will print the size of the array. Finally, it will print the shape, or dimensions, of the array. If this is a matrix, the dimensions should be a tuple (like a list) of two numbers, the first being the number of rows, and the second being the number of columns.</p>
+<h2 id="accessing-elements-of-an-array"><span class="num">9.4</span>Accessing Elements of an Array</h2>
+<p>Sometimes, we wish to access elements of an array. To do this, we can use the row number and column number of the element in the matrix.</p>
+<p>Before we do this, remember that indexing starts from 0. So, an element in the first row is in row index <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>.</span></p>
+<div class="sourceCode" id="cb11" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-2"></span>
+<span id="cb11-3">MyArray <span class="op">=</span> [some array]</span>
+<span id="cb11-4"><span class="bu">print</span>(MyArray[<span class="dv">0</span>])</span>
+<span id="cb11-5"><span class="bu">print</span>(MyArray[:,<span class="dv">0</span>])</span></code></pre></div>
+<p>When we do this first command, we are accessing the first row. Since we have not specified the column number, we will be printing the whole first row. The second print statement specifies the column number, but allows the row number to take on any value (this is what the colon means). Therefore, we will be accessing every element in the first row, or the first row itself.</p>
+<p>We can return a specific element by specifying both the row number and the column number.</p>
+<div class="sourceCode" id="cb12" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb12-2"></span>
+<span id="cb12-3">MyArray <span class="op">=</span> [some array]</span>
+<span id="cb12-4"><span class="bu">print</span>(MyArray[<span class="dv">2</span>,<span class="dv">1</span>])</span></code></pre></div>
+<p>This action will access the element in the <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span>rd row and <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span>nd column.</p>
+<h2 id="special-numpy-arrays"><span class="num">9.5</span>Special NumPy Arrays</h2>
+<p>We sometimes want to define an array full of zeros or ones.</p>
+<p>We can make an array of zeros by first defining the dimensions of the matrix which we want to be zero.</p>
+<div class="sourceCode" id="cb13" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-2"></span>
+<span id="cb13-3">MyArray <span class="op">=</span> np.zeros(([dimension <span class="dv">1</span>],[dimension <span class="dv">2</span>]))</span>
+<span id="cb13-4"><span class="bu">print</span>(MyArray)</span></code></pre></div>
+<p>This will print a matrix of zeros with the dimensions given. Remember the double parentheses around the dimensions.</p>
+<p>Similarly, we can define a matrix of ones with some dimensions.</p>
+<div class="sourceCode" id="cb14" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb14-2"></span>
+<span id="cb14-3">MyArray <span class="op">=</span> np.ones(([dimension <span class="dv">1</span>],[dimension <span class="dv">2</span>]))</span>
+<span id="cb14-4"><span class="bu">print</span>(MyArray)</span></code></pre></div>
+<p>This will print a matrix of ones with the dimensions given.</p>
+<p>We can make the identity matrix with dimensions <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> as follows.</p>
+<div class="sourceCode" id="cb15" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb15-2"></span>
+<span id="cb15-3">n <span class="op">=</span> [number] <span class="co"># Dimension of identity matrix.</span></span>
+<span id="cb15-4">MyArray <span class="op">=</span> np.identity([n])</span>
+<span id="cb15-5"><span class="bu">print</span>(MyArray)</span></code></pre></div>
+<p>This will return an identity matrix with dimensions <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>.</span></p>
+<h2 id="statistics-of-an-array"><span class="num">9.6</span>Statistics of an Array</h2>
+<p>We can print out several statistics of an array.</p>
+<p>These can be quite useful in handling data.</p>
+<div class="sourceCode" id="cb16" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb16-2"></span>
+<span id="cb16-3">MyArray <span class="op">=</span> [some array]</span>
+<span id="cb16-4"><span class="bu">print</span>(MyArray.<span class="bu">max</span>()) <span class="co"># This is the maximum of the matrix.</span></span>
+<span id="cb16-5"><span class="bu">print</span>(MyArray.<span class="bu">min</span>()) <span class="co"># This is the minimum of the matrix.</span></span>
+<span id="cb16-6"><span class="bu">print</span>(MyArray.mean()) <span class="co"># This is the mean of the matrix.</span></span>
+<span id="cb16-7"><span class="bu">print</span>(MyArray.<span class="bu">max</span>()) <span class="co"># This is the maximum of the matrix.</span></span>
+<span id="cb16-8"><span class="bu">print</span>(MyArray.std()) <span class="co"># This is the standard deviation of the matrix.</span></span>
+<span id="cb16-9"><span class="bu">print</span>(MyArray.<span class="bu">sum</span>()) <span class="co"># This is the sum of the elements of the matrix. </span></span></code></pre></div>
+<p>Now you should know all you need to know in order to make, move around, and study NumPy arrays.</p>
+<h2 id="transpose-of-an-array"><span class="num">9.7</span>Transpose of an Array</h2>
+<p>We can take the transpose of an array or vector as follows.</p>
+<div class="sourceCode" id="cb17" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb17-2"></span>
+<span id="cb17-3">MyArray <span class="op">=</span> [some array]</span>
+<span id="cb17-4"><span class="bu">print</span>(MyArray.T) <span class="co"># This is the Transpose of a NumPy Array.</span></span></code></pre></div>
+<p>Now you should know all you need to know in order to make, move around, and study NumPy arrays.</p>
+
+</div>
+<nav class="endnav" aria-label="Chapters">
+  <a class="prev" href="../python-basics/"><span class="dir">Previous</span><span class="t">8. The Basics of Python</span></a>
+  <a class="next" href="../plotting-with-matplotlib/"><span class="dir">Next</span><span class="t">10. Plotting with Matplotlib</span></a>
+</nav>
+</article>
+</div>
+
+<footer class="wrap foot">
+  <span>© 2026 Jai Sharma</span>
+  <span class="spacer"></span>
+  <span>Math typeset with <a href="https://katex.org/">KaTeX</a>.</span>
+</footer>
+
+<script src="../../../assets/js/main.js"></script>
+<script src="../../../assets/js/writing.js"></script>
+</body>
+</html>

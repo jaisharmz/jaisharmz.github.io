@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What is Deep Learning? | Introduction to Deep Learning</title>
+<meta name="description" content="What deep learning is, where it is used, and how it compares with other machine learning algorithms as data sets grow.">
+<link rel="canonical" href="https://jaisharmz.github.io/writing/introduction-to-deep-learning/what-is-deep-learning/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What is Deep Learning? | Introduction to Deep Learning">
+<meta property="og:description" content="What deep learning is, where it is used, and how it compares with other machine learning algorithms as data sets grow.">
+<meta property="og:url" content="https://jaisharmz.github.io/writing/introduction-to-deep-learning/what-is-deep-learning/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.92em' font-size='92' font-family='Georgia,serif' font-weight='600'>J</text></svg>">
+<link rel="alternate" type="application/atom+xml" title="Jai Sharma: Writing" href="../../../writing/index.xml">
+<link rel="stylesheet" href="../../../assets/css/style.css">
+<link rel="stylesheet" href="../../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../../assets/css/writing.css">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap topbar__inner topbar__inner--wide">
+    <a class="home" href="../../../index.html">Jai Sharma</a>
+    <nav>
+      <a href="../../../index.html#research">Research</a>
+      <a href="../../../writing/">Writing</a>
+      <a href="../../../assets/pdf/Jai_Sharma_CV.pdf">CV</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.6v2.4M12 20v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M1.6 12h2.4M20 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8z"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="page">
+<aside class="side toc book-toc" aria-label="Book contents">
+  <p class="side__label"><a href="../">Introduction to Deep Learning</a></p>
+  <p class="part">Introduction</p>
+  <ol><li class="is-current"><a href="./"><span class="num">1</span><span>What is Deep Learning?</span></a><ol><li><a href="#applications-of-deep-learning"><span class="num">1.1</span><span>Applications of Deep Learning</span></a></li><li><a href="#deep-learning-v.s.-other-machine-learning-algorithms"><span class="num">1.2</span><span>Deep Learning v.s. Other Machine Learning Algorithms</span></a></li></ol></li><li><a href="../linear-regression/"><span class="num">2</span><span>Linear Regression</span></a></li><li><a href="../logistic-regression/"><span class="num">3</span><span>Logistic Regression</span></a></li><li><a href="../neural-networks/"><span class="num">4</span><span>Neural Networks</span></a></li></ol>
+  <p class="part">Linear Algebra, Calculus, and Derivations</p>
+  <ol><li><a href="../linear-algebra/"><span class="num">5</span><span>Linear Algebra</span></a></li><li><a href="../calculus/"><span class="num">6</span><span>Calculus</span></a></li><li><a href="../derivations/"><span class="num">7</span><span>Derivations</span></a></li></ol>
+  <p class="part">Introduction to Python</p>
+  <ol><li><a href="../python-basics/"><span class="num">8</span><span>The Basics of Python</span></a></li><li><a href="../numpy-arrays/"><span class="num">9</span><span>NumPy Arrays</span></a></li><li><a href="../plotting-with-matplotlib/"><span class="num">10</span><span>Plotting with Matplotlib</span></a></li></ol>
+  <p class="part">Hands On Implementations</p>
+  <ol><li><a href="../implementing-linear-regression/"><span class="num">11</span><span>Implementing Linear Regression</span></a></li><li><a href="../implementing-logistic-regression/"><span class="num">12</span><span>Implementing Logistic Regression</span></a></li><li><a href="../implementing-neural-networks/"><span class="num">13</span><span>Implementing a Neural Network</span></a></li></ol>
+  <p class="part">Afterword</p>
+  <ol><li><a href="../afterword/"><span>Afterword</span></a></li></ol>
+</aside>
+<article class="article">
+<header class="article__head">
+  <p class="article__kicker"><a href="../">Introduction to Deep Learning</a> · Introduction · Chapter 1</p>
+  <h1>What is Deep Learning?</h1>
+  <p class="article__meta">
+    <span>3 min read</span>
+    <a href="../../../assets/pdf/introduction-to-deep-learning.pdf">PDF of the book</a>
+  </p>
+</header>
+
+<details class="toc-inline"><summary>In this chapter</summary><ol><li><a href="#applications-of-deep-learning"><span class="num">1.1</span><span>Applications of Deep Learning</span></a></li><li><a href="#deep-learning-v.s.-other-machine-learning-algorithms"><span class="num">1.2</span><span>Deep Learning v.s. Other Machine Learning Algorithms</span></a></li></ol></details>
+<div class="prose-long">
+<p>As our world becomes more digitized, more and more information is being structurally recorded. As a result, a plethora of enormous data sets have been made, many of these being available to the common public. <a href="https://www.kaggle.com/">Kaggle</a>, a child company of Google, has become one of the most popular hubs for accessing such data sets.</p>
+<p>As such, it has become increasingly important for large industries and companies to be able to effectively understand and use this gathered information. This necessity has inspired the development of the realm of data analysis.</p>
+<p>Machine Learning is one of the sub-branches of data analysis in which humans employ computers to identify and extrapolate patterns in data.</p>
+<p>Deep Learning is the use of Machine Learning through a method known as “Neural Networks.” Neural Networks are a mechanism which tries to mimic the human brain in terms of how patterns in data are identified.</p>
+
+<p><strong class="para-head">Purpose</strong> The goal of this handout is to discuss the technicalities and specifics of Deep Learning models so that you may fully understand the fundamentals of Deep Learning as well as how to make a Deep Learning model yourself.</p>
+<h2 id="applications-of-deep-learning"><span class="num">1.1</span>Applications of Deep Learning</h2>
+<p>You likely experience the impacts of Machine Learning many times on a daily basis. Many practitioners have begun to use Neural Networks as opposed to other models in Machine Learning, which means that you are also likely deeply affected by Deep Learning in your daily routines.</p>
+<p>Here are some common examples of Machine Learning and Deep Learning at work:</p>
+<ul>
+<li><p>Weather prediction;</p></li>
+<li><p>Content recommendation systems (Netflix, YouTube, Amazon, Spotify, etc.);</p></li>
+<li><p>Spam filters for email;</p></li>
+<li><p>Supply and demand forecasting in business;</p></li>
+<li><p>Autonomous driving vehicles;</p></li>
+<li><p>Photo recognition systems;</p></li>
+<li><p>Speech recognition systems;</p></li>
+<li><p>Smart devices (Siri, Cortana, Google Home, Amazon Echo, etc.);</p></li>
+<li><p>Search Engines (Google, etc.);</p></li>
+<li><p>Translation Systems (Google Translate, etc.);</p></li>
+<li><p>Spellcheck (Google Docs, Grammarly, etc.);</p></li>
+<li><p>Medical research and imaging;</p></li>
+<li><p>Biometric scans (fingerprint, facial recognition, etc.);</p></li>
+<li><p>Deep fakes.</p></li>
+</ul>
+<p>The list goes on, and on, and on…</p>
+<p>Hopefully, you were able to relate at least one of these items to your personal life. If so, you know the value of Machine Learning from a practical perspective.</p>
+<p>What’s more is that the hype has only just begun! While shown to be colossal in its implications, Machine Learning is a relatively young topic, and a multitude of research is being done for it.</p>
+<p>If you do not have any project ideas, look for data sets on Kaggle that interest you! Remember, anywhere that there is data, there is a chance for Machine Learning to be applied. Kaggle also has many <a href="https://www.kaggle.com/competitions">competitions </a> on their website which you can take inspiration from (or enter).</p>
+<h2 id="deep-learning-v.s.-other-machine-learning-algorithms"><span class="num">1.2</span>Deep Learning v.s. Other Machine Learning Algorithms</h2>
+<p>There are tons of models out there. Here are some:</p>
+<ul>
+<li><p>Linear/Polynomial Regression;</p></li>
+<li><p>Logistic Regression;</p></li>
+<li><p>Support Vector Machines;</p></li>
+<li><p>K Means Clustering.</p></li>
+</ul>
+<p>Out of all of these, why do we choose to use Neural Networks?</p>
+<p>To answer this question, we examine why other models were even made in the first place. Consider the following image (<a href="https://lilianweng.github.io/lil-log/2017/06/21/an-overview-of-deep-learning.html">source link</a>):</p>
+<figure class="figure-img"><img src="../../../assets/img/writing/introduction-to-deep-learning/data_size_vs_model_performance.png" alt="Figure from the original text" loading="lazy"></figure>
+<p>Consider the left side of the vertical dashed purple line. This is represents the size of the data sets prior to digitization of information. At this time, data sets were small, and using any kind of model seemed satisfactory.</p>
+<p>However, as digitization began, data sets became more like the ones to the right of the line. They were bigger, and at this time, the performance of Neural Networks and Deep Learning shined through.</p>
+<p>Compared to Deep Learning, other models are just not as outstanding anymore, which is why many systems are making a switch.</p>
+
+</div>
+<nav class="endnav" aria-label="Chapters">
+  <a class="prev" href="../"><span class="dir">Contents</span><span class="t">Introduction to Deep Learning</span></a>
+  <a class="next" href="../linear-regression/"><span class="dir">Next</span><span class="t">2. Linear Regression</span></a>
+</nav>
+</article>
+</div>
+
+<footer class="wrap foot">
+  <span>© 2026 Jai Sharma</span>
+  <span class="spacer"></span>
+  <span>Math typeset with <a href="https://katex.org/">KaTeX</a>.</span>
+</footer>
+
+<script src="../../../assets/js/main.js"></script>
+<script src="../../../assets/js/writing.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Jai Sharma: Writing</title>
+  <link href="https://jaisharmz.github.io/writing/"/>
+  <link rel="self" href="https://jaisharmz.github.io/writing/index.xml"/>
+  <id>https://jaisharmz.github.io/writing/</id>
+  <updated>2026-03-24T00:00:00Z</updated>
+  <author><name>Jai Sharma</name></author>
+  <entry>
+    <title>A Provider’s Perspective of a Compute Exchange</title>
+    <link href="https://jaisharmz.github.io/writing/compute-exchange/"/>
+    <id>https://jaisharmz.github.io/writing/compute-exchange/</id>
+    <updated>2026-03-24T00:00:00Z</updated>
+    <summary>AI compute is scarce and intrinsically valuable, but a lack of standardization and divisibility keeps it from being traded the way oil and gold are. This white paper models GPU resource allocation from a provider’s point of view: pricing an ask against competing bids, the cost of sampling utilization slowly, energy and compute prices as coupled stochastic processes, and a correlation metric for a tokens market.</summary>
+  </entry>
+  <entry>
+    <title>Diffusion from First Principles</title>
+    <link href="https://jaisharmz.github.io/writing/diffusion-from-first-principles/"/>
+    <id>https://jaisharmz.github.io/writing/diffusion-from-first-principles/</id>
+    <updated>2025-10-06T00:00:00Z</updated>
+    <summary>Diffusion is a physical term before it is a machine learning one. This text builds up the forward SDE, the Fokker-Planck equation, the reverse SDE, the Boltzmann distribution, the Einstein-Stokes relation, Langevin sampling, and the fluctuation-dissipation theorem, starting from a speck of dust in water.</summary>
+  </entry>
+  <entry>
+    <title>Introduction to Deep Learning</title>
+    <link href="https://jaisharmz.github.io/writing/introduction-to-deep-learning/"/>
+    <id>https://jaisharmz.github.io/writing/introduction-to-deep-learning/</id>
+    <updated>2021-12-05T00:00:00Z</updated>
+    <summary>An introductory text on deep learning. It starts with linear and logistic regression and builds up to neural networks, developing the linear algebra and calculus needed to derive the parameter updates along the way, then implements everything from scratch in Python.</summary>
+  </entry>
+</feed>

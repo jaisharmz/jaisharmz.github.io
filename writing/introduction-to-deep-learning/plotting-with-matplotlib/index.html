@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plotting with Matplotlib | Introduction to Deep Learning</title>
+<meta name="description" content="Line plots and scatter plots for looking at data.">
+<link rel="canonical" href="https://jaisharmz.github.io/writing/introduction-to-deep-learning/plotting-with-matplotlib/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Plotting with Matplotlib | Introduction to Deep Learning">
+<meta property="og:description" content="Line plots and scatter plots for looking at data.">
+<meta property="og:url" content="https://jaisharmz.github.io/writing/introduction-to-deep-learning/plotting-with-matplotlib/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.92em' font-size='92' font-family='Georgia,serif' font-weight='600'>J</text></svg>">
+<link rel="alternate" type="application/atom+xml" title="Jai Sharma: Writing" href="../../../writing/index.xml">
+<link rel="stylesheet" href="../../../assets/css/style.css">
+<link rel="stylesheet" href="../../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../../assets/css/writing.css">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap topbar__inner topbar__inner--wide">
+    <a class="home" href="../../../index.html">Jai Sharma</a>
+    <nav>
+      <a href="../../../index.html#research">Research</a>
+      <a href="../../../writing/">Writing</a>
+      <a href="../../../assets/pdf/Jai_Sharma_CV.pdf">CV</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.6v2.4M12 20v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M1.6 12h2.4M20 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8z"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="page">
+<aside class="side toc book-toc" aria-label="Book contents">
+  <p class="side__label"><a href="../">Introduction to Deep Learning</a></p>
+  <p class="part">Introduction</p>
+  <ol><li><a href="../what-is-deep-learning/"><span class="num">1</span><span>What is Deep Learning?</span></a></li><li><a href="../linear-regression/"><span class="num">2</span><span>Linear Regression</span></a></li><li><a href="../logistic-regression/"><span class="num">3</span><span>Logistic Regression</span></a></li><li><a href="../neural-networks/"><span class="num">4</span><span>Neural Networks</span></a></li></ol>
+  <p class="part">Linear Algebra, Calculus, and Derivations</p>
+  <ol><li><a href="../linear-algebra/"><span class="num">5</span><span>Linear Algebra</span></a></li><li><a href="../calculus/"><span class="num">6</span><span>Calculus</span></a></li><li><a href="../derivations/"><span class="num">7</span><span>Derivations</span></a></li></ol>
+  <p class="part">Introduction to Python</p>
+  <ol><li><a href="../python-basics/"><span class="num">8</span><span>The Basics of Python</span></a></li><li><a href="../numpy-arrays/"><span class="num">9</span><span>NumPy Arrays</span></a></li><li class="is-current"><a href="./"><span class="num">10</span><span>Plotting with Matplotlib</span></a><ol><li><a href="#plotting-with-matplotlib"><span class="num">10.1</span><span>Plotting with Matplotlib</span></a></li><li><a href="#conclusion"><span class="num">10.2</span><span>Conclusion</span></a></li></ol></li></ol>
+  <p class="part">Hands On Implementations</p>
+  <ol><li><a href="../implementing-linear-regression/"><span class="num">11</span><span>Implementing Linear Regression</span></a></li><li><a href="../implementing-logistic-regression/"><span class="num">12</span><span>Implementing Logistic Regression</span></a></li><li><a href="../implementing-neural-networks/"><span class="num">13</span><span>Implementing a Neural Network</span></a></li></ol>
+  <p class="part">Afterword</p>
+  <ol><li><a href="../afterword/"><span>Afterword</span></a></li></ol>
+</aside>
+<article class="article">
+<header class="article__head">
+  <p class="article__kicker"><a href="../">Introduction to Deep Learning</a> · Introduction to Python · Chapter 10</p>
+  <h1>Plotting with Matplotlib</h1>
+  <p class="article__meta">
+    <span>2 min read</span>
+    <a href="../../../assets/pdf/introduction-to-deep-learning.pdf">PDF of the book</a>
+  </p>
+</header>
+
+<details class="toc-inline"><summary>In this chapter</summary><ol><li><a href="#plotting-with-matplotlib"><span class="num">10.1</span><span>Plotting with Matplotlib</span></a></li><li><a href="#conclusion"><span class="num">10.2</span><span>Conclusion</span></a></li></ol></details>
+<div class="prose-long">
+<h2 id="plotting-with-matplotlib"><span class="num">10.1</span>Plotting with Matplotlib</h2>
+<p>Many times in order to communicate our results from machine learning, we want to showcase something that is not very technical, like a picture or a graph. In this section, we will learn about plotting in Python using the Matplotlib library.</p>
+<p>If we have a list of points we want to plot, we can first store them in an array. When doing machine learning, you will most likely already have this format for your data or predictions.</p>
+<p>Then, we can plot these two through the following.</p>
+<div class="sourceCode" id="cb1" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">x <span class="op">=</span> [some array of x values]</span>
+<span id="cb1-4">y <span class="op">=</span> [some array of y values]</span>
+<span id="cb1-5">plt.plot(x,y)</span>
+<span id="cb1-6">plt.show()</span></code></pre></div>
+<p>We will see a graph of the plotted <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> and <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span> values. These values will be connected with a line, and they are not specific points (or dots).</p>
+<p>We can change this by adding the ’o’ parameter, which plots the points in the form of dots.</p>
+<div class="sourceCode" id="cb2" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-2"></span>
+<span id="cb2-3">x <span class="op">=</span> [some array of x values]</span>
+<span id="cb2-4">y <span class="op">=</span> [some array of y values]</span>
+<span id="cb2-5">plt.plot(x,y,<span class="st">'o'</span>)</span>
+<span id="cb2-6">plt.show()</span></code></pre></div>
+<p>If we wish to zoom into a certain part of the plot, we can use the following command.</p>
+<div class="sourceCode" id="cb3" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-2"></span>
+<span id="cb3-3">x <span class="op">=</span> [some array of x values]</span>
+<span id="cb3-4">y <span class="op">=</span> [some array of y values]</span>
+<span id="cb3-5">plt.plot(x,y)</span>
+<span id="cb3-6">plt.axis([start x coordinate of new view],[end x coordinate of new view],[start y coordinate of new view],[end y coordinate of new view])</span>
+<span id="cb3-7">plt.show()</span></code></pre></div>
+<p>To be more organized with our graphs, we can add a title to our graph and the axes.</p>
+<div class="sourceCode" id="cb4" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-2"></span>
+<span id="cb4-3">x <span class="op">=</span> [some array of x values]</span>
+<span id="cb4-4">y <span class="op">=</span> [some array of y values]</span>
+<span id="cb4-5">plt.plot(x,y)</span>
+<span id="cb4-6">plt.title(<span class="st">"Title"</span>) <span class="co"># This is the title of the graph.</span></span>
+<span id="cb4-7">plt.xlabel(<span class="st">"X axis"</span>) <span class="co"># This is the name of the x axis.</span></span>
+<span id="cb4-8">plt.ylabel(<span class="st">"Y axis"</span>) <span class="co"># This is the name of the y axis.</span></span>
+<span id="cb4-9">plt.show()</span></code></pre></div>
+<h2 id="conclusion"><span class="num">10.2</span>Conclusion</h2>
+<p>This was a brief introduction to the coding tools needed for Machine Learning and Deep Learning. You need not memorize every command here (though if you did, that would be helpful). Rather, when you forget how to do something, you can simply search up the syntax you should use. Much of this information will be used outside of Machine Learning and Deep Learning and will be a good coding foundation no matter what area of Computer Science you pursue.</p>
+
+</div>
+<nav class="endnav" aria-label="Chapters">
+  <a class="prev" href="../numpy-arrays/"><span class="dir">Previous</span><span class="t">9. NumPy Arrays</span></a>
+  <a class="next" href="../implementing-linear-regression/"><span class="dir">Next</span><span class="t">11. Implementing Linear Regression</span></a>
+</nav>
+</article>
+</div>
+
+<footer class="wrap foot">
+  <span>© 2026 Jai Sharma</span>
+  <span class="spacer"></span>
+  <span>Math typeset with <a href="https://katex.org/">KaTeX</a>.</span>
+</footer>
+
+<script src="../../../assets/js/main.js"></script>
+<script src="../../../assets/js/writing.js"></script>
+</body>
+</html>

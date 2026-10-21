@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Implementing a Neural Network | Introduction to Deep Learning</title>
+<meta name="description" content="Recognizing handwritten digits with a neural network built from scratch.">
+<link rel="canonical" href="https://jaisharmz.github.io/writing/introduction-to-deep-learning/implementing-neural-networks/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Implementing a Neural Network | Introduction to Deep Learning">
+<meta property="og:description" content="Recognizing handwritten digits with a neural network built from scratch.">
+<meta property="og:url" content="https://jaisharmz.github.io/writing/introduction-to-deep-learning/implementing-neural-networks/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.92em' font-size='92' font-family='Georgia,serif' font-weight='600'>J</text></svg>">
+<link rel="alternate" type="application/atom+xml" title="Jai Sharma: Writing" href="../../../writing/index.xml">
+<link rel="stylesheet" href="../../../assets/css/style.css">
+<link rel="stylesheet" href="../../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../../assets/css/writing.css">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap topbar__inner topbar__inner--wide">
+    <a class="home" href="../../../index.html">Jai Sharma</a>
+    <nav>
+      <a href="../../../index.html#research">Research</a>
+      <a href="../../../writing/">Writing</a>
+      <a href="../../../assets/pdf/Jai_Sharma_CV.pdf">CV</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.6v2.4M12 20v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M1.6 12h2.4M20 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8z"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="page">
+<aside class="side toc book-toc" aria-label="Book contents">
+  <p class="side__label"><a href="../">Introduction to Deep Learning</a></p>
+  <p class="part">Introduction</p>
+  <ol><li><a href="../what-is-deep-learning/"><span class="num">1</span><span>What is Deep Learning?</span></a></li><li><a href="../linear-regression/"><span class="num">2</span><span>Linear Regression</span></a></li><li><a href="../logistic-regression/"><span class="num">3</span><span>Logistic Regression</span></a></li><li><a href="../neural-networks/"><span class="num">4</span><span>Neural Networks</span></a></li></ol>
+  <p class="part">Linear Algebra, Calculus, and Derivations</p>
+  <ol><li><a href="../linear-algebra/"><span class="num">5</span><span>Linear Algebra</span></a></li><li><a href="../calculus/"><span class="num">6</span><span>Calculus</span></a></li><li><a href="../derivations/"><span class="num">7</span><span>Derivations</span></a></li></ol>
+  <p class="part">Introduction to Python</p>
+  <ol><li><a href="../python-basics/"><span class="num">8</span><span>The Basics of Python</span></a></li><li><a href="../numpy-arrays/"><span class="num">9</span><span>NumPy Arrays</span></a></li><li><a href="../plotting-with-matplotlib/"><span class="num">10</span><span>Plotting with Matplotlib</span></a></li></ol>
+  <p class="part">Hands On Implementations</p>
+  <ol><li><a href="../implementing-linear-regression/"><span class="num">11</span><span>Implementing Linear Regression</span></a></li><li><a href="../implementing-logistic-regression/"><span class="num">12</span><span>Implementing Logistic Regression</span></a></li><li class="is-current"><a href="./"><span class="num">13</span><span>Implementing a Neural Network</span></a><ol><li><a href="#importing-libraries"><span class="num">13.1</span><span>Importing Libraries</span></a></li><li><a href="#import-data-set-from-tensorflow"><span class="num">13.2</span><span>Import Data set from Tensorflow</span></a></li><li><a href="#data-set-features"><span class="num">13.3</span><span>Data set Features</span></a></li><li><a href="#data-set-shape"><span class="num">13.4</span><span>Data set Shape</span></a></li><li><a href="#normalization"><span class="num">13.5</span><span>Normalization</span></a></li><li><a href="#gradient-descent"><span class="num">13.6</span><span>Gradient Descent</span></a></li><li><a href="#plotting-results"><span class="num">13.7</span><span>Plotting Results</span></a></li><li><a href="#making-predictions"><span class="num">13.8</span><span>Making Predictions</span></a></li><li><a href="#congratulations"><span class="num">13.9</span><span>Congratulations!</span></a></li></ol></li></ol>
+  <p class="part">Afterword</p>
+  <ol><li><a href="../afterword/"><span>Afterword</span></a></li></ol>
+</aside>
+<article class="article">
+<header class="article__head">
+  <p class="article__kicker"><a href="../">Introduction to Deep Learning</a> · Hands On Implementations · Chapter 13</p>
+  <h1>Implementing a Neural Network</h1>
+  <p class="article__meta">
+    <span>15 min read</span>
+    <a href="../../../assets/pdf/introduction-to-deep-learning.pdf">PDF of the book</a>
+    <span><a href="https://github.com/jaisharmz/introduction-to-deep-learning/blob/main/Neural_Network_Intro_to_Deep_Learning.ipynb">Notebook</a> · <a href="https://colab.research.google.com/github/jaisharmz/introduction-to-deep-learning/blob/main/Neural_Network_Intro_to_Deep_Learning.ipynb">Open in Colab</a></span>
+  </p>
+</header>
+
+<details class="toc-inline"><summary>In this chapter</summary><ol><li><a href="#importing-libraries"><span class="num">13.1</span><span>Importing Libraries</span></a></li><li><a href="#import-data-set-from-tensorflow"><span class="num">13.2</span><span>Import Data set from Tensorflow</span></a><ol><li><a href="#quick-look"><span class="num">13.2.1</span><span>Quick-Look</span></a></li></ol></li></li><li><a href="#data-set-features"><span class="num">13.3</span><span>Data set Features</span></a></li><li><a href="#data-set-shape"><span class="num">13.4</span><span>Data set Shape</span></a></li><li><a href="#normalization"><span class="num">13.5</span><span>Normalization</span></a></li><li><a href="#gradient-descent"><span class="num">13.6</span><span>Gradient Descent</span></a><ol><li><a href="#neural-network-architecture"><span class="num">13.6.1</span><span>Neural Network Architecture</span></a></li><li><a href="#initialize-parameters"><span class="num">13.6.2</span><span>Initialize Parameters</span></a></li><li><a href="#hypothesis-function"><span class="num">13.6.3</span><span>Hypothesis Function</span></a></li><li><a href="#cost-function"><span class="num">13.6.4</span><span>Cost Function</span></a></li><li><a href="#parameter-update"><span class="num">13.6.5</span><span>Parameter Update</span></a></li><li><a href="#put-it-all-together"><span class="num">13.6.6</span><span>Put it all together!</span></a></li><li><a href="#training-the-model"><span class="num">13.6.7</span><span>Training the Model</span></a></li></ol></li></li><li><a href="#plotting-results"><span class="num">13.7</span><span>Plotting Results</span></a></li><li><a href="#making-predictions"><span class="num">13.8</span><span>Making Predictions</span></a></li><li><a href="#congratulations"><span class="num">13.9</span><span>Congratulations!</span></a></li></ol></details>
+<div class="prose-long">
+<p>We will perform a similar workflow as the last two sections here for a Neural Network implementation.</p>
+<h2 id="importing-libraries"><span class="num">13.1</span>Importing Libraries</h2>
+<p>Before we start, let’s import some necessary libraries we will be using.</p>
+<div class="sourceCode" id="cb1" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><span class="im">import</span> numpy <span class="im">as</span> np <span class="co"># NumPy</span></span>
+<span id="cb1-2"><span class="im">import</span> pandas <span class="im">as</span> pd <span class="co"># Pandas</span></span>
+<span id="cb1-3"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt <span class="co"># Matplotlib</span></span>
+<span id="cb1-4"><span class="im">from</span> IPython.display <span class="im">import</span> display <span class="co"># For displaying the Pandas DataFrame</span></span>
+<span id="cb1-5"><span class="im">import</span> math <span class="co"># Math library</span></span>
+<span id="cb1-6"><span class="im">from</span> tensorflow.keras.datasets <span class="im">import</span> mnist <span class="co"># For loading the data set</span></span>
+<span id="cb1-7"><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split <span class="co"># For splitting the data set into train and test sets</span></span>
+<span id="cb1-8"><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder <span class="co"># To one-hot encode the y-values</span></span></code></pre></div>
+<h2 id="import-data-set-from-tensorflow"><span class="num">13.2</span>Import Data set from Tensorflow</h2>
+<p>We will be using a data set on hand-written digits. In this data set, we are given some information about the pixel values of a picture with a numerical digit and the corresponding number.</p>
+<p>In this notebook, we will use Neural Networks to predict what number a hand-written digit is.</p>
+<p>In the following code box, we import the data from Tensorflow.</p>
+<div class="sourceCode" id="cb2" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1">one_hot <span class="op">=</span> OneHotEncoder(sparse<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-2">(x_train, y_train), (x_test, y_test) <span class="op">=</span> mnist.load_data()</span>
+<span id="cb2-3">x_train <span class="op">=</span> x_train.reshape(x_train.shape[<span class="dv">0</span>], <span class="op">-</span><span class="dv">1</span>).T</span>
+<span id="cb2-4">x_test <span class="op">=</span> x_test.reshape(x_test.shape[<span class="dv">0</span>], <span class="op">-</span><span class="dv">1</span>).T</span>
+<span id="cb2-5">y_train <span class="op">=</span> y_train.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb2-6">y_train <span class="op">=</span> one_hot.fit_transform(y_train).T</span>
+<span id="cb2-7">y_test <span class="op">=</span> y_test.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb2-8">y_test <span class="op">=</span> one_hot.transform(y_test).T</span></code></pre></div>
+<div class="nb-out"><pre>Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz
+11493376/11490434 [==============================] - 0s 0us/step</pre></div>
+<h3 id="quick-look"><span class="num">13.2.1</span>Quick-Look</h3>
+<p>In the following code box, we take a quick look at one of the images.</p>
+<div class="sourceCode" id="cb3" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1">image_num <span class="op">=</span> <span class="dv">0</span> <span class="co"># Change this number to see different image examples</span></span>
+<span id="cb3-2">image <span class="op">=</span> x_train[:,image_num]</span>
+<span id="cb3-3">label <span class="op">=</span> one_hot.inverse_transform(y_train[:,image_num].reshape(<span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>))[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb3-4"><span class="bu">print</span>(<span class="st">"Label: "</span> <span class="op">+</span> <span class="bu">str</span>(label))</span>
+<span id="cb3-5">plt.imshow(image.reshape(<span class="dv">28</span>,<span class="dv">28</span>))</span>
+<span id="cb3-6">plt.show()</span></code></pre></div>
+<div class="nb-out"><pre>Label: 5</pre><img src="../../../assets/img/writing/introduction-to-deep-learning/nb-c170e33ca3a5.png" alt="Plot produced by the code above" loading="lazy"></div>
+<h2 id="data-set-features"><span class="num">13.3</span>Data set Features</h2>
+<p>Here is some information about the features and labels of our data set.</p>
+<p><strong>X-Values (Features)</strong></p>
+<ul>
+<li><p>784 grayscale pixel values (0 to 255) (There are 784 pixels in total for each image because the image dimensions are <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">28</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">28</span></span></span></span>.)</span></p></li>
+</ul>
+<p><strong>Y-Value (Label)</strong></p>
+<ul>
+<li><p>Label: The digit that the image is supposed to represent.</p></li>
+</ul>
+<p>We will be turning each y-value into a one hot encoding, so the number “5” as a label would be represented by the vector <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:12.0001em;vertical-align:-5.7501em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:6.2499em;"><span style="top:-8.2499em;"><span class="pstrut" style="height:14em;"></span><span style="width:0.875em;height:12.000em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.875em" height="12.000em" viewBox="0 0 875 12000"><path d="M863,9c0,-2,-2,-5,-6,-9c0,0,-17,0,-17,0c-12.7,0,-19.3,0.3,-20,1
+c-5.3,5.3,-10.3,11,-15,17c-242.7,294.7,-395.3,682,-458,1162c-21.3,163.3,-33.3,349,
+-36,557 l0,8484c0.2,6,0,26,0,60c2,159.3,10,310.7,24,454c53.3,528,210,
+949.7,470,1265c4.7,6,9.7,11.7,15,17c0.7,0.7,7,1,19,1c0,0,18,0,18,0c4,-4,6,-7,6,-9
+c0,-2.7,-3.3,-8.7,-10,-18c-135.3,-192.7,-235.5,-414.3,-300.5,-665c-65,-250.7,-102.5,
+-544.7,-112.5,-882c-2,-104,-3,-167,-3,-189
+l0,-8492c0,-162.7,5.7,-314,17,-454c20.7,-272,63.7,-513,129,-723c65.3,
+-210,155.3,-396.3,270,-559c6.7,-9.3,10,-15.3,10,-18z"></path></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:5.7501em;"><span></span></span></span></span></span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:6.25em;"><span style="top:-8.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:-7.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:-6.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:-4.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:-0.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:1.19em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:2.39em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:5.75em;"><span></span></span></span></span></span></span></span><span class="mclose"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:6.2499em;"><span style="top:-8.2499em;"><span class="pstrut" style="height:14em;"></span><span style="width:0.875em;height:12.000em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.875em" height="12.000em" viewBox="0 0 875 12000"><path d="M76,0c-16.7,0,-25,3,-25,9c0,2,2,6.3,6,13c21.3,28.7,42.3,60.3,
+63,95c96.7,156.7,172.8,332.5,228.5,527.5c55.7,195,92.8,416.5,111.5,664.5
+c11.3,139.3,17,290.7,17,454c0,28,1.7,43,3.3,45l0,8409
+c-3,4,-3.3,16.7,-3.3,38c0,162,-5.7,313.7,-17,455c-18.7,248,-55.8,469.3,-111.5,664
+c-55.7,194.7,-131.8,370.3,-228.5,527c-20.7,34.7,-41.7,66.3,-63,95c-2,3.3,-4,7,-6,11
+c0,7.3,5.7,11,17,11c0,0,11,0,11,0c9.3,0,14.3,-0.3,15,-1c5.3,-5.3,10.3,-11,15,-17
+c242.7,-294.7,395.3,-681.7,458,-1161c21.3,-164.7,33.3,-350.7,36,-558
+l0,-8544c-2,-159.3,-10,-310.7,-24,-454c-53.3,-528,-210,-949.7,
+-470,-1265c-4.7,-6,-9.7,-11.7,-15,-17c-0.7,-0.7,-6.7,-1,-18,-1z"></path></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:5.7501em;"><span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span></span></span></span></span> where we place the 1 in the 5th position (index starts at 0).</p>
+<div class="sourceCode" id="cb4" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1">m_train <span class="op">=</span> x_train.shape[<span class="dv">1</span>]</span>
+<span id="cb4-2">m_test <span class="op">=</span> x_test.shape[<span class="dv">1</span>]</span>
+<span id="cb4-3"></span>
+<span id="cb4-4"><span class="bu">print</span>(<span class="st">"Number of examples in train set: "</span> <span class="op">+</span> <span class="bu">str</span>(m_train))</span>
+<span id="cb4-5"><span class="bu">print</span>(<span class="st">"Number of examples in test set:</span><span class="ch">\t</span><span class="st"> "</span> <span class="op">+</span> <span class="bu">str</span>(m_test))</span></code></pre></div>
+<div class="nb-out"><pre>Number of examples in train set: 60000
+Number of examples in test set:	 10000</pre></div>
+<div class="sourceCode" id="cb5" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1">m <span class="op">=</span> m_train <span class="op">+</span> m_test</span>
+<span id="cb5-2">n <span class="op">=</span> x_train.shape[<span class="dv">0</span>]</span>
+<span id="cb5-3"><span class="bu">print</span>(<span class="st">"Number of examples: "</span> <span class="op">+</span> <span class="bu">str</span>(m))</span>
+<span id="cb5-4"><span class="bu">print</span>(<span class="st">"Number of features: "</span> <span class="op">+</span> <span class="bu">str</span>(n))</span></code></pre></div>
+<div class="nb-out"><pre>Number of examples: 70000
+Number of features: 784</pre></div>
+<h2 id="data-set-shape"><span class="num">13.4</span>Data set Shape</h2>
+<p>In the last two code boxes, we found that our data set has 70,000 examples, 60,000 of which are in the train set and 10,000 of which are in the test set. Additionally, as we said before, both the train set and the test set have 784 features (pixel values). This kind of familiarity with the data set is always nice to know before creating the Deep Learning model.</p>
+<h2 id="normalization"><span class="num">13.5</span>Normalization</h2>
+<p>For Linear Regression, we must **normalize** our values. In this case, that means bringing the mean to 0 and the standard deviation to 1 using the following code box. Note that we only do this for the X-Values (Features).</p>
+<div class="sourceCode" id="cb6" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><span class="co"># x_train_np</span></span>
+<span id="cb6-2">x_train <span class="op">=</span> x_train<span class="op">/</span><span class="dv">255</span></span>
+<span id="cb6-3"></span>
+<span id="cb6-4"><span class="co"># x_test_np</span></span>
+<span id="cb6-5">x_test <span class="op">=</span> x_test<span class="op">/</span><span class="dv">255</span></span>
+<span id="cb6-6">x_train</span></code></pre></div>
+<div class="nb-out"><img src="../../../assets/img/writing/introduction-to-deep-learning/code20.png" alt="Output of the code above" loading="lazy"></div>
+<h2 id="gradient-descent"><span class="num">13.6</span>Gradient Descent</h2>
+<p>Now we will move onto the Neural Network model. For Neural Networks, we use Gradient Descent. These are the steps of Gradient Descent (the parameter initialization is specific to Neural Networks, but most of these steps are applied to (mostly) all types of Machine Learning and Deep Learning algorithms):</p>
+<ol>
+<li><p><strong>Initialize Parameters</strong> For Neural Networks, we initialize all parameters except for the bias parameters at random. We initialize the bias parameters to be 0.</p></li>
+<li><p><strong>Hypothesis Function</strong> Use the paramters and input features to compute the hypothesis <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.1944em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span></span></span></span>.</span></p></li>
+<li><p><strong>Cost Function</strong> Use the prediction <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.1944em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span></span></span></span> and the real label <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span> to compute the Binary Cross Entropy (Cross Entropy) cost function.</p></li>
+<li><p><strong>Parameter Update</strong> Compute the parameter update for all parameters and update them using the appropriate learning rate <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span> (alpha).</p></li>
+<li><p><strong>Repeat!</strong> Repeat Steps 2-4 many times until the cost is sufficiently low.</p></li>
+</ol>
+<p>In the following code boxes, we will write code for each of these steps. In the end, we will put these together to train the Neural Network model.</p>
+<h3 id="neural-network-architecture"><span class="num">13.6.1</span>Neural Network Architecture</h3>
+<p>The following image shows the architecture of the Neural Network we will be implementing. However, we want to create code so that we can easily change the architecture. So, you will see that all of the methods we will be implementing will be generalized.</p>
+<div class="nb-out"><img src="../../../assets/img/writing/introduction-to-deep-learning/code21.png" alt="Output of the code above" loading="lazy"></div>
+<h3 id="initialize-parameters"><span class="num">13.6.2</span>Initialize Parameters</h3>
+<p>A Neural Network has different parameters at each layer. How do we initialize the parameters for all layers?</p>
+<p>First, we start by creating a function to initialize the parameters for one layer.</p>
+<p>The parameters for one layer will be stored in a matrix of shape <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>,</span> where <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span> is the number of units in the next layer and <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is the number of units in the previous layer. (Remember, these parameters will be initialized at random.)</p>
+<p>The bias parameters will be stored in an array of zeros with shape <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>.</span></p>
+<div class="sourceCode" id="cb7" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><span class="kw">def</span> initialize_parameters_one_layer(n_x, n_y):</span>
+<span id="cb7-2">  W <span class="op">=</span> np.random.rand(n_y, n_x)</span>
+<span id="cb7-3">  b <span class="op">=</span> np.zeros((n_y,<span class="dv">1</span>))</span>
+<span id="cb7-4">  <span class="cf">return</span> W, b</span></code></pre></div>
+<div class="sourceCode" id="cb8" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><span class="co"># Let's test it out!</span></span>
+<span id="cb8-2">W_temp, b_temp <span class="op">=</span> initialize_parameters_one_layer(<span class="dv">8</span>,<span class="dv">8</span>)</span>
+<span id="cb8-3"><span class="bu">print</span>(W_temp)</span>
+<span id="cb8-4"><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>)</span>
+<span id="cb8-5"><span class="bu">print</span>(b_temp)</span></code></pre></div>
+<div class="nb-out"><pre>[[0.9948882  0.31061237 0.59983966 0.0903806  0.39713194 0.74456186
+  0.74524955 0.61054516]
+ [0.40787876 0.7472519  0.21508359 0.70613346 0.09833612 0.77623298
+  0.84916848 0.93004424]
+ [0.37349405 0.9830624  0.56006727 0.63066102 0.58694321 0.19604183
+  0.02724027 0.76783474]
+ [0.64280007 0.76425092 0.09191286 0.79202201 0.46478162 0.6500469
+  0.81145321 0.38500157]
+ [0.46835228 0.70215198 0.28147696 0.77359609 0.60774462 0.75848635
+  0.7629576  0.5458516 ]
+ [0.48069041 0.36528199 0.16404106 0.213355   0.93370239 0.57034688
+  0.68039659 0.46567365]
+ [0.11422886 0.19365046 0.65993693 0.99365807 0.49854135 0.14871664
+  0.89138876 0.21796542]
+ [0.36232873 0.86834132 0.73126737 0.42163397 0.19175555 0.12868344
+  0.3792012  0.1771464 ]]
+
+
+
+[[0.]
+ [0.]
+ [0.]
+ [0.]
+ [0.]
+ [0.]
+ [0.]
+ [0.]]</pre></div>
+<p>Then, we create all of the parameters for all of the layers. To do this, we have to know the architecture of the network, so we pass that as an argument.</p>
+<p>This argument will be a list like <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">784</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">8</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">8</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">10</span><span class="mclose">]</span></span></span></span> (which is the network structure we will be using).</p>
+<p>We will store the final parameters in a dictionary called “parameters,” which we will return at the end of the function.</p>
+<div class="sourceCode" id="cb9" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><span class="kw">def</span> initialize_parameters(layer_dims):</span>
+<span id="cb9-2">  parameters <span class="op">=</span> {}</span>
+<span id="cb9-3">  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(layer_dims)<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb9-4">    parameters[<span class="st">"W"</span> <span class="op">+</span> <span class="bu">str</span>(i <span class="op">+</span> <span class="dv">1</span>)], parameters[<span class="st">"b"</span> <span class="op">+</span> <span class="bu">str</span>(i <span class="op">+</span> <span class="dv">1</span>)] <span class="op">=</span> initialize_parameters_one_layer(layer_dims[i], layer_dims[i<span class="op">+</span><span class="dv">1</span>])</span>
+<span id="cb9-5">  </span>
+<span id="cb9-6">  <span class="cf">return</span> parameters</span></code></pre></div>
+<div class="sourceCode" id="cb10" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><span class="co"># Let's test it out!</span></span>
+<span id="cb10-2">initialize_parameters([<span class="dv">1</span>,<span class="dv">8</span>,<span class="dv">8</span>,<span class="dv">1</span>])</span></code></pre></div>
+<div class="nb-out"><pre>{'W1': array([[0.50403375],
+        [0.2482813 ],
+        [0.4401925 ],
+        [0.80938932],
+        [0.17882748],
+        [0.61901345],
+        [0.1650366 ],
+        [0.18466573]]),
+ 'W2': array([[0.31584434, 0.66085578, 0.32536029, 0.07630073, 0.26280106,
+         0.18086192, 0.80576887, 0.55052303],
+        [0.8421674 , 0.67539196, 0.55940613, 0.46603706, 0.24337491,
+         0.96732574, 0.05994815, 0.96613542],
+        [0.81486762, 0.5078549 , 0.32228502, 0.80395045, 0.80621855,
+         0.42159382, 0.7995287 , 0.76764003],
+        [0.12166132, 0.69217668, 0.74841264, 0.41248084, 0.9953898 ,
+         0.77604088, 0.78442132, 0.43921354],
+        [0.62223419, 0.10602683, 0.72589688, 0.22725062, 0.20834198,
+         0.14922117, 0.9117977 , 0.18231461],
+        [0.46405014, 0.83205318, 0.52006071, 0.36658749, 0.06654238,
+         0.04215887, 0.38908826, 0.57961021],
+        [0.14434125, 0.12783952, 0.66082712, 0.45476599, 0.59337462,
+         0.22681795, 0.63748266, 0.15836681],
+        [0.22914379, 0.98708748, 0.30427091, 0.01945012, 0.54740481,
+         0.41804085, 0.99274595, 0.68454313]]),
+ 'W3': array([[0.35134235, 0.36249248, 0.95158612, 0.56110301, 0.76751867,
+         0.81790674, 0.25298197, 0.91874051]]),
+ 'b1': array([[0.],
+        [0.],
+        [0.],
+        [0.],
+        [0.],
+        [0.],
+        [0.],
+        [0.]]),
+ 'b2': array([[0.],
+        [0.],
+        [0.],
+        [0.],
+        [0.],
+        [0.],
+        [0.],
+        [0.]]),
+ 'b3': array([[0.]])}</pre></div>
+<h3 id="hypothesis-function"><span class="num">13.6.3</span>Hypothesis Function</h3>
+<p>Now, we implement the hypothesis function for Neural Networks. Just like for the parameter initialization, we cannot make our code specific to our neural network architecture.</p>
+<p>So how do we compute the hypothesis?</p>
+<p>We take a similar approach as in the parameter initialization. We first compute the activation units of the next layer given the activation units of the previous layer.</p>
+<p>Then, we create another function which repeats this process many times to compute the final hypothesis given the original inputs.</p>
+<p>(Before we do this, we define the sigmoid function.)</p>
+<p>Here is the sigmoid function:</p>
+<div class="sourceCode" id="cb11" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><span class="kw">def</span> sigmoid(x):</span>
+<span id="cb11-2">  <span class="cf">return</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>math.e<span class="op">**</span>(<span class="op">-</span>x))</span></code></pre></div>
+<p>Now, we compute the activation units of the next layer given the activation units of the last layer.</p>
+<p>Shape of input: <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span></span></span></span></p>
+<p>Shape of parameter (not bias parameter): <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
+<p>We want the shape: <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span></span></span></span>.</span></p>
+<p>Therefore, we do: <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8095em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord">parameter</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8623em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord">input</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord">bias&nbsp;parameter</span></span><span class="mord">.</span></span></span></span></span></p>
+<p>Finally, we take the sigmoid of this answer.</p>
+<p>We also return the value before we take the sigmoid for backpropagation.</p>
+<div class="sourceCode" id="cb12" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><span class="kw">def</span> hypothesis_one_layer(layer_num, <span class="bu">input</span>, parameters):</span>
+<span id="cb12-2">  W <span class="op">=</span> parameters[<span class="st">"W"</span> <span class="op">+</span> <span class="bu">str</span>(layer_num)]</span>
+<span id="cb12-3">  b <span class="op">=</span> parameters[<span class="st">"b"</span> <span class="op">+</span> <span class="bu">str</span>(layer_num)]</span>
+<span id="cb12-4"></span>
+<span id="cb12-5">  z <span class="op">=</span> np.dot(W, <span class="bu">input</span>) <span class="op">+</span> b</span>
+<span id="cb12-6">  y_hat <span class="op">=</span> sigmoid(z)</span>
+<span id="cb12-7">  <span class="cf">return</span> y_hat, z</span></code></pre></div>
+<p>To find the hypothesis, we repeat the last function a lot of times according to the layer dimensions. We have to also remember to store some of the values in a “cache” for when we do backpropagation.</p>
+<div class="sourceCode" id="cb13" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><span class="kw">def</span> hypothesis(layer_dims, x, parameters):</span>
+<span id="cb13-2">  cache <span class="op">=</span> {}</span>
+<span id="cb13-3">  y_hat <span class="op">=</span> x</span>
+<span id="cb13-4">  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(layer_dims)<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb13-5">    y_hat, cache[<span class="st">"Z"</span><span class="op">+</span><span class="bu">str</span>(i<span class="op">+</span><span class="dv">1</span>)] <span class="op">=</span> hypothesis_one_layer(i<span class="op">+</span><span class="dv">1</span>, y_hat, parameters)</span>
+<span id="cb13-6">    cache[<span class="st">"A"</span><span class="op">+</span><span class="bu">str</span>(i<span class="op">+</span><span class="dv">1</span>)] <span class="op">=</span> y_hat</span>
+<span id="cb13-7">  </span>
+<span id="cb13-8">  <span class="cf">return</span> y_hat, cache</span></code></pre></div>
+<h3 id="cost-function"><span class="num">13.6.4</span>Cost Function</h3>
+<p>Now, we define the cost function using <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9495em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9495em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textbf">Y</span></span></span><span style="top:-3.2551em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">^</span></span></span></span></span></span></span></span></span></span> and <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6861em;"></span><span class="mord text"><span class="mord textbf">Y</span></span></span></span></span>.</span> Remember, when <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9495em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9495em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textbf">Y</span></span></span><span style="top:-3.2551em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">^</span></span></span></span></span></span></span></span></span></span> and <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6861em;"></span><span class="mord text"><span class="mord textbf">Y</span></span></span></span></span> are matrices, the cost function is defined as follows: <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.09618em;">J</span><span class="mopen">(</span><span class="mord text"><span class="mord textbf">X</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord text"><span class="mord textbf">W</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord">−</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">m</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">[</span></span><span class="mord text"><span class="mord textbf">Y</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9495em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textbf">Y</span></span></span><span style="top:-3.2551em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">^</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord text"><span class="mord textbf">Y</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9495em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textbf">Y</span></span></span><span style="top:-3.2551em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">^</span></span></span></span></span></span></span><span class="mclose">)</span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">]</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span></span></span></span></span> where ”<span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord">−</span></span></span></span>”</span> and the squaring operation represent element-wise subtraction and squaring. Note that “log” is the natural log function with base <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">e</span></span></span></span>.</span> In Python code, this would be:</p>
+<div class="sourceCode" id="cb14" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1">J <span class="op">=</span> <span class="op">-</span> <span class="dv">1</span><span class="op">/</span>(m) <span class="op">*</span> (y<span class="op">*</span>np.log(y_hat) <span class="op">+</span> (<span class="dv">1</span><span class="op">-</span>y)<span class="op">*</span>np.log(<span class="dv">1</span><span class="op">-</span>y_hat))</span></code></pre></div>
+<p>(Sidenote: For the Python function, instead of passing in <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6861em;"></span><span class="mord text"><span class="mord textbf">X</span></span></span></span></span>,</span> <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>,</span> and <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6861em;"></span><span class="mord text"><span class="mord textbf">W</span></span></span></span></span>,</span> we will simply pass in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9495em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9495em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textbf">Y</span></span></span><span style="top:-3.2551em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">^</span></span></span></span></span></span></span></span></span></span> (which we computed in the last step). Additionally, we will pass in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6861em;"></span><span class="mord text"><span class="mord textbf">Y</span></span></span></span></span> and <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span></span></span></span>.)</span></p>
+<p>In the next code box, we create the cost function.</p>
+<p>(Note: The cost function for Neural Networks is the same as the Logistic Regression cost function in this case.)</p>
+<div class="sourceCode" id="cb15" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><span class="kw">def</span> cost(y_hat, y, m):</span>
+<span id="cb15-2">  J <span class="op">=</span> <span class="op">-</span> <span class="dv">1</span><span class="op">/</span>m <span class="op">*</span> np.<span class="bu">sum</span>(y<span class="op">*</span>np.log(y_hat) <span class="op">+</span> (<span class="dv">1</span><span class="op">-</span>y)<span class="op">*</span>np.log(<span class="dv">1</span><span class="op">-</span>y_hat))</span>
+<span id="cb15-3">  <span class="cf">return</span> J</span></code></pre></div>
+<h3 id="parameter-update"><span class="num">13.6.5</span>Parameter Update</h3>
+<p>After computing the cost, we have to adjust our parameters. Recall that the parameter update for <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6861em;"></span><span class="mord text"><span class="mord textbf">W</span></span></span></span></span> is: <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.0574em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="mord text"><span class="mord textbf">W</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.09618em;">dJ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord">.</span></span></span></span></span> Similarly, this is how we update <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>:</span> <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.0574em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="mord mathnormal">b</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.09618em;">dJ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord">.</span></span></span></span></span> To find <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2251em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mord text mtight"><span class="mord textbf mtight">W</span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.09618em;">dJ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> and <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2251em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight">b</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.09618em;">dJ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>,</span> we again find this in pieces. Because we did not learn Calculus, do not worry about how we find these values. Just note how we use them to update the Neural Network weights.</p>
+<p>(Implementational Detail: We store all of the gradients (parameter updates) in a dictionary called “grads” in the parameter update function.)</p>
+<div class="sourceCode" id="cb16" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><span class="kw">def</span> parameter_update_one_layer(dz, a, z, w):</span>
+<span id="cb16-2">  dW <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>m <span class="op">*</span> np.dot(dz, a.T)</span>
+<span id="cb16-3">  db <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>m <span class="op">*</span> np.<span class="bu">sum</span>(dz, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-4">  dZ <span class="op">=</span> np.dot(w.T, dz) <span class="op">*</span> (sigmoid(z) <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>sigmoid(z)))</span>
+<span id="cb16-5"></span>
+<span id="cb16-6">  <span class="cf">return</span> dW, db, dZ</span></code></pre></div>
+<p>Now, we write the parameter update function to update all parameters.</p>
+<div class="sourceCode" id="cb17" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><span class="kw">def</span> parameter_update(layer_dims, y, cache, parameters, alpha<span class="op">=</span><span class="fl">0.1</span>):</span>
+<span id="cb17-2">  grads <span class="op">=</span> {}</span>
+<span id="cb17-3">  A <span class="op">=</span> cache[<span class="st">"A"</span><span class="op">+</span><span class="bu">str</span>(<span class="bu">len</span>(layer_dims)<span class="op">-</span><span class="dv">1</span>)]</span>
+<span id="cb17-4">  dZ <span class="op">=</span> A <span class="op">-</span> y</span>
+<span id="cb17-5">  A <span class="op">=</span> cache[<span class="st">"A"</span><span class="op">+</span><span class="bu">str</span>(<span class="bu">len</span>(layer_dims)<span class="op">-</span><span class="dv">2</span>)]</span>
+<span id="cb17-6">  Z <span class="op">=</span> cache[<span class="st">"Z"</span><span class="op">+</span><span class="bu">str</span>(<span class="bu">len</span>(layer_dims)<span class="op">-</span><span class="dv">2</span>)]</span>
+<span id="cb17-7">  grads[<span class="st">"dZ"</span><span class="op">+</span><span class="bu">str</span>(<span class="bu">len</span>(layer_dims)<span class="op">-</span><span class="dv">1</span>)] <span class="op">=</span> dZ</span>
+<span id="cb17-8">  W <span class="op">=</span> parameters[<span class="st">"W"</span><span class="op">+</span><span class="bu">str</span>(<span class="bu">len</span>(layer_dims)<span class="op">-</span><span class="dv">1</span>)]</span>
+<span id="cb17-9"></span>
+<span id="cb17-10">  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(layer_dims)<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb17-11">    dW, db, dZ <span class="op">=</span> parameter_update_one_layer(dZ, A, Z, W)</span>
+<span id="cb17-12">    grads[<span class="st">"dW"</span><span class="op">+</span><span class="bu">str</span>(i)] <span class="op">=</span> dW</span>
+<span id="cb17-13">    grads[<span class="st">"db"</span><span class="op">+</span><span class="bu">str</span>(i)] <span class="op">=</span> db</span>
+<span id="cb17-14">    grads[<span class="st">"dZ"</span><span class="op">+</span><span class="bu">str</span>(i)] <span class="op">=</span> dZ</span>
+<span id="cb17-15"></span>
+<span id="cb17-16">    A <span class="op">=</span> cache[<span class="st">"A"</span><span class="op">+</span><span class="bu">str</span>(i<span class="op">-</span><span class="dv">1</span>)]</span>
+<span id="cb17-17">    Z <span class="op">=</span> cache[<span class="st">"Z"</span><span class="op">+</span><span class="bu">str</span>(i<span class="op">-</span><span class="dv">1</span>)]</span>
+<span id="cb17-18">    W <span class="op">=</span> parameters[<span class="st">"W"</span><span class="op">+</span><span class="bu">str</span>(i<span class="op">-</span><span class="dv">1</span>)]</span>
+<span id="cb17-19">  </span>
+<span id="cb17-20">  <span class="cf">for</span> i <span class="kw">in</span> grads.keys():</span>
+<span id="cb17-21">    <span class="cf">if</span> i[<span class="dv">1</span>] <span class="op">==</span> <span class="st">"W"</span> <span class="kw">or</span> i[<span class="dv">1</span>] <span class="op">==</span> <span class="st">"b"</span>:</span>
+<span id="cb17-22">      parameters[i[<span class="dv">1</span>:]] <span class="op">=</span> parameters[i[<span class="dv">1</span>:]] <span class="op">-</span> alpha <span class="op">*</span> grads[i]</span>
+<span id="cb17-23">  </span>
+<span id="cb17-24">  <span class="cf">return</span> parameters</span></code></pre></div>
+<h3 id="put-it-all-together"><span class="num">13.6.6</span>Put it all together!</h3>
+<p>We will now do Step 5 of Gradient Descent (Repeat!) by putting all of the previous functions together into a model function. This is what we will do in this function:</p>
+<ol>
+<li><p><strong>Initialize Parameters</strong> For Neural Networks, we initialize all parameters except for the bias parameters at random. We initialize the bias parameters to be 0.</p></li>
+<li><p><strong>Hypothesis Function</strong> Use the paramters and input features to compute the hypothesis <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.1944em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span></span></span></span>.</span></p></li>
+<li><p><strong>Cost Function</strong> Use the prediction <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.1944em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span></span></span></span> and the real label <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span> to compute the Binary Cross Entropy (Cross Entropy) cost function.</p></li>
+<li><p><strong>Parameter Update</strong> Compute the parameter update for all parameters and update them using the appropriate learning rate <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span> (alpha).</p></li>
+<li><p><strong>Repeat!</strong> Repeat Steps 2-4 many times until the cost is sufficiently low.</p></li>
+</ol>
+<p>Finally, we return the learned parameters <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6861em;"></span><span class="mord text"><span class="mord textbf">W</span></span></span></span></span> and <span class="nowrap"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>.</span> While training the model, we will print the cost on the train set every few iterations and, along with this, the cost on the test set. We will keep track of these costs and return some values that are helpful in graphing our performance.</p>
+<p>In the following code box, we create the model function.</p>
+<div class="sourceCode" id="cb18" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><span class="kw">def</span> model(x_train, y_train, m_train, x_test, y_test, m_test, layer_dims, alpha<span class="op">=</span><span class="fl">0.1</span>, iterations<span class="op">=</span><span class="dv">100</span>):</span>
+<span id="cb18-2">  <span class="co"># Initialize Parameters</span></span>
+<span id="cb18-3">  parameters <span class="op">=</span> initialize_parameters(layer_dims)</span>
+<span id="cb18-4"></span>
+<span id="cb18-5">  <span class="co"># Keep track of costs for train and test sets</span></span>
+<span id="cb18-6">  iteration_nums <span class="op">=</span> [] <span class="co"># X-value for performance graph</span></span>
+<span id="cb18-7">  costs_train <span class="op">=</span> []</span>
+<span id="cb18-8">  costs_test <span class="op">=</span> []</span>
+<span id="cb18-9"></span>
+<span id="cb18-10">  <span class="co"># Repeat the following steps of Gradient Descent using a for-loop</span></span>
+<span id="cb18-11">  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(iterations):</span>
+<span id="cb18-12">    <span class="co"># Compute Hypothesis</span></span>
+<span id="cb18-13">    y_hat, cache <span class="op">=</span> hypothesis(layer_dims, x_train, parameters)</span>
+<span id="cb18-14"></span>
+<span id="cb18-15">    <span class="co"># Compute Cost Function for train set and test set and print this out</span></span>
+<span id="cb18-16">    <span class="co"># Only do this once every 1 iteration</span></span>
+<span id="cb18-17">    <span class="cf">if</span> i <span class="op">%</span> <span class="dv">1</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb18-18">      iteration_nums.append(i) <span class="co"># Add iteration number to list of iteration numbers</span></span>
+<span id="cb18-19">      cost_train <span class="op">=</span> cost(y_hat, y_train, m_train) <span class="co"># Compute cost for train set</span></span>
+<span id="cb18-20">      costs_train.append(cost_train) <span class="co"># Add cost to list of train costs</span></span>
+<span id="cb18-21">      y_hat_test, _ <span class="op">=</span> hypothesis(layer_dims, x_test, parameters) <span class="co"># Compute hypothesis for test set</span></span>
+<span id="cb18-22">      cost_test <span class="op">=</span> cost(y_hat_test, y_test, m_test) <span class="co"># Compute cost for test set</span></span>
+<span id="cb18-23">      costs_test.append(cost_test) <span class="co"># Add cost to list of test costs</span></span>
+<span id="cb18-24">      <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n\n</span><span class="st">Iteration "</span> <span class="op">+</span> <span class="bu">str</span>(i<span class="op">+</span><span class="dv">1</span>))</span>
+<span id="cb18-25">      <span class="bu">print</span>(<span class="st">"Train set cost: "</span> <span class="op">+</span> <span class="bu">str</span>(cost_train))</span>
+<span id="cb18-26">      <span class="bu">print</span>(<span class="st">"Test set cost: "</span> <span class="op">+</span> <span class="bu">str</span>(cost_test))</span>
+<span id="cb18-27">    </span>
+<span id="cb18-28">    <span class="co"># Update Parameters</span></span>
+<span id="cb18-29">    parameters <span class="op">=</span> parameter_update(layer_dims, y_train, cache, parameters, alpha)</span>
+<span id="cb18-30">  </span>
+<span id="cb18-31">  <span class="co"># Print final costs for train and test sets</span></span>
+<span id="cb18-32">  iteration_nums.append(iterations) <span class="co"># Add iteration number to list of iteration numbers</span></span>
+<span id="cb18-33">  y_hat, _ <span class="op">=</span> hypothesis(layer_dims, x_train, parameters) <span class="co"># Compute hypothesis for train set</span></span>
+<span id="cb18-34">  cost_train <span class="op">=</span> cost(y_hat, y_train, m_train) <span class="co"># Compute cost for train set</span></span>
+<span id="cb18-35">  costs_train.append(cost_train) <span class="co"># Add cost to list of train costs</span></span>
+<span id="cb18-36">  y_hat_test, _ <span class="op">=</span> hypothesis(layer_dims, x_test, parameters) <span class="co"># Compute hypothesis for test set</span></span>
+<span id="cb18-37">  cost_test <span class="op">=</span> cost(y_hat_test, y_test, m_test) <span class="co"># Compute cost for test set</span></span>
+<span id="cb18-38">  costs_test.append(cost_test) <span class="co"># Add cost to list of test costs</span></span>
+<span id="cb18-39">  <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>)</span>
+<span id="cb18-40">  <span class="bu">print</span>(<span class="st">"Final train set cost: "</span> <span class="op">+</span> <span class="bu">str</span>(cost_train))</span>
+<span id="cb18-41">  <span class="bu">print</span>(<span class="st">"Final test set cost: "</span> <span class="op">+</span> <span class="bu">str</span>(cost_test))</span>
+<span id="cb18-42"></span>
+<span id="cb18-43">  <span class="co"># Return learned parameters</span></span>
+<span id="cb18-44">  <span class="cf">return</span> parameters, iteration_nums, costs_train, costs_test</span></code></pre></div>
+<h3 id="training-the-model"><span class="num">13.6.7</span>Training the Model</h3>
+<p>Finally, we get to train the Neural Network model. In the next code box, we run the model function with the appropriate arguments and store the learned parameters in the variable “parameters.”</p>
+<p>Note that we use [784,8,8,10] for the value of “layer_dims” because of the Neural Network architecture we decided on.</p>
+<div class="sourceCode" id="cb19" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1">layer_dims <span class="op">=</span> [<span class="dv">784</span>,<span class="dv">8</span>,<span class="dv">8</span>,<span class="dv">10</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb20" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1">parameters, iteration_nums, costs_train, costs_test <span class="op">=</span> model(x_train, y_train, m_train, x_test, y_test, m_test, layer_dims, alpha<span class="op">=</span><span class="fl">0.1</span>, iterations<span class="op">=</span><span class="dv">100</span>)</span></code></pre></div>
+<p>Here are the last few lines of the output:</p>
+<div class="nb-out"><pre>
+Iteration 1
+Train set cost: 35.07658208824893
+Test set cost: 35.08643914912262
+
+
+Iteration 2
+Train set cost: 29.49682882032977
+Test set cost: 29.5063886113274
+
+
+Iteration 3
+Train set cost: 24.283044178226376
+Test set cost: 24.292135570154073
+
+
+Iteration 4
+Train set cost: 19.570206944748893
+Test set cost: 19.578618183567112
+
+
+Iteration 5
+Train set cost: 15.487951238926728
+Test set cost: 15.495470592735796
+
+
+Iteration 6
+Train set cost: 12.132084141206459
+Test set cost: 12.138562771311786
+
+
+Iteration 7
+Train set cost: 9.533488428554469
+Test set cost: 9.538895864218208
+
+
+Iteration 8
+Train set cost: 7.638942197203305
+Test set cost: 7.643369645153778
+
+
+Iteration 9
+Train set cost: 6.323750698917708
+Test set cost: 6.327358008042367
+
+
+Iteration 10
+Train set cost: 5.435211583873795
+Test set cost: 5.438166375023456
+
+
+Iteration 11
+Train set cost: 4.836756871603709
+Test set cost: 4.839201930578125
+
+
+Iteration 12
+Train set cost: 4.427906486600051
+Test set cost: 4.429952860178958
+
+
+Iteration 13
+Train set cost: 4.142285100945218
+Test set cost: 4.144016329761375
+
+
+Iteration 14
+Train set cost: 3.937901749107486
+Test set cost: 3.939380349984817
+
+
+Iteration 15
+Train set cost: 3.7883051681681
+Test set cost: 3.7895782759578065
+
+
+Iteration 16
+Train set cost: 3.6765814563801387
+Test set cost: 3.677685067073104
+
+
+Iteration 17
+Train set cost: 3.591667031297092
+Test set cost: 3.592629038978742
+
+
+Iteration 18
+Train set cost: 3.5261448101707775
+Test set cost: 3.5269871513855033
+
+
+Iteration 19
+Train set cost: 3.474922080235384
+Test set cost: 3.475662251205908
+
+
+Iteration 20
+Train set cost: 3.4344237921905405
+Test set cost: 3.4350759321799913
+
+
+Iteration 21
+Train set cost: 3.402089395452101
+Test set cost: 3.4026650698908045
+
+
+Iteration 22
+Train set cost: 3.37605160619777
+Test set cost: 3.376560380435936
+
+
+Iteration 23
+Train set cost: 3.354926591037642
+Test set cost: 3.355376456450497
+
+
+Iteration 24
+Train set cost: 3.337673932661621
+Test set cost: 3.338071627315054
+
+
+Iteration 25
+Train set cost: 3.3235012754575024
+Test set cost: 3.3238525284898515
+
+
+Iteration 26
+Train set cost: 3.3117981848668023
+Test set cost: 3.3121079049654183
+
+
+Iteration 27
+Train set cost: 3.3020894866086024
+Test set cost: 3.3023619090030314
+
+
+Iteration 28
+Train set cost: 3.29400183411698
+Test set cost: 3.2942406364227805
+
+
+Iteration 29
+Train set cost: 3.287239411592314
+Test set cost: 3.2874478060011536
+
+
+Iteration 30
+Train set cost: 3.2815660452183857
+Test set cost: 3.281746852535231
+
+
+Iteration 31
+Train set cost: 3.276791874417174
+Test set cost: 3.2769475840269573
+
+
+Iteration 32
+Train set cost: 3.272763311348575
+Test set cost: 3.272896130174287
+
+
+Iteration 33
+Train set cost: 3.269355400818596
+Test set cost: 3.2694672935905946
+
+
+Iteration 34
+Train set cost: 3.2664659524782964
+Test set cost: 3.2665586750891045
+
+
+Iteration 35
+Train set cost: 3.264010995393178
+Test set cost: 3.2640861227069897
+
+
+Iteration 36
+Train set cost: 3.2619212289623514
+Test set cost: 3.261980178144826
+
+
+Iteration 37
+Train set cost: 3.260139231389666
+Test set cost: 3.260183281593961
+
+
+Iteration 38
+Train set cost: 3.258617249029794
+Test set cost: 3.258647558099528
+
+
+Iteration 39
+Train set cost: 3.2573154346589788
+Test set cost: 3.2573330533740754
+
+
+Iteration 40
+Train set cost: 3.2562004352536267
+Test set cost: 3.256206319540505
+
+
+Iteration 41
+Train set cost: 3.25524425375185
+Test set cost: 3.2552392751978805
+
+
+Iteration 42
+Train set cost: 3.254423326977638
+Test set cost: 3.2544082819256546
+
+
+Iteration 43
+Train set cost: 3.2537177751386492
+Test set cost: 3.2536933925865332
+
+
+Iteration 44
+Train set cost: 3.253110788276024
+Test set cost: 3.2530777367660244
+
+
+Iteration 45
+Train set cost: 3.252588122610456
+Test set cost: 3.2525470162604573
+
+
+Iteration 46
+Train set cost: 3.2521376855122717
+Test set cost: 3.2520890893152035
+
+
+Iteration 47
+Train set cost: 3.2517491922746435
+Test set cost: 3.251693626771068
+
+
+Iteration 48
+Train set cost: 3.2514138813167475
+Test set cost: 3.251351826728486
+
+
+Iteration 49
+Train set cost: 3.2511242771303785
+Test set cost: 3.251056177028945
+
+
+Iteration 50
+Train set cost: 3.2508739923890912
+Test set cost: 3.2508002569611603
+
+
+Iteration 51
+Train set cost: 3.2506575622982083
+Test set cost: 3.250578571260801
+
+
+Iteration 52
+Train set cost: 3.2504703055782724
+Test set cost: 3.2503864107884004
+
+
+Iteration 53
+Train set cost: 3.250308207520612
+Test set cost: 3.250219735317598
+
+
+Iteration 54
+Train set cost: 3.2501678213903955
+Test set cost: 3.250075074703489
+
+
+Iteration 55
+Train set cost: 3.250046185124404
+Test set cost: 3.2499494453738045
+
+
+Iteration 56
+Train set cost: 3.24994075081303
+Test set cost: 3.24984027962844
+
+
+Iteration 57
+Train set cost: 3.2498493248948965
+Test set cost: 3.249745365672528
+
+
+Iteration 58
+Train set cost: 3.2497700173495985
+Test set cost: 3.249662796665722
+
+
+Iteration 59
+Train set cost: 3.2497011984652655
+Test set cost: 3.2495909273620476
+
+
+Iteration 60
+Train set cost: 3.249641461996176
+Test set cost: 3.2495283371535324
+
+
+Iteration 61
+Train set cost: 3.2495895937216543
+Test set cost: 3.24947379852711
+
+
+Iteration 62
+Train set cost: 3.249544544578864
+Test set cost: 3.249426250105965
+
+
+Iteration 63
+Train set cost: 3.2495054076757457
+Test set cost: 3.249384773580228
+
+
+Iteration 64
+Train set cost: 3.24947139860083
+Test set cost: 3.249348573942739
+
+
+Iteration 65
+Train set cost: 3.2494418385387966
+Test set cost: 3.249316962537732
+
+
+Iteration 66
+Train set cost: 3.249416139777185
+Test set cost: 3.2492893425070513
+
+
+Iteration 67
+Train set cost: 3.2493937932537467
+Test set cost: 3.2492651962826726
+
+
+Iteration 68
+Train set cost: 3.2493743578475316
+Test set cost: 3.249244074828003
+
+
+Iteration 69
+Train set cost: 3.249357451161807
+Test set cost: 3.249225588375484
+
+
+Iteration 70
+Train set cost: 3.2493427415847167
+Test set cost: 3.2492093984459847
+
+
+Iteration 71
+Train set cost: 3.2493299414455237
+Test set cost: 3.2491952109673417
+
+
+Iteration 72
+Train set cost: 3.249318801111135
+Test set cost: 3.2491827703364295
+
+
+Iteration 73
+Train set cost: 3.2493091038904205
+Test set cost: 3.2491718542919292
+
+
+Iteration 74
+Train set cost: 3.249300661633103
+Test set cost: 3.2491622694842763
+
+
+Iteration 75
+Train set cost: 3.2492933109263653
+Test set cost: 3.249153847645701
+
+
+Iteration 76
+Train set cost: 3.249286909806226
+Test set cost: 3.2491464422771643
+
+
+Iteration 77
+Train set cost: 3.2492813349125647
+Test set cost: 3.249139925780902
+
+
+Iteration 78
+Train set cost: 3.249276479026805
+Test set cost: 3.2491341869773565
+
+
+Iteration 79
+Train set cost: 3.2492722489397905
+Test set cost: 3.249129128953931
+
+
+Iteration 80
+Train set cost: 3.249268563604831
+Test set cost: 3.2491246672003666
+
+
+Iteration 81
+Train set cost: 3.249265352537139
+Test set cost: 3.249120727991823
+
+
+Iteration 82
+Train set cost: 3.2492625544262648
+Test set cost: 3.2491172469861924
+
+
+Iteration 83
+Train set cost: 3.2492601159327514
+Test set cost: 3.2491141680067503
+
+
+Iteration 84
+Train set cost: 3.2492579906442463
+Test set cost: 3.2491114419852556
+
+
+Iteration 85
+Train set cost: 3.249256138169598
+Test set cost: 3.2491090260440134
+
+
+Iteration 86
+Train set cost: 3.2492545233525347
+Test set cost: 3.249106882698343
+
+
+Iteration 87
+Train set cost: 3.2492531155888957
+Test set cost: 3.2491049791634046
+
+
+Iteration 88
+Train set cost: 3.2492518882336463
+Test set cost: 3.249103286751554
+
+
+Iteration 89
+Train set cost: 3.249250818085757
+Test set cost: 3.2491017803482034
+
+
+Iteration 90
+Train set cost: 3.2492498849405793
+Test set cost: 3.2491004379558284
+
+
+Iteration 91
+Train set cost: 3.2492490712008295
+Test set cost: 3.2490992402971393
+
+
+Iteration 92
+Train set cost: 3.249248361538418
+Test set cost: 3.2490981704696313
+
+
+Iteration 93
+Train set cost: 3.2492477426003994
+Test set cost: 3.249097213644759
+
+
+Iteration 94
+Train set cost: 3.2492472027532884
+Test set cost: 3.249096356805913
+
+
+Iteration 95
+Train set cost: 3.2492467318606475
+Test set cost: 3.2490955885201114
+
+
+Iteration 96
+Train set cost: 3.2492463210896165
+Test set cost: 3.249094898739001
+
+
+Iteration 97
+Train set cost: 3.249245962742572
+Test set cost: 3.2490942786253756
+
+
+Iteration 98
+Train set cost: 3.249245650110634
+Test set cost: 3.2490937204018735
+
+
+Iteration 99
+Train set cost: 3.2492453773461913
+Test set cost: 3.249093217218989
+
+
+Iteration 100
+Train set cost: 3.2492451393519044
+Test set cost: 3.2490927630398874
+
+
+
+Final train set cost: 3.249244931684105
+Final test set cost: 3.249092352539868</pre></div>
+<h2 id="plotting-results"><span class="num">13.7</span>Plotting Results</h2>
+<p>Now, we plot our results to visualize how the model learned. In the following code box, we use Matplotlib and the costs from the model training to create a graph with:</p>
+<ul>
+<li><p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span>-axis: # of Iterations;</p></li>
+<li><p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span>-axis: Cost.</p></li>
+</ul>
+<div class="sourceCode" id="cb21" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1">plt.plot(iteration_nums, costs_train)</span>
+<span id="cb21-2">plt.plot(iteration_nums, costs_test)</span>
+<span id="cb21-3">plt.title(<span class="st">"# of Iterations v.s. Cost (MSE)"</span>)</span>
+<span id="cb21-4">plt.xlabel(<span class="st">"# of Iterations"</span>)</span>
+<span id="cb21-5">plt.ylabel(<span class="st">"Cost (MSE)"</span>)</span>
+<span id="cb21-6">plt.show()</span></code></pre></div>
+<div class="nb-out"><img src="../../../assets/img/writing/introduction-to-deep-learning/nb-8ba12d59254c.png" alt="Plot produced by the code above" loading="lazy"></div>
+<p>This plot is a bit zoomed out, so we will zoom in by only plotting the first 10,000 iterations onward.</p>
+<div class="sourceCode" id="cb22" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1">plt.plot(iteration_nums[<span class="dv">50</span>:], costs_train[<span class="dv">50</span>:])</span>
+<span id="cb22-2">plt.plot(iteration_nums[<span class="dv">50</span>:], costs_test[<span class="dv">50</span>:])</span>
+<span id="cb22-3">plt.title(<span class="st">"# of Iterations v.s. Cost (MSE)"</span>)</span>
+<span id="cb22-4">plt.xlabel(<span class="st">"# of Iterations"</span>)</span>
+<span id="cb22-5">plt.ylabel(<span class="st">"Cost (MSE)"</span>)</span>
+<span id="cb22-6">plt.show()</span></code></pre></div>
+<div class="nb-out"><img src="../../../assets/img/writing/introduction-to-deep-learning/nb-aee278ccee16.png" alt="Plot produced by the code above" loading="lazy"></div>
+<h2 id="making-predictions"><span class="num">13.8</span>Making Predictions</h2>
+<p>In the next code box, we make predictions for some value in the test set. We will print out the prediction along with the real value.</p>
+<p>Feel free to play around with this code and make predictions on different examples.</p>
+<div class="sourceCode" id="cb23" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1">example_num <span class="op">=</span> <span class="dv">5</span> <span class="co"># This is the example number. Feel free to change it.</span></span>
+<span id="cb23-2">hypothesis_example <span class="op">=</span> hypothesis(layer_dims, x_test[:,example_num].reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>), parameters)[<span class="dv">0</span>]</span>
+<span id="cb23-3">real_label_example <span class="op">=</span> one_hot.inverse_transform(y_test[:,example_num].reshape(<span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>))[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb23-4"><span class="bu">print</span>(<span class="st">"Hypothesis: "</span> <span class="op">+</span> <span class="bu">str</span>(np.where(np.<span class="bu">max</span>(hypothesis_example) <span class="op">==</span> hypothesis_example)[<span class="dv">0</span>][<span class="dv">0</span>]))</span>
+<span id="cb23-5"><span class="bu">print</span>(<span class="st">"Real Label: "</span> <span class="op">+</span> <span class="bu">str</span>(real_label_example))</span>
+<span id="cb23-6">plt.imshow(x_test[:,example_num].reshape(<span class="dv">28</span>,<span class="dv">28</span>)<span class="op">*</span><span class="dv">255</span>)</span>
+<span id="cb23-7">plt.show()</span></code></pre></div>
+<div class="nb-out"><pre>Hypothesis: 1
+Real Label: 1</pre><img src="../../../assets/img/writing/introduction-to-deep-learning/nb-d5ca541f2714.png" alt="Plot produced by the code above" loading="lazy"></div>
+<h2 id="congratulations"><span class="num">13.9</span>Congratulations!</h2>
+<p>You have now implemented a Neural Network model from scratch. You should be proud of yourself!</p>
+<p>The main takeaway from this assignment is the Gradient Descent algorithm, which has the following steps:</p>
+<ol>
+<li><p>Initialize Parameters</p></li>
+<li><p>Compute Hypothesis</p></li>
+<li><p>Compute Cost Function</p></li>
+<li><p>Update Parameters</p></li>
+<li><p>Repeat!</p></li>
+</ol>
+<p>Try Experimenting: What happens when you add more hidden layers or if you change alpha? What if you train for a longer amount of time?</p>
+<p>I hope you had fun!</p>
+
+</div>
+<nav class="endnav" aria-label="Chapters">
+  <a class="prev" href="../implementing-logistic-regression/"><span class="dir">Previous</span><span class="t">12. Implementing Logistic Regression</span></a>
+  <a class="next" href="../afterword/"><span class="dir">Next</span><span class="t">Afterword</span></a>
+</nav>
+</article>
+</div>
+
+<footer class="wrap foot">
+  <span>© 2026 Jai Sharma</span>
+  <span class="spacer"></span>
+  <span>Math typeset with <a href="https://katex.org/">KaTeX</a>.</span>
+</footer>
+
+<script src="../../../assets/js/main.js"></script>
+<script src="../../../assets/js/writing.js"></script>
+</body>
+</html>
