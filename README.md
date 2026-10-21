@@ -9,6 +9,7 @@ as chapters with a sidebar).
 ```
 index.html            home page, hand written
 writing/              generated: posts and the book, from src/ by tools/build.mjs
+ai-writing/           pages Claude wrote at my direction, each a self-contained HTML file
 assets/css/style.css  design system (light + dark, follows system or toggle)
 assets/css/writing.css  posts, book chapters, interactive figures
 assets/js/main.js     theme toggle
@@ -16,6 +17,7 @@ assets/js/writing.js  contents highlight while reading
 assets/js/figlib.js   runtime for interactive figures
 assets/js/figures/    one script per interactive figure
 assets/katex/         KaTeX stylesheet and fonts, vendored by the build
+assets/mathjax/       MathJax 3.2.2 (es5/tex-svg-full.js from npm), for the AI writing pages
 assets/pdf/           hosted papers, books, white papers, CV (addresses never change)
 assets/img/thumbs/    publication teasers (rendered from PDF page 1)
 assets/img/writing/   generated: TikZ drawings as SVG, notebook plots, book images
@@ -70,3 +72,11 @@ pdftoppm -jpeg -r 72 -f 1 -l 1 -scale-to-x 340 -scale-to-y -1 \
 **Add a news item.** Prepend an `<li>` to `.news` in `#news`.
 
 Deployed from `main` via GitHub Pages.
+
+## AI writing
+
+`ai-writing/<slug>/index.html` holds work Claude wrote at my direction, kept apart from my own
+writing above. Each page is the public edition of a private build: the build lives elsewhere,
+and its public step removes notes addressed to me, paths on my machine, and links to private
+pages before the file is copied here. Each page loads nothing from third parties; the textbook
+typesets its math with the vendored MathJax in `assets/mathjax/`.
