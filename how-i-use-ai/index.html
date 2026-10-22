@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>How I use AI | Jai Sharma</title>
-<meta name="description" content="How Jai Sharma works through an agent built on Claude Code: the setup, the rules that hold every send and public push for his approval, how he steers it, and what he uses it for.">
+<meta name="description" content="How Jai Sharma works through an agent built on Claude Code: the setup, the rules that hold every send for his approval, how he steers it, and what he uses it for.">
 <link rel="canonical" href="https://jaisharmz.github.io/how-i-use-ai/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="How I use AI | Jai Sharma">
-<meta property="og:description" content="How Jai Sharma works through an agent built on Claude Code: the setup, the rules that hold every send and public push for his approval, how he steers it, and what he uses it for.">
+<meta property="og:description" content="How Jai Sharma works through an agent built on Claude Code: the setup, the rules that hold every send for his approval, how he steers it, and what he uses it for.">
 <meta property="og:url" content="https://jaisharmz.github.io/how-i-use-ai/">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.92em' font-size='92' font-family='Georgia,serif' font-weight='600'>J</text></svg>">
@@ -42,7 +42,7 @@
 <header class="article__head">
   <p class="article__kicker"><a href="../index.html#how-i-use-ai">Jai Sharma</a> · How I work</p>
   <h1>How I use AI</h1>
-  <p class="article__dek">I run my work through an agent built on Claude Code. Here is how it is set up, the rules that hold every send and public push for my approval, how I steer it, and what I use it for. Each mechanism links to its file in <a href="https://github.com/jaisharmz/dexter">dexter</a>, the public build of the same setup, so you can check it.</p>
+  <p class="article__dek">I run my work through an agent built on Claude Code. Here is how it is set up, the rules that hold every send for my approval, how I steer it, and what I use it for. Each mechanism links to its file in <a href="https://github.com/jaisharmz/dexter">dexter</a>, the public build of the same setup, so you can check it.</p>
   <p class="article__meta">
     <time datetime="2026-10-22">October 22, 2026</time>
     <span>13 min read</span>
@@ -52,7 +52,7 @@
 <div class="prose-long">
 
 <h2 id="short-version"><span class="num">1</span>The short version</h2>
-<p>I work through <a href="https://claude.com/claude-code">Claude Code</a>, running in one folder of plain files that holds its skills, its rules, its memory and a queue of deferred work. Because all of it is files, a correction I make once is written down, and every later run reads it. The agent can read whatever I give it access to, but every email, message, post and public push waits for my approval of that act, and a hook logs and checks every tool call before it runs. I use it to map research fields, to write textbooks whose figures compute what they show, to build practice decks whose answers a script runs, and to prepare applications and outreach that I read before anything goes out.</p>
+<p>I work through <a href="https://claude.com/claude-code">Claude Code</a>, running in one folder of plain files that holds its skills, its rules, its memory and a queue of deferred work. Because all of it is files, a correction I make once is written down, and every later run reads it. The agent can read whatever I give it access to, but every email, message and post waits for my approval of that act, and so does every push to dexter, and a hook logs and checks every tool call before it runs. I use it to map research fields, to write textbooks whose figures compute what they show, to build practice decks whose answers a script runs, and to prepare applications and outreach that I read before anything goes out.</p>
 
 <h2 id="setup"><span class="num">2</span>The setup</h2>
 <p>The folder is a private repository I call intel. A skill is a subfolder with a <code>SKILL.md</code> of instructions, and it becomes a slash command as soon as the folder exists, with nothing to register. Claude Code's own skills directory is a link to the same tree, so a skill I write or fix reaches every session at once. A rule I care about becomes a lens, a short markdown file I can attach to any message. Two choices shaped the design: adding the next skill should be cheap, and before building anything the agent checks whether something maintained already does the job well enough.</p>
@@ -68,10 +68,10 @@
 <p>One hook enforces the rule (<a href="https://github.com/jaisharmz/dexter/blob/main/kernel/audit/README.md">kernel/audit/</a>). Registered in Claude Code's user settings, the one file every surface reads, it covers the desktop app, the terminal, scheduled tasks, headless runs on the desktop at home and the Discord bot. It writes every prompt and tool call to a local ledger, kept for 90 days, with anything shaped like a secret replaced before it is written. Before each tool call runs, the hook asks a short policy (<a href="https://github.com/jaisharmz/dexter/blob/main/kernel/audit/policy.mjs">policy.mjs</a>) whether the call may go ahead, and the policy gives one of three answers:</p>
 <ul>
 <li>Flag. A push, a recursive delete, a git command that throws away work, or a browser click that submits, sends, pays, applies or books goes ahead and is marked for the daily audit.</li>
-<li>Ask. A message to anyone other than me and the people I have given standing approval, a force push, a push to a public repository, deleting or exposing a repository, or an edit to the audit itself waits until I approve that one act.</li>
+<li>Ask. A message to anyone other than me and the people I have given standing approval, a force push, a push to dexter, deleting or exposing a repository, or an edit to the audit itself waits until I approve that one act.</li>
 <li>Deny. A few acts are never right for an agent, such as deleting the home directory, forcing an ignored file into a commit, or repeating the same call eight times in a row.</li>
 </ul>
-<p>A session nobody is attending, such as the Discord bot or a scheduled run, cannot ask me anything, so there an ask becomes a refusal that leaves the act for me. In Claude Code's auto mode an ask goes to Claude Code's own classifier instead of to me, so for a send to someone else or a push to a public repository the hook refuses outright, and I run the command myself or approve it from a session that asks me. A click or keystroke in my own Chrome is flagged unless the session holds the Chrome lease, which one session holds at a time, so two sessions never type into the same browser at once.</p>
+<p>A session nobody is attending, such as the Discord bot or a scheduled run, cannot ask me anything, so there an ask becomes a refusal that leaves the act for me. In Claude Code's auto mode an ask goes to Claude Code's own classifier instead of to me, so for a send to someone else or a push to dexter the hook refuses outright, and I run the command myself or approve it from a session that asks me. A click or keystroke in my own Chrome is flagged unless the session holds the Chrome lease, which one session holds at a time, so two sessions never type into the same browser at once.</p>
 <p>I first replayed the policy against a week of my own sessions: 17,300 tool calls, of which it would have flagged 504, held 26 and denied none. Every one of the 26 was a real publish, force push, repository change or audit edit. Since then I add a rule when the ledger shows a mistake that actually happened. Typing in a chat or messaging app counts as a send, for example, since a click that misses a search box turns the query into a post. Chat apps are read through connectors and exports, and nothing is typed in them.</p>
 
 <h3>The mail gate and the reach gate</h3>
@@ -80,7 +80,7 @@
 
 <h3>Privacy and public builds</h3>
 <p>Personal data stays out of anything shareable because of where it is stored. The private half of the folder is a separate git repository with no remote, ignored by the outer one, and it holds my raw prompts, my own writing, material other people wrote and my contacts. Every CSV file is ignored wherever it sits, and so are the folders where skills keep personal details, such as the profile an application form is filled from.</p>
-<p>Anything public is a separate build. dexter is rebuilt from intel by a script: an allowlist names the files that may go out, marked passages are dropped, private strings are redacted, and a leak gate fails the build on anything shaped like an email address, a phone number, an IP address, a home directory or a key. An agent stages each build, and I read the diff and approve the push. The pages under AI writing on this site are public editions too: before a page is copied here, a public step removes notes addressed to me, paths on my machine and links to private pages. This site publishes on every push to its main branch, so I approve those pushes too.</p>
+<p>Anything public is a separate build. dexter is rebuilt from intel by a script: an allowlist names the files that may go out, marked passages are dropped, private strings are redacted, and a leak gate fails the build on anything shaped like an email address, a phone number, an IP address, a home directory or a key. An agent stages each build, and I read the diff and approve the push. The pages under AI writing on this site are public editions too: before a page is copied here, a public step removes notes addressed to me, paths on my machine and links to private pages. This site publishes on every push to its main branch, and those pushes go out without waiting for me once their checks pass: the prose checker is clean, every new link has been opened, and the page has been looked at on a desktop and a phone in light and dark. After the push, the agent confirms that the build finished and that the new pages load.</p>
 
 <h2 id="steering"><span class="num">4</span>How I steer it</h2>
 <h3>Lenses</h3>
@@ -96,7 +96,7 @@
 
 <h3>Sessions and checks</h3>
 <p>Long or parallel work runs in sessions I can open. The <a href="https://github.com/jaisharmz/dexter/blob/main/skills/spawn/SKILL.md">spawn</a> skill starts a Claude Code session with its own row in the desktop app's sidebar, which I can watch and type into and which outlives the session that started it. Sessions register a name, message each other directly, and report back when they finish. Before work counts as done, the <a href="https://github.com/jaisharmz/dexter/blob/main/skills/loops/SKILL.md">loops</a> skill runs adversarial and judge subagents over it, so a reader who did not write it looks for what is wrong first.</p>
-<p>If I step away, I can hand the agent a window. "I'm going to sleep, take autonomy" gives the agent eight hours to work the queue in dependency order, decide design questions itself and log each decision for me to review, and leave everything committed at every stopping point, because the window can end at any moment. Sends and public pushes still wait for me.</p>
+<p>If I step away, I can hand the agent a window. "I'm going to sleep, take autonomy" gives the agent eight hours to work the queue in dependency order, decide design questions itself and log each decision for me to review, and leave everything committed at every stopping point, because the window can end at any moment. Sends and pushes to dexter still wait for me.</p>
 
 <h2 id="uses"><span class="num">5</span>What I use it for</h2>
 <h3>Research maps and reading paths</h3>
@@ -119,7 +119,7 @@
 <p>It makes slides in my own style, measured from my decks and checked slide by slide in Google Slides. It turns a photo of handwritten notes into a transcription, marks every word it could not read, and checks each line against the material the notes cover. It finds the print page of a passage in a book I own for a citation, emails me reports that read in a minute on a phone, and orders dinner through a few multiple choice questions.</p>
 
 <h2 id="mine"><span class="num">6</span>What stays with me</h2>
-<p>Some steps never go to the agent, in an autonomy window or out of one. I sign in to every site myself, once per browser, and no agent types a password, a two-factor code or a captcha. Questions on a form that only I can answer, such as a phonetic spelling of my name, come back to me. I read every email draft before I send it, and I approve every push to a public repository, this site included.</p>
+<p>Some steps never go to the agent, in an autonomy window or out of one. I sign in to every site myself, once per browser, and no agent types a password, a two-factor code or a captcha. Questions on a form that only I can answer, such as a phonetic spelling of my name, come back to me. I read every email draft before I send it, and I approve every push to dexter.</p>
 <p>My own writing is under <a href="../writing/">Writing</a>. Work Claude writes at my direction is under <a href="../index.html#ai-writing">AI writing</a>, and each of those pages says so.</p>
 
 </div>
