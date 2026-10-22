@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How I use AI | Jai Sharma</title>
+<meta name="description" content="How Jai Sharma works through an agent built on Claude Code: the setup, the rules that hold every send and public push for his approval, how he steers it, and what he uses it for.">
+<link rel="canonical" href="https://jaisharmz.github.io/how-i-use-ai/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How I use AI | Jai Sharma">
+<meta property="og:description" content="How Jai Sharma works through an agent built on Claude Code: the setup, the rules that hold every send and public push for his approval, how he steers it, and what he uses it for.">
+<meta property="og:url" content="https://jaisharmz.github.io/how-i-use-ai/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.92em' font-size='92' font-family='Georgia,serif' font-weight='600'>J</text></svg>">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="../assets/css/writing.css">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap topbar__inner topbar__inner--wide">
+    <a class="home" href="../index.html">Jai Sharma</a>
+    <nav>
+      <a href="../index.html#research">Research</a>
+      <a href="../writing/">Writing</a>
+      <a href="../assets/pdf/Jai_Sharma_CV.pdf">CV</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.6v2.4M12 20v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M1.6 12h2.4M20 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8z"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="page">
+<aside class="side toc" aria-label="Contents">
+  <p class="side__label">Contents</p>
+  <ol><li><a href="#short-version"><span class="num">1</span><span>The short version</span></a></li><li><a href="#setup"><span class="num">2</span><span>The setup</span></a></li><li><a href="#approval"><span class="num">3</span><span>What waits for my approval</span></a></li><li><a href="#steering"><span class="num">4</span><span>How I steer it</span></a></li><li><a href="#uses"><span class="num">5</span><span>What I use it for</span></a></li><li><a href="#mine"><span class="num">6</span><span>What stays with me</span></a></li></ol>
+</aside>
+<article class="article">
+<header class="article__head">
+  <p class="article__kicker"><a href="../index.html#how-i-use-ai">Jai Sharma</a> · How I work</p>
+  <h1>How I use AI</h1>
+  <p class="article__dek">I run my work through an agent built on Claude Code. Here is how it is set up, the rules that hold every send and public push for my approval, how I steer it, and what I use it for. Each mechanism links to its file in <a href="https://github.com/jaisharmz/dexter">dexter</a>, the public build of the same setup, so you can check it.</p>
+  <p class="article__meta">
+    <time datetime="2026-10-22">October 22, 2026</time>
+    <span>13 min read</span>
+  </p>
+</header>
+<details class="toc-inline"><summary>Contents</summary><ol><li><a href="#short-version"><span class="num">1</span><span>The short version</span></a></li><li><a href="#setup"><span class="num">2</span><span>The setup</span></a></li><li><a href="#approval"><span class="num">3</span><span>What waits for my approval</span></a></li><li><a href="#steering"><span class="num">4</span><span>How I steer it</span></a></li><li><a href="#uses"><span class="num">5</span><span>What I use it for</span></a></li><li><a href="#mine"><span class="num">6</span><span>What stays with me</span></a></li></ol></details>
+<div class="prose-long">
+
+<h2 id="short-version"><span class="num">1</span>The short version</h2>
+<p>I work through <a href="https://claude.com/claude-code">Claude Code</a>, running in one folder of plain files that holds its skills, its rules, its memory and a queue of deferred work. Because all of it is files, a correction I make once is written down, and every later run reads it. The agent can read whatever I give it access to, but every email, message, post and public push waits for my approval of that act, and a hook logs and checks every tool call before it runs. I use it to map research fields, to write textbooks whose figures compute what they show, to build practice decks whose answers a script runs, and to prepare applications and outreach that I read before anything goes out.</p>
+
+<h2 id="setup"><span class="num">2</span>The setup</h2>
+<p>The folder is a private repository I call intel. A skill is a subfolder with a <code>SKILL.md</code> of instructions, and it becomes a slash command as soon as the folder exists, with nothing to register. Claude Code's own skills directory is a link to the same tree, so a skill I write or fix reaches every session at once. A rule I care about becomes a lens, a short markdown file I can attach to any message. Two choices shaped the design: adding the next skill should be cheap, and before building anything the agent checks whether something maintained already does the job well enough.</p>
+<p>Two files tell every session how to work. <a href="https://github.com/jaisharmz/dexter/blob/main/AGENTS.md">AGENTS.md</a> is the operating manual: choose the lenses that apply before the first step, save the prompts that show how I think, commit and push your own changes, and keep memory in dated files. <code>CLAUDE.md</code> adds what matters inside Claude Code, such as what must never be committed and how to take work from the queue.</p>
+<p>Memory is files too. Each day gets a notes file, a nightly job consolidates those notes, and durable preferences go in <code>USER.md</code> as dated directives that are rewritten in place when a preference changes, so two contradictory rules never stand at once. Prompts that show how I frame a problem, such as a spec, a framework or a correction with its reason, are saved word for word in the private half of the folder. Routine requests are left out. Keeping my own words means a better model can read them again later and draw more from them than today's summary would.</p>
+<p>I reach the agent from a terminal, from the Claude desktop app, and from my phone. The phone goes through Discord: an <a href="https://openclaw.ai">OpenClaw</a> gateway runs Claude Code as a bot in a server of my own, with one channel per kind of work (<a href="https://github.com/jaisharmz/dexter/blob/main/docs/discord.md">docs/discord.md</a>). I type in one channel, and the agent decides where the work belongs, does it there, and leaves a one-line pointer back. Each channel has a default posture set by what a mistake there would cost. The experiments channel acts without asking, most channels propose a plan first, and the outreach channel does nothing without an explicit yes. Any single message can override its channel's posture.</p>
+<p>The setup runs on two machines. A desktop at home is the one that stays on, and my laptop keeps a synced copy of the folder as a warm standby. Exactly one of them holds Discord at a time, because two live copies would answer every message twice and send every approved email twice. A task that should outlive my laptop's lid goes to the desktop through a handoff skill, which runs Claude Code headless there on the same files and collects the answer when it finishes.</p>
+
+<h2 id="approval"><span class="num">3</span>What waits for my approval</h2>
+<p>One rule holds in every mode and every channel. Reading is open: files, web pages, and my mail and calendar through connectors. Nothing leaves until I approve it, whether an email, a message, a post or a form submission. Emails wait as drafts in my Gmail, applications stop at the Submit button unless I authorize a run to submit for me, and a dinner order stops at Place Order.</p>
+
+<h3>The audit hook</h3>
+<p>One hook enforces the rule (<a href="https://github.com/jaisharmz/dexter/blob/main/kernel/audit/README.md">kernel/audit/</a>). Registered in Claude Code's user settings, the one file every surface reads, it covers the desktop app, the terminal, scheduled tasks, headless runs on the desktop at home and the Discord bot. It writes every prompt and tool call to a local ledger, kept for 90 days, with anything shaped like a secret replaced before it is written. Before each tool call runs, the hook asks a short policy (<a href="https://github.com/jaisharmz/dexter/blob/main/kernel/audit/policy.mjs">policy.mjs</a>) whether the call may go ahead, and the policy gives one of three answers:</p>
+<ul>
+<li>Flag. A push, a recursive delete, a git command that throws away work, or a browser click that submits, sends, pays, applies or books goes ahead and is marked for the daily audit.</li>
+<li>Ask. A message to anyone other than me and the people I have given standing approval, a force push, a push to a public repository, deleting or exposing a repository, or an edit to the audit itself waits until I approve that one act.</li>
+<li>Deny. A few acts are never right for an agent, such as deleting the home directory, forcing an ignored file into a commit, or repeating the same call eight times in a row.</li>
+</ul>
+<p>A session nobody is attending, such as the Discord bot or a scheduled run, cannot ask me anything, so there an ask becomes a refusal that leaves the act for me. In Claude Code's auto mode an ask goes to Claude Code's own classifier instead of to me, so for a send to someone else or a push to a public repository the hook refuses outright, and I run the command myself or approve it from a session that asks me. A click or keystroke in my own Chrome is flagged unless the session holds the Chrome lease, which one session holds at a time, so two sessions never type into the same browser at once.</p>
+<p>I first replayed the policy against a week of my own sessions: 17,300 tool calls, of which it would have flagged 504, held 26 and denied none. Every one of the 26 was a real publish, force push, repository change or audit edit. Since then I add a rule when the ledger shows a mistake that actually happened. Typing in a chat or messaging app counts as a send, for example, since a click that misses a search box turns the query into a post. Chat apps are read through connectors and exports, and nothing is typed in them.</p>
+
+<h3>The mail gate and the reach gate</h3>
+<p>Every draft passes a mail gate before I see it (<a href="https://github.com/jaisharmz/dexter/blob/main/kernel/mailgate/README.md">kernel/mailgate/</a>). It reads the draft back as Gmail stores it and fails one whose text promises attachments it does not carry, leaves a placeholder, names a weekday that does not match its date, or says someone is copied when the cc line is empty. The audit hook runs the same check on every draft and send call.</p>
+<p>Every outreach note and every submission also passes a reach gate, which asks whether it is right to contact this person, this way, now (<a href="https://github.com/jaisharmz/dexter/blob/main/kernel/reachgate/README.md">kernel/reachgate/</a>). The agent writes a short card for the act, and the gate fails it if the person's own page asks not to be emailed, if my mail was not searched for an earlier thread in the past week, if any fact about the person lacks a source, if a cited arXiv paper does not list them as an author or carries a different title, or if a hiring process with that company is already under way. The last check needs a reader: a fresh subagent that did not write the note reads the card, the draft and the person's page, and has to return a pass, and that review expires after two days.</p>
+
+<h3>Privacy and public builds</h3>
+<p>Personal data stays out of anything shareable because of where it is stored. The private half of the folder is a separate git repository with no remote, ignored by the outer one, and it holds my raw prompts, my own writing, material other people wrote and my contacts. Every CSV file is ignored wherever it sits, and so are the folders where skills keep personal details, such as the profile an application form is filled from.</p>
+<p>Anything public is a separate build. dexter is rebuilt from intel by a script: an allowlist names the files that may go out, marked passages are dropped, private strings are redacted, and a leak gate fails the build on anything shaped like an email address, a phone number, an IP address, a home directory or a key. An agent stages each build, and I read the diff and approve the push. The pages under AI writing on this site are public editions too: before a page is copied here, a public step removes notes addressed to me, paths on my machine and links to private pages. This site publishes on every push to its main branch, so I approve those pushes too.</p>
+
+<h2 id="steering"><span class="num">4</span>How I steer it</h2>
+<h3>Lenses</h3>
+<p>A lens is a rule file I attach to a message with a plus sign (<a href="https://github.com/jaisharmz/dexter/tree/main/kernel/guidelines">kernel/guidelines/</a>). <a href="https://github.com/jaisharmz/dexter/blob/main/kernel/guidelines/ordering.md">+ordering</a> asks for a list in which reading only the first M items gives about the best M I could have read, so each item earns its place by what it adds to the ones above it. <a href="https://github.com/jaisharmz/dexter/blob/main/kernel/guidelines/core-idea.md">+core</a> asks for the one idea that takes about five minutes to learn and unlocks the most, stated first. +small means making something work at the smallest scale that can show it and checking it by eye before scaling up. +deslop strips the habits of machine-written prose, and a <a href="https://github.com/jaisharmz/papers-skill/blob/main/scripts/deslop.py">script</a> checks a draft against it. This page went through it.</p>
+<p>Two lenses are always on. <a href="https://github.com/jaisharmz/dexter/blob/main/kernel/guidelines/autonomy.md">Autonomy</a> says to act without asking, except for design decisions, captchas, credentials and legal agreements. Throughput says to run independent work in the background and in parallel. Every session chooses its lenses before its first step and names them in one line, so I can see which rules it is working under.</p>
+
+<h3>Skills that learn</h3>
+<p>When I correct a run, the agent writes the lesson as one dated line in that skill's <code>LEARNED.md</code> during the same run and tells me in a line (<a href="https://github.com/jaisharmz/dexter/blob/main/kernel/skill-learning.md">kernel/skill-learning.md</a>). Every later run reads that file before the skill itself, and its lines override the skill. A lesson that holds twice, or that I state as a rule, moves into the skill's own text, and a lesson that goes stale is struck with the date and the reason. Most of my skills carry a <code>LEARNED.md</code> by now. A fact about one company or one person is kept out of it and goes to the skill's private state.</p>
+
+<h3>The queue and the board</h3>
+<p>Work that cannot happen yet goes into a queue with its dependencies, where it waits until what it depends on is done (<a href="https://github.com/jaisharmz/dexter/blob/main/kernel/queue.mjs">kernel/queue.mjs</a>). Each item sits in a time frame, from the next ten minutes to this term, and in one of four tiers: now, next, soon and later. The queue hands out the shortest frame first and the highest tier within it, and an item that blocks another is pulled up to the tier of the work it blocks. Every title starts with [AI] or with my name, so it says who acts next, and it is written so a fresh session can act on it alone. I do not file items myself. If I ask for something, the agent writes the item.</p>
+<p>After every task, a session asks the queue for its next item and claims it in the same step, so two sessions never take the same one. I read the queue on a board, a local page in the desktop app's browser pane. Dragging a card changes what the next session gets, which is how I set priorities without writing anything, and Start on a card opens a Terminal window running Claude Code on that item, already claimed and working.</p>
+
+<h3>Sessions and checks</h3>
+<p>Long or parallel work runs in sessions I can open. The <a href="https://github.com/jaisharmz/dexter/blob/main/skills/spawn/SKILL.md">spawn</a> skill starts a Claude Code session with its own row in the desktop app's sidebar, which I can watch and type into and which outlives the session that started it. Sessions register a name, message each other directly, and report back when they finish. Before work counts as done, the <a href="https://github.com/jaisharmz/dexter/blob/main/skills/loops/SKILL.md">loops</a> skill runs adversarial and judge subagents over it, so a reader who did not write it looks for what is wrong first.</p>
+<p>If I step away, I can hand the agent a window. "I'm going to sleep, take autonomy" gives the agent eight hours to work the queue in dependency order, decide design questions itself and log each decision for me to review, and leave everything committed at every stopping point, because the window can end at any moment. Sends and public pushes still wait for me.</p>
+
+<h2 id="uses"><span class="num">5</span>What I use it for</h2>
+<h3>Research maps and reading paths</h3>
+<p><a href="https://github.com/jaisharmz/dexter/blob/main/skills/industry-research/SKILL.md">/industry-research</a> maps a field end to end with a team of agents: the problem hierarchy down to niche sub-problems, what solved would look like, a starter project with a reading list, and the companies working on each part. Its fact checker runs before the style edit, so a fabricated finding cannot hide behind good prose. <a href="https://github.com/jaisharmz/papers-skill">/papers</a> builds one ordered path of papers, code and projects for a topic, where each entry says where the thinking is and which lab it came from. <a href="../ai-writing/flow-matching-and-its-descendants/">Flow matching and its descendants</a>, under AI writing, is one of these maps.</p>
+
+<h3>Textbooks and practice decks</h3>
+<p><a href="https://github.com/jaisharmz/dexter/blob/main/skills/textbook/SKILL.md">/textbook</a> writes a page that teaches as a short textbook. Each chapter states one idea, derives it, and builds it up in interactive figures that compute it on a small example. Parallel agents build the figures against a written contract, and a script merges everything into one page with typeset math. <a href="../ai-writing/fundamental-ideas-from-first-principles/">Fundamental Ideas from First Principles</a> is the first of these, and separate agents audited its mathematics and checked every citation.</p>
+<p>/drills builds a numbered deck of problems and solutions for anything learned by doing, such as coding interview rounds or papers implemented from scratch. Each front shows only what you face at the start, the cards are ordered so that stopping after any card leaves the best set of that size, and before I see the deck a script runs every example, every test, and every deliberately wrong answer the tests must catch. The exercises at the end of a textbook chapter can become the cards of a deck.</p>
+
+<h3>Learning</h3>
+<p><a href="https://github.com/jaisharmz/dexter/blob/main/skills/guided-learning/SKILL.md">/guided-learning</a> teaches by asking one question at a time, so I derive the idea from what I already know. A coach for hard LeetCode problems keeps a model of my level and picks the next problem so that every prefix of the plan is the best one of its length. A morning briefing email teaches one development in my corner of AI from first principles, with diagrams, and covers the rest briefly.</p>
+
+<h3>Applications and outreach</h3>
+<p>The job search runs as four skills. One finds companies worth applying to and judges whether years there would be well spent. One chooses how to reach each company, finds the right person, and leaves the email as a Gmail draft. <a href="https://github.com/jaisharmz/dexter/blob/main/skills/role-apply/SKILL.md">/role-apply</a> fills the application in my browser and stops at Submit. When I authorize a run to submit for me, it checks before every Submit that no process with that company is under way, sends each essay to me for review first, and hands back any agreement that waives a right. The last skill keeps a tracker sheet with a column that says whose move each application is. Every draft passes both gates above, and I send each of those emails myself. Proposed meeting times go on calendars the agent keeps for itself, so it never writes to my own.</p>
+
+<h3>Coursework</h3>
+<p>I use it for a course only where that course allows AI. The skill that reads my course sites only reads: it never submits, posts, or marks an announcement read, and it answers a policy question by quoting the syllabus. A deck for a course exam is built from that course's own handouts, readings and slides, after reading the course's policy on AI.</p>
+
+<h3>Everyday</h3>
+<p>It makes slides in my own style, measured from my decks and checked slide by slide in Google Slides. It turns a photo of handwritten notes into a transcription, marks every word it could not read, and checks each line against the material the notes cover. It finds the print page of a passage in a book I own for a citation, emails me reports that read in a minute on a phone, and orders dinner through a few multiple choice questions.</p>
+
+<h2 id="mine"><span class="num">6</span>What stays with me</h2>
+<p>Some steps never go to the agent, in an autonomy window or out of one. I sign in to every site myself, once per browser, and no agent types a password, a two-factor code or a captcha. Questions on a form that only I can answer, such as a phonetic spelling of my name, come back to me. I read every email draft before I send it, and I approve every push to a public repository, this site included.</p>
+<p>My own writing is under <a href="../writing/">Writing</a>. Work Claude writes at my direction is under <a href="../index.html#ai-writing">AI writing</a>, and each of those pages says so.</p>
+
+</div>
+
+<div class="web-note"><p>Claude drafted this page at my direction from the files it describes, and the links go to the public build of those files. dexter carries the framework, the gates and the general purpose skills. Skills that stay in the private workspace, such as the course reader, the practice decks and the briefing, have no link.</p></div>
+</article>
+</div>
+
+<div class="wrap">
+<footer class="foot">
+  <span>© 2026 Jai Sharma</span>
+  <span class="spacer"></span>
+  <span><a href="../index.html">Home</a></span>
+</footer>
+</div>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/writing.js"></script>
+</body>
+</html>
